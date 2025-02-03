@@ -1,5 +1,8 @@
 export class Ship{
-    constructor(length){
+    constructor(length){//maybe include an if statement to check length is not 0
+        if(length == 0){
+            return NaN;
+        }
         this.length = length;
         this.hits = 0;
     }
@@ -9,7 +12,7 @@ export class Ship{
     }
 
     isSunk(){
-        if(this.hits == this.length){
+        if(this.hits >= this.length){
             return true;
         }
         return false;
