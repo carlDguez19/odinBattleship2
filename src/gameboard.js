@@ -40,5 +40,14 @@ export class Gameboard{
             }
         }
     }
+    allShipsSunk(){
+        for(let i = 0; i < this.ships.length; i++){
+            let sunk = this.ships[i].isSunk();
+            if(!sunk){
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
