@@ -13,8 +13,22 @@ export class Gameboard{
         }
         return arr;
     }
+    coordsInRange(coords){
+        if(coords[0] < this.size && coords[1] < this.size){
+            return true;
+        }
+        return false;
+    }
+    coordsNotTaken(board, coords){
+        if(board[coords[0]][coords[1]] == undefined){
+            return true;
+        }
+        return false;
+    }
     placeShip(length, coords, axis, board){
-        if(coordsInRange && coordsNotTaken){
+        const inRange = this.coordsInRange(coords);
+        const notTaken = this.coordsNotTaken(board, coords);
+        if(inRange && notTaken){
             const testShip = new Ship(length);
             this.ships.append(testShip);
             if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
@@ -42,12 +56,12 @@ export class Gameboard{
     }
     allShipsSunk(){
         for(let i = 0; i < this.ships.length; i++){
-            let sunk = this.ships[i].isSunk();
+            let sunk = this.ships[i].isSunk();//if even one ship is not sunk return false
             if(!sunk){
                 return false;
             }
         }
-        return true;
+        return true;//if we made it outside the loop then all ships are sunk
     }
 
 }
