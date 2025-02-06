@@ -5,6 +5,7 @@ export class Gameboard{
         this.size = size;
         this.numOfShips = 0;
         this.ships = [];
+        this.board = this.generateGameboard(this.size);
     }
     generateGameboard(size){
         let arr = [];
@@ -30,7 +31,7 @@ export class Gameboard{
         const notTaken = this.coordsNotTaken(board, coords);
         if(inRange && notTaken){
             const testShip = new Ship(length);
-            this.ships.append(testShip);
+            this.ships.push(testShip);
             if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
                 for(let i = 0; i < length; i++){
                     board[coords[0]+i][coords[1]] = testShip;
@@ -40,7 +41,8 @@ export class Gameboard{
                     board[coords[0]][coords[1]+1] = testShip;
                 }
             }
-            return board;//maybe not needed
+            //
+            // return board;//maybe not needed
         }
     }
     receiveAttack(coords, board){
