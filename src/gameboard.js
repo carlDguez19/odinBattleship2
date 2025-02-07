@@ -14,14 +14,14 @@ export class Gameboard{
         }
         return arr;
     }
-    coordsInRange(coords){
+    coordsInRange(coords){//starting coordinates are not off the board
         if(coords[0] < this.size && coords[1] < this.size){
             return true;
         }else{
             return false;
         }
     }
-    coordsNotTaken(board, coords, axis, length){
+    coordsNotTaken(board, coords, axis, length){//cells are empty before placing
         if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
                 if(board[coords[0]+i][coords[1]] != undefined){
@@ -38,7 +38,7 @@ export class Gameboard{
             }
         }
     }
-    fitsOnBoard(length, coords, axis){
+    fitsOnBoard(length, coords, axis){//ship wont be left hanging off board
         if(axis == "y"){
             if(coords[0]+length < this.size){
                 return true;
@@ -54,10 +54,10 @@ export class Gameboard{
         }
     }
     placeShip(length, coords, axis, board){
-        const inRange = this.coordsInRange(coords);
-        const shipFits = this.fitsOnBoard(length, coords, axis);
-        if((length <= this.size) && inRange && shipFits){
-            const notTaken = this.coordsNotTaken(board, coords, axis, length);
+        const inRange = this.coordsInRange(coords);//coordinates are not bigger than the board itself
+        const shipFits = this.fitsOnBoard(length, coords, axis);//pieces of the ship are not left 'hanging' outside the board
+        if((length <= this.size) && inRange && shipFits){//if ship is not bigger than board itself and ... ^
+            const notTaken = this.coordsNotTaken(board, coords, axis, length);//make sure spots are empty for ship to be placed
             if(notTaken){
                 const testShip = new Ship(length);
                 this.ships.push(testShip);
@@ -77,7 +77,7 @@ export class Gameboard{
         }
     }
     receiveAttack(coords, board){
-        if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty or was previously a miss then declare a miss
+        if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty OR was previously a miss then declare a miss
             board[coords[0]][coords[1]] == "0";
         }else{
             for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
