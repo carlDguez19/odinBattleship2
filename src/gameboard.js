@@ -17,32 +17,63 @@ export class Gameboard{
     coordsInRange(coords){
         if(coords[0] < this.size && coords[1] < this.size){
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
-    coordsNotTaken(board, coords){
-        if(board[coords[0]][coords[1]] == undefined){
-            return true;
+    coordsNotTaken(board, coords, axis, length){
+        if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
+            for(let i = 0; i < length; i++){
+                if(board[coords[0]+i][coords[1]] != undefined){
+                    return false;
+                }else{
+                    return true;
+                }  
+            }
+        }else{//ship placed horizontally
+            if(board[coords[0]][coords[1]+1] != undefined){
+                return false;
+            }else{
+                return true;
+            }
         }
-        return false;
+    }
+    fitsOnBoard(length, coords, axis){
+        if(axis == "y"){
+            if(coords[0]+length < this.size){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            if(coords[1]+length < this.size){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
     placeShip(length, coords, axis, board){
         const inRange = this.coordsInRange(coords);
-        const notTaken = this.coordsNotTaken(board, coords);
-        if(inRange && notTaken){
-            const testShip = new Ship(length);
-            this.ships.push(testShip);
-            if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
-                for(let i = 0; i < length; i++){
-                    board[coords[0]+i][coords[1]] = testShip;
+        const shipFits = this.fitsOnBoard(length, coords, axis);
+        if((length <= this.size) && inRange && shipFits){
+            const notTaken = this.coordsNotTaken(board, coords, axis, length);
+            if(notTaken){
+                const testShip = new Ship(length);
+                this.ships.push(testShip);
+                if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
+                    for(let i = 0; i < length; i++){
+                        board[coords[0]+i][coords[1]] = testShip;
+                    }
+                    this.numOfShips++;
+                }else{//ship placed horizontally
+                    for(let i = 0; i < length; i++){
+                        board[coords[0]][coords[1]+1] = testShip;
+                    }
+                    this.numOfShips++;
                 }
-            }else{//ship placed horizontally
-                for(let i = 0; i < length; i++){
-                    board[coords[0]][coords[1]+1] = testShip;
-                }
+                // return board;//maybe not needed
             }
-            //
-            // return board;//maybe not needed
         }
     }
     receiveAttack(coords, board){
