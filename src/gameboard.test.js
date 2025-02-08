@@ -44,4 +44,14 @@ describe("testing recieveAttack whether it registers misses and hits", () => {
         expect(testShip.hits).toEqual(0);
         expect(gBoard6.board[0][1]).toBe("0");
     })
+    test("testing a miss on a previously missed cell", () => {
+        const gBoard7 = new Gameboard(5);
+        gBoard7.placeShip(2,[2,2],"y",gBoard7.board);
+        gBoard7.receiveAttack([0,1], gBoard7.board);
+        gBoard7.receiveAttack([0,1], gBoard7.board);
+        const testShip = gBoard7.board[2][2];
+        expect(testShip.hits).toEqual(0);
+        expect(gBoard7.board[0][1]).toBe("0");
+
+    })
 })
