@@ -1,7 +1,7 @@
 import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
 
-describe("testing placeShip, recieveAttack, and allShipsSunk methods", () => {
+describe("testing placeShip and all its variations", () => {//testing placeShip, recieveAttack, and allShipsSunk methods
     test("standard test of placeShip", () => {
         const gBoard = new Gameboard(5);
         gBoard.placeShip(2,[1,1],"y",gBoard.board);
@@ -24,7 +24,16 @@ describe("testing placeShip, recieveAttack, and allShipsSunk methods", () => {
         gBoard4.placeShip(2,[1,1],"y",gBoard4.board);
         gBoard4.placeShip(3,[1,1],"x",gBoard4.board);
         expect(gBoard4.numOfShips).toEqual(1);
-        //expect(gBoard4.board[1][1]).toEqual({hits:0, length:2});
-        //expect(gBoard4.board[2][1]).toEqual({hits:0, length:2});
+        expect(gBoard4.board[1][1]).toEqual({hits:0, length:2});
+        expect(gBoard4.board[2][1]).toEqual({hits:0, length:2});
+    })
+})
+describe("testing recieveAttack whether it registers misses and hits", () => {
+    test("testing a hit on a ship", () => {
+        const gBoard5 = new Gameboard(5);
+        gBoard5.placeShip(2,[1,1],"x", gBoard5.board);
+        gBoard5.receiveAttack([1,1], gBoard5.board);
+        const testShip = gBoard5.board[1][1];
+        expect(testShip.hits).toEqual(1);
     })
 })
