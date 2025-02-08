@@ -36,4 +36,12 @@ describe("testing recieveAttack whether it registers misses and hits", () => {
         const testShip = gBoard5.board[1][1];
         expect(testShip.hits).toEqual(1);
     })
+    test("testing a miss on an empty cell", () => {
+        const gBoard6 = new Gameboard(5);
+        gBoard6.placeShip(2,[1,1],"x",gBoard6.board);
+        gBoard6.receiveAttack([0,1], gBoard6.board);
+        const testShip = gBoard6.board[1][1];
+        expect(testShip.hits).toEqual(0);
+        expect(gBoard6.board[0][1]).toBe("0");
+    })
 })

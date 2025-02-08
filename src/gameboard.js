@@ -79,7 +79,7 @@ export class Gameboard{
     receiveAttack(coords, board){
         if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty OR was previously a miss then declare a miss
             console.log('hereagain');
-            board[coords[0]][coords[1]] == "0";
+            board[coords[0]][coords[1]] = "0";
         }else{
             for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
                 console.log("at coords: " + board[coords[0]][coords[1]]);
