@@ -24,14 +24,16 @@ export class Gameboard{
     coordsNotTaken(board, coords, axis, length){//cells are empty before placing
         if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
-                if(board[coords[0]+i][coords[1]] !== undefined){
+                if(board[coords[0]+i][coords[1]] != undefined){
                     return false;
                 }
             }
             return true;
         }else{//ship placed horizontally
-            if(board[coords[0]][coords[1]+1] !== undefined){
-                return false;
+            for(let i = 0; i < length; i++){
+                if(board[coords[0]][coords[1]+i] != undefined){
+                    return false;
+                }
             }
             return true;
         }
