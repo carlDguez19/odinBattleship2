@@ -72,19 +72,20 @@ export class Gameboard{
                     }
                     this.numOfShips++;
                 }
-                // return board;//maybe not needed
             }
         }
     }
     receiveAttack(coords, board){
         if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty OR was previously a miss then declare a miss
-            console.log('hereagain');
             board[coords[0]][coords[1]] = "0";
-        }else{
+        }
+        else if(board[coords[0]][coords[1]] == "X"){
+            board[coords[0]][coords[1]] = "X";
+        }
+        else{
             for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
-                console.log("at coords: " + board[coords[0]][coords[1]]);
-                console.log("in ship arr: " + this.ships[i]);
                 if(board[coords[0]][coords[1]] == this.ships[i]){
+                    board[coords[0]][coords[1]] = "X"
                     this.ships[i].hit();
                 }
             }

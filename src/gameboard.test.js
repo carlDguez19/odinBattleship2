@@ -31,9 +31,9 @@ describe("testing placeShip and all its variations", () => {//testing placeShip,
 describe("testing recieveAttack whether it registers misses and hits", () => {
     test("testing a hit on a ship", () => {
         const gBoard5 = new Gameboard(5);
-        gBoard5.placeShip(2,[1,1],"x", gBoard5.board);
+        gBoard5.placeShip(2,[1,1],"x",gBoard5.board);
         gBoard5.receiveAttack([1,1], gBoard5.board);
-        const testShip = gBoard5.board[1][1];
+        const testShip = gBoard5.ships[0];
         expect(testShip.hits).toEqual(1);
     })
     test("testing a miss on an empty cell", () => {
@@ -52,6 +52,14 @@ describe("testing recieveAttack whether it registers misses and hits", () => {
         const testShip = gBoard7.board[2][2];
         expect(testShip.hits).toEqual(0);
         expect(gBoard7.board[0][1]).toBe("0");
-
+    })
+    test("testing a hit on an already hit cell", () => {
+        const gBoard8 = new Gameboard(5);
+        gBoard8.placeShip(2,[2,2],"y",gBoard8.board);
+        gBoard8.receiveAttack([2,2], gBoard8.board);
+        gBoard8.receiveAttack([2,2], gBoard8.board);
+        const testShip = gBoard8.ships[0];
+        expect(testShip.hits).toEqual(1);
+        expect(gBoard8.board[2][2]).toBe("X");
     })
 })
