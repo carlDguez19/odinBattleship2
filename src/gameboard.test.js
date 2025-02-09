@@ -63,3 +63,14 @@ describe("testing recieveAttack whether it registers misses and hits", () => {
         expect(gBoard8.board[2][2]).toBe("X");
     })
 })
+describe("test allShipsSunk", () => {
+    test("general test for allShipsSunk", () => {
+        const gBoard9 = new Gameboard(5);
+        gBoard9.placeShip(1,[1,1],"y",gBoard9.board);
+        gBoard9.placeShip(1,[3,3],"y",gBoard9.board);
+        gBoard9.receiveAttack([1,1], gBoard9.board);
+        gBoard9.receiveAttack([3,3], gBoard9.board);
+        const result = gBoard9.allShipsSunk();
+        expect(result).toEqual(true);
+    })
+})
