@@ -1,6 +1,7 @@
 import "./styles.css";
 import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
+import { Player } from "./player";
 
 const gBoard5 = new Gameboard(5);
 gBoard5.placeShip(2,[1,1],"x", gBoard5.board);
