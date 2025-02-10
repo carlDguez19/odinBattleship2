@@ -61,7 +61,7 @@ export class Gameboard{
             if(notTaken){
                 const testShip = new Ship(length);
                 this.ships.push(testShip);
-                if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
+                if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
                     for(let i = 0; i < length; i++){
                         board[coords[0]+i][coords[1]] = testShip;
                     }
