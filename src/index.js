@@ -3,6 +3,15 @@ import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
 import { Player } from "./player";
 
+//here we will have the flow of the game...
+//game setup
+//ask how many ships per board
+//ask if player is real or computer.
+//if real then prompt player for coords of ships and place them
+//else generate random coords for ships and place them(all of this in a method in gameboard???)
+//start gameloop
+//each player takes turn choosing a coord until either of the players allShipsSunk
+
 // const gBoard5 = new Gameboard(5);
 // gBoard5.placeShip(2,[1,1],"x", gBoard5.board);
 // gBoard5.receiveAttack([1,1], gBoard5.board);
