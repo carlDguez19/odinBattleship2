@@ -21,10 +21,10 @@ import { Player } from "./player";
 const player1 = new Player("real", 5);
 const player2 = new Player("real", 5);
 
-player1.chooseLocation(3,[2,2],"y");
-player1.chooseLocation(2,[0,1],"x");
-player1.chooseLocation(2,[2,0],"x");
+player1.pBoard.placeShip(3,[2,2],"y");
+player1.pBoard.placeShip(2,[0,1],"x");
+player1.pBoard.placeShip(2,[2,0],"x");
 
-player2.chooseLocation(3,[1,2],"x");
-player2.chooseLocation(2,[2,1],"y");
-player2.chooseLocation(2,[3,3],"y");
+player2.pBoard.placeShip(3,[1,2],"x");
+player2.pBoard.placeShip(2,[2,1],"y");
+player2.pBoard.placeShip(2,[3,3],"y");

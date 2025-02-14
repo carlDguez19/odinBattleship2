@@ -53,22 +53,22 @@ export class Gameboard{
             }
         }
     }
-    placeShip(length, coords, axis, board){
+    placeShip(length, coords, axis){
         const inRange = this.coordsInRange(coords);//coordinates are not bigger than the board itself
         const shipFits = this.fitsOnBoard(length, coords, axis);//pieces of the ship are not left 'hanging' outside the board
         if((length <= this.size) && inRange && shipFits){//if ship is not bigger than board itself and ... ^
-            const notTaken = this.coordsNotTaken(board, coords, axis, length);//make sure spots are empty for ship to be placed
+            const notTaken = this.coordsNotTaken(this.board, coords, axis, length);//we can remove board and replace it with this.baord//make sure spots are empty for ship to be placed
             if(notTaken){
                 const testShip = new Ship(length);
                 this.ships.push(testShip);
                 if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
                     for(let i = 0; i < length; i++){
-                        board[coords[0]+i][coords[1]] = testShip;
+                        this.board[coords[0]+i][coords[1]] = testShip;
                     }
                     this.numOfShips++;
                 }else{//ship placed horizontally
                     for(let i = 0; i < length; i++){
-                        board[coords[0]][coords[1]+i] = testShip;
+                        this.board[coords[0]][coords[1]+i] = testShip;
                     }
                     this.numOfShips++;
                 }
