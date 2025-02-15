@@ -4,3 +4,15 @@
   height: 500px;
   background-color: rebeccapurple;
 } */
+.gamingArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100vh;
+  background-color: darkgreen;
+}
+
+.player1Board {
+  width: 1fr;
+}
