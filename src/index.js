@@ -28,3 +28,6 @@ player1.pBoard.placeShip(2,[2,0],"x");
 player2.pBoard.placeShip(3,[1,2],"x");
 player2.pBoard.placeShip(2,[2,1],"y");
 player2.pBoard.placeShip(2,[3,3],"y");
+
+player1.openBoard(".p1Grid");
+player2.openBoard(".p2Grid");

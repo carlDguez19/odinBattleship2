@@ -22,4 +22,31 @@ export class Player{
     // getRndInteger(min, max) {
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
+    openBoard(playerBoardDOM){
+        let gc = document.querySelector(playerBoardDOM);
+    
+        //clear grid of any previous size grid
+        this.clearGrid(gc);
+    
+        //set template for grid
+        gc.style.gridTemplateColumns = `repeat(${this.pBoard.size}, 1fr)`;
+        gc.style.gridTemplateRows = `repeat(${this.pBoard.size}, 1fr)`;
+    
+        let totalCells = this.pBoard.size * this.pBoard.size;
+    
+        //fill grid with divs
+        for(let i = 0; i < totalCells; i++){
+            let cell = document.createElement('div');
+            cell.style.backgroundColor = "darkred";
+            cell.style.borderRadius = "5px";
+            gc.appendChild(cell);
+        }
+    }
+
+    clearGrid(grid){
+        let cells = grid.querySelectorAll('div');
+        cells.forEach((cell) => {
+            cell.remove();
+        })
+    }
 }

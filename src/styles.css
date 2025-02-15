@@ -13,6 +13,33 @@
   background-color: darkgreen;
 }
 
+.player1Board,
+.player2Board {
+  margin: 20px;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  border-radius: 10px;
+}
+
 .player1Board {
-  width: 1fr;
+  background-color: midnightblue;
+}
+.player2Board {
+  background-color: olivedrab;
+}
+
+.p1Grid,
+.p2Grid {
+  width: 400px;
+  height: 400px;
+  display: grid;
+  /* all of the following added via js in player.js in openBoard method */
+  /* grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 1fr); */
+  /* background-color: darkred; */
+  gap: 10px;
+  margin-bottom: 20px;
 }
