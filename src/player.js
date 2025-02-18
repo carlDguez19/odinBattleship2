@@ -32,15 +32,21 @@ export class Player{
         gc.style.gridTemplateColumns = `repeat(${this.pBoard.size}, 1fr)`;
         gc.style.gridTemplateRows = `repeat(${this.pBoard.size}, 1fr)`;
     
-        let totalCells = this.pBoard.size * this.pBoard.size;
+        //let totalCells = this.pBoard.size * this.pBoard.size;
     
-        //fill grid with divs
-        for(let i = 0; i < totalCells; i++){
-            let cell = document.createElement('div');
-            cell.style.backgroundColor = "darkred";
-            cell.style.borderRadius = "5px";
-            gc.appendChild(cell);
+        //fill grid with a table for easier access of each cell
+        let table = document.createElement('table');
+        for(let i = 0; i < this.pBoard.size; i++){
+            let row = document.createElement('tr');
+            for(let j = 0; j < this.pBoard.size; j++){
+                let cell = document.createElement('td');
+                cell.style.backgroundColor = "limegreen";
+                cell.style.borderRadius = "5px";
+                row.appendChild(cell);
+            } 
+            table.appendChild(row);
         }
+        gc.appendChild(table);
     }
 
     clearGrid(grid){

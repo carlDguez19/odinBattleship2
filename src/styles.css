@@ -31,15 +31,8 @@
   background-color: olivedrab;
 }
 
-.p1Grid,
-.p2Grid {
+table{/* added via js in player.js openBoard method */
   width: 400px;
   height: 400px;
-  display: grid;
-  /* all of the following added via js in player.js in openBoard method */
-  /* grid-template-rows: repeat(5, 1fr);
-  grid-template-columns: repeat(5, 1fr); */
-  /* background-color: darkred; */
-  gap: 10px;
   margin-bottom: 20px;
 }
