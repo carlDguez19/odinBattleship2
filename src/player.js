@@ -23,6 +23,10 @@ export class Player{
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
 
+    clickCell(playerBoardDOM){
+        
+    }
+
     displayShips(playerBoardDOM){
         let gb = document.querySelector(playerBoardDOM);
         let table = gb.firstElementChild;
