@@ -34,3 +34,6 @@ player2.openBoard(".player2Board");
 
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
+
+player1.clickCell(".player1Board");
+player2.clickCell(".player2Board");

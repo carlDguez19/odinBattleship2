@@ -24,7 +24,16 @@ export class Player{
     // }
 
     clickCell(playerBoardDOM){
-        
+        let gb = document.querySelector(playerBoardDOM);
+        let table = gb.firstElementChild;
+        table.addEventListener('click', (e) => {
+            if(e.target.tagName === 'TD'){
+                const row = e.target.parentElement;
+                let cIndex = e.target.cellIndex;
+                let rIndex = row.rowIndex
+                console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+            }
+        });
     }
 
     displayShips(playerBoardDOM){
@@ -33,7 +42,6 @@ export class Player{
         for(let i = 0; i < this.pBoard.board.length; i++){
             for(let j = 0; j < this.pBoard.board[i].length; j++){
                 if(this.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
-                    console.log("found a ship and displaying it!!!");
                     const row = table.rows[i]//querySelector(`tr:nth-child(${i})`);
                     const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
                     cell.style.backgroundColor = "darkred";
