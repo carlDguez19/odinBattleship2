@@ -32,6 +32,8 @@ export class Player{
                 let cIndex = e.target.cellIndex;
                 let rIndex = row.rowIndex
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+                this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board);
+                this.pBoard.updateHitOrMiss([rIndex,cIndex],table);
                 //using these coords I will receiveAttack then i will...
                 //update board with updateHitOrMiss which will check these coords..
                     //if value at coords is now 0(zero) then update board to a miss
@@ -48,7 +50,7 @@ export class Player{
                 if(this.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
                     const row = table.rows[i]//querySelector(`tr:nth-child(${i})`);
                     const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
-                    cell.style.backgroundColor = "darkred";
+                    cell.style.backgroundColor = "gray";
                     cell.style.borderRadius = "50px";
                 }                
             }

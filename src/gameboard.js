@@ -79,10 +79,10 @@ export class Gameboard{
         if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty OR was previously a miss then declare a miss
             board[coords[0]][coords[1]] = "0";
         }
-        else if(board[coords[0]][coords[1]] == "X"){
+        else if(board[coords[0]][coords[1]] == "X"){//if previously declared a hit then leave as a hit
             board[coords[0]][coords[1]] = "X";
         }
-        else{
+        else{//if newly discovered ship then declare hit
             for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
                 if(board[coords[0]][coords[1]] == this.ships[i]){
                     board[coords[0]][coords[1]] = "X"
@@ -100,5 +100,18 @@ export class Gameboard{
         }
         return true;//if we made it outside the loop then all ships are sunk
     }
-
+    updateHitOrMiss(coords,table){
+        if(this.board[coords[0]][coords[1]] == "0"){
+            //update table cell to miss
+            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
+            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+            cell.style.backgroundColor = "teal";
+        }else if(this.board[coords[0]][coords[1]] == "X"){
+            //update ship to hit
+            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
+            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+            cell.style.backgroundColor = "darkred";
+            cell.style.borderRadius = "50px";
+        }
+    }
 }
