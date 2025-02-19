@@ -33,4 +33,4 @@ player1.openBoard(".player1Board");
 player2.openBoard(".player2Board");
 
 player1.displayShips(".player1Board");
-//player2.displayShips(".player2Board");
+player2.displayShips(".player2Board");

@@ -32,8 +32,8 @@ export class Player{
                     console.log("found a ship and displaying it!!!");
                     const row = table.rows[i]//querySelector(`tr:nth-child(${i})`);
                     const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
-                    cell.style.backgroundColor = "red";
-                    cell.style.borderRadius = "5px";
+                    cell.style.backgroundColor = "darkred";
+                    cell.style.borderRadius = "50px";
                 }                
             }
         }
