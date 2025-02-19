@@ -32,6 +32,10 @@ export class Player{
                 let cIndex = e.target.cellIndex;
                 let rIndex = row.rowIndex
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+                //using these coords I will receiveAttack then i will...
+                //update board with updateHitOrMiss which will check these coords..
+                    //if value at coords is now 0(zero) then update board to a miss
+                    //else if value at coords is no X then update board to hit.
             }
         });
     }
