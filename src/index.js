@@ -21,7 +21,7 @@ import { Player } from "./player";
 const player1 = new Player("real", 5);
 const player2 = new Player("real", 5);
 
-player1.pBoard.placeShip(3,[2,2],"y");
+player1.pBoard.placeShip(3,[2,2],1);
 player1.pBoard.placeShip(2,[0,1],"x");
 player1.pBoard.placeShip(2,[2,0],"x");
 
@@ -31,3 +31,6 @@ player2.pBoard.placeShip(2,[3,3],"y");
 
 player1.openBoard(".player1Board");
 player2.openBoard(".player2Board");
+
+player1.displayShips(".player1Board");
+//player2.displayShips(".player2Board");

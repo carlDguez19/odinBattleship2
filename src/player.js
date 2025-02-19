@@ -22,17 +22,28 @@ export class Player{
     // getRndInteger(min, max) {
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
-    openBoard(playerBoardDOM){
+
+    displayShips(playerBoardDOM){
+        let gb = document.querySelector(playerBoardDOM);
+        let table = gb.firstElementChild;
+        for(let i = 0; i < this.pBoard.board.length; i++){
+            for(let j = 0; j < this.pBoard.board[i].length; j++){
+                if(this.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
+                    console.log("found a ship and displaying it!!!");
+                    const row = table.rows[i]//querySelector(`tr:nth-child(${i})`);
+                    const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
+                    cell.style.backgroundColor = "red";
+                    cell.style.borderRadius = "5px";
+                }                
+            }
+        }
+    }
+
+    openBoard(playerBoardDOM){//html element is the param
         let gc = document.querySelector(playerBoardDOM);
     
         //clear grid of any previous size grid
         this.clearGrid(gc);
-    
-        //set template for grid
-        gc.style.gridTemplateColumns = `repeat(${this.pBoard.size}, 1fr)`;
-        gc.style.gridTemplateRows = `repeat(${this.pBoard.size}, 1fr)`;
-    
-        //let totalCells = this.pBoard.size * this.pBoard.size;
     
         //fill grid with a table for easier access of each cell
         let table = document.createElement('table');

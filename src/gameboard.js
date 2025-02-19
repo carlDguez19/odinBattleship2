@@ -24,14 +24,14 @@ export class Gameboard{
     coordsNotTaken(board, coords, axis, length){//cells are empty before placing
         if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
-                if(board[coords[0]+i][coords[1]] != undefined){
+                if(board[coords[0]+i][coords[1]] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
             return true;
         }else{//ship placed horizontally
             for(let i = 0; i < length; i++){
-                if(board[coords[0]][coords[1]+i] != undefined){
+                if(board[coords[0]][coords[1]+i] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
@@ -39,14 +39,14 @@ export class Gameboard{
         }
     }
     fitsOnBoard(length, coords, axis){//ship wont be left hanging off board
-        if(axis == "y"){
-            if(coords[0]+length < this.size){
+        if(axis == 1){//ship wont overhang vertically
+            if(coords[0]+length <= this.size){
                 return true;
             }else{
                 return false;
             }
-        }else{
-            if(coords[1]+length < this.size){
+        }else{//ship wont overhang horizontally
+            if(coords[1]+length <= this.size){
                 return true;
             }else{
                 return false;
