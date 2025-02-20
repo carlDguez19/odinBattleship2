@@ -21,19 +21,23 @@ import { Player } from "./player";
 const player1 = new Player("real", 5);
 const player2 = new Player("real", 5);
 
-player1.pBoard.placeShip(3,[2,2],1);
-player1.pBoard.placeShip(2,[0,1],"x");
-player1.pBoard.placeShip(2,[2,0],"x");
+player1.pBoard.placeShip(3,[2,3],1);
+player1.pBoard.placeShip(2,[0,1],0);
+player1.pBoard.placeShip(2,[2,0],0);
 
-player2.pBoard.placeShip(3,[1,2],"x");
-player2.pBoard.placeShip(2,[2,1],"y");
-player2.pBoard.placeShip(2,[3,3],"y");
+player2.pBoard.placeShip(3,[1,2],0);
+player2.pBoard.placeShip(2,[2,1],1);
+player2.pBoard.placeShip(2,[3,3],1);
 
 player1.openBoard(".player1Board");
+player1.openBoard(".player1HiddenBoard");
 player2.openBoard(".player2Board");
+player2.openBoard(".player2HiddenBoard");
 
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
 
 player1.clickCell(".player1Board");
+player1.clickCell(".player1HiddenBoard");
 player2.clickCell(".player2Board");
+player2.clickCell(".player2HiddenBoard");

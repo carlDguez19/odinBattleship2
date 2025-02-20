@@ -14,7 +14,9 @@
 }
 
 .player1Board,
-.player2Board {
+.player2Board,
+.player1HiddenBoard,
+.player2HiddenBoard {
   margin: 20px;
   width: 500px;
   height: 500px;
@@ -24,6 +26,21 @@
   border-radius: 10px;
 }
 
+.player1HiddenBoard,
+.player2HiddenBoard {
+  position: absolute;
+}
+
+.player1HiddenBoard {
+  left: 10%;
+  background-color: red;
+}
+
+.player2HiddenBoard {
+  right: 10%;
+  background-color: blueviolet;
+}
+
 .player1Board {
   background-color: midnightblue;
 }
@@ -31,7 +48,8 @@
   background-color: olivedrab;
 }
 
-table{/* added via js in player.js openBoard method */
+table {
+  /* added via js in player.js openBoard method */
   width: 400px;
   height: 400px;
   margin-bottom: 20px;
