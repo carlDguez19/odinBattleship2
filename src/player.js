@@ -23,17 +23,20 @@ export class Player{
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
 
-    clickCell(playerBoardDOM){
-        let gb = document.querySelector(playerBoardDOM);
-        let table = gb.firstElementChild;
-        table.addEventListener('click', (e) => {
+    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM){//this should update the hidden board and the true board at the same time
+        let gbh = document.querySelector(playerHiddenBoardDOM);
+        let hiddenTable = gbh.firstElementChild;
+        let gbt = document.querySelector(playerTrueBoardDOM);
+        let trueTable = gbt.firstElementChild;
+        hiddenTable.addEventListener('click', (e) => {
             if(e.target.tagName === 'TD'){
                 const row = e.target.parentElement;
                 let cIndex = e.target.cellIndex;
                 let rIndex = row.rowIndex
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board);
-                this.pBoard.updateHitOrMiss([rIndex,cIndex],table);
+                this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
+                this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
             }
         });
     }
@@ -53,7 +56,7 @@ export class Player{
         }
     }
 
-    openBoard(playerBoardDOM){//html element is the param
+    openBoard(playerBoardDOM){//html element is the param. Create a table/grid
         let gc = document.querySelector(playerBoardDOM);
     
         //clear grid of any previous size grid
