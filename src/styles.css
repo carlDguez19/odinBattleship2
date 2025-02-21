@@ -29,7 +29,7 @@
 }
 
 .player1HiddenBoard {
-  left: 10%;
+  left: -50%;
   background-color: red;
 }
 
@@ -43,6 +43,7 @@
 }
 .player2Board {
   background-color: olivedrab;
+  opacity: 0;
 }
 
 table {
