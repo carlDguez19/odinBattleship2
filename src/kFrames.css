@@ -1,0 +1,34 @@
+/* enter and exit leftleftleftleftleft */
+@keyframes exitLeft {
+  from {
+  }
+  to {
+    left: -50%;
+  }
+}
+
+@keyframes enterLeft {
+  from {
+    left: -50%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+/* enter and exit rightrightrightrightright */
+@keyframes exitRight {
+  from {
+  }
+  to {
+    right: -50%;
+  }
+}
+@keyframes enterRight {
+  from {
+    right: -50%;
+  }
+  to {
+    right: 0;
+  }
+}

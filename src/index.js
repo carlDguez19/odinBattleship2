@@ -12,32 +12,30 @@ import { Player } from "./player";
 //start gameloop
 //each player takes turn choosing a coord until either of the players allShipsSunk
 
-// const gBoard5 = new Gameboard(5);
-// gBoard5.placeShip(2,[1,1],"x", gBoard5.board);
-// gBoard5.receiveAttack([1,1], gBoard5.board);
-// const testShip = gBoard5.board[1][1];
-// console.log(testShip);
-
-const player1 = new Player("real", 5);
-const player2 = new Player("real", 5);
+const player1 = new Player("real", 10);
+const player2 = new Player("real", 10);
 
 player1.pBoard.placeShip(3,[2,3],1);
 player1.pBoard.placeShip(2,[0,1],0);
 player1.pBoard.placeShip(2,[2,0],0);
+player1.pBoard.placeShip(4,[9,6],0);
+player1.pBoard.placeShip(5,[3,8],1);
 
 player2.pBoard.placeShip(3,[1,2],0);
 player2.pBoard.placeShip(2,[2,1],1);
 player2.pBoard.placeShip(2,[3,3],1);
+player2.pBoard.placeShip(4,[9,3],0);
+player2.pBoard.placeShip(5,[3,5],1);
 
 player1.openBoard(".player1Board");
-player1.openBoard(".player1HiddenBoard");
 player2.openBoard(".player2Board");
+player1.openBoard(".player1HiddenBoard");
 player2.openBoard(".player2HiddenBoard");
 
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
 
 player1.clickCell(".player1Board");
-player1.clickCell(".player1HiddenBoard");
 player2.clickCell(".player2Board");
+player1.clickCell(".player1HiddenBoard");
 player2.clickCell(".player2HiddenBoard");
