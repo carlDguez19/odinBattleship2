@@ -35,9 +35,14 @@ export class Player{
                 let cIndex = e.target.cellIndex;
                 let rIndex = row.rowIndex
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
-                this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board);
-                this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
-                this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
+                    this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
+                    this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                    this.turnTook = true;
+                    return true;
+                }else{
+                    return false;
+                }
             }
         });
     }

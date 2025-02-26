@@ -34,6 +34,21 @@ player2.openBoard(".player2HiddenBoard");
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
 
+player2.turnTook = true;
+
+//while(neither players allShipsSunk){
+    //if(!player1.turnTook){
+    //  player2.clickCell(".player2HiddenBoard", ".player2Board");
+    //  player1.turnTook = true;
+    //  player2.turnTook = false;
+    //}
+    //else if(!player2.turnTook){
+    //  player1.clickCell(".player1HiddenBoard", ".player1Board");
+    //  player2.turnTook = true;
+    //  player1.turnTook = false;
+    //}
+//}
+
 //i will need a function or method in one of these files that determines the currentTurn(influenced by tictactoe)
-player1.clickCell(".player1HiddenBoard", ".player1Board");
+//player1.clickCell(".player1HiddenBoard", ".player1Board");
 player2.clickCell(".player2HiddenBoard", ".player2Board");
