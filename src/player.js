@@ -4,6 +4,7 @@ export class Player{
     constructor(type, length){
         this.type = type;
         this.pBoard = new Gameboard(length);
+        this.turnTook = false;
     }
 
     //player should choose location of ships and gameboard should placeShip

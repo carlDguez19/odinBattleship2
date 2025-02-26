@@ -76,18 +76,35 @@ export class Gameboard{
         }
     }
     receiveAttack(coords, board){
-        if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty OR was previously a miss then declare a miss
-            board[coords[0]][coords[1]] = "0";
+        // if(board[coords[0]][coords[1]] == undefined || board[coords[0]][coords[1]] == "0"){//if cell on 2d array is empty OR was previously a miss then declare a miss
+        //     board[coords[0]][coords[1]] = "0";
+        // }
+        // else if(board[coords[0]][coords[1]] == "X"){//if previously declared a hit then leave as a hit
+        //     board[coords[0]][coords[1]] = "X";
+        // }
+        // else{//if newly discovered ship then declare hit
+        //     for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
+        //         if(board[coords[0]][coords[1]] == this.ships[i]){
+        //             board[coords[0]][coords[1]] = "X"
+        //             this.ships[i].hit();
+        //         }
+        //     }
+        // }
+        if(board[coords[0]][coords[1]] == "X" || board[coords[0]][coords[1]] == "0"){//if previously declared a hit or a miss then leave as a hit or a miss
+            return false;
         }
-        else if(board[coords[0]][coords[1]] == "X"){//if previously declared a hit then leave as a hit
-            board[coords[0]][coords[1]] = "X";
-        }
-        else{//if newly discovered ship then declare hit
-            for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
-                if(board[coords[0]][coords[1]] == this.ships[i]){
-                    board[coords[0]][coords[1]] = "X"
-                    this.ships[i].hit();
+        else{//else emtpy or ship in cell
+            if(board[coords[0]][coords[1]] == undefined){//if cell on 2d array is empty then declare a miss
+                board[coords[0]][coords[1]] = "0";
+                return true;
+            }else{
+                for(let i = 0; i < this.ships.length; i++){//if cell has a ship then look for that ship in array of ships and .hit()
+                    if(board[coords[0]][coords[1]] == this.ships[i]){
+                        board[coords[0]][coords[1]] = "X"
+                        this.ships[i].hit();
+                    }
                 }
+                return true;
             }
         }
     }

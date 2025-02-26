@@ -18,8 +18,7 @@ const player2 = new Player("real", 10);
 player1.pBoard.placeShip(3,[2,3],1);
 player1.pBoard.placeShip(2,[0,1],0);
 player1.pBoard.placeShip(2,[2,0],0);
-player1.pBoard.placeShip(4,[9,6],0);
-player1.pBoard.placeShip(5,[3,8],1);
+player1.pBoard.placeShip(4,[9,6],0);player1.pBoard.placeShip(5,[3,8],1);
 
 player2.pBoard.placeShip(3,[1,2],0);
 player2.pBoard.placeShip(2,[2,1],1);
@@ -35,7 +34,6 @@ player2.openBoard(".player2HiddenBoard");
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
 
-// player1.clickCell(".player1Board");
-// player2.clickCell(".player2Board");
+//i will need a function or method in one of these files that determines the currentTurn(influenced by tictactoe)
 player1.clickCell(".player1HiddenBoard", ".player1Board");
 player2.clickCell(".player2HiddenBoard", ".player2Board");
