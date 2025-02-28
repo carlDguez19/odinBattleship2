@@ -24,7 +24,7 @@ export class Player{
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
 
-    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM){//this should update the hidden board and the true board at the same time
+    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
         let gbt = document.querySelector(playerTrueBoardDOM);
@@ -39,10 +39,18 @@ export class Player{
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                     // this.turnTook = true;
-                    return true;
-                }else{
-                    return false;
+                    if(this.pBoard.allShipsSunk()){//      ...for this board, this player loses.
+                        console.log("the winner is player "+ winner);
+                    }
+                    else{
+                        this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
+                        this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
+                    }
+                    //return true;
                 }
+                // else{
+                //     return false;
+                // }
             }
         });
     }
@@ -90,17 +98,16 @@ export class Player{
         })
     }
 
-    swap1Boards(oldBoard, newBoard){
+    swapBoards(oldBoard, newBoard){
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitLeft 1.5s forwards';
-        nBoard.style.animation = 'enterLeft 1.5s forwards';
+        oBoard.style.animation = 'exitUp 1.5s forwards';
+        nBoard.style.animation = 'fadeIn 1.5s forwards';
     }
-
-    swap2Boards(oldBoard, newBoard){
+    swapEnemyBoards(oldBoard, newBoard){
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitRight 1.5s forwards';
-        nBoard.style.animation = 'enterRight 1.5s forwards';
+        oBoard.style.animation = 'fadeOut 1.5s forwards';
+        nBoard.style.animation = 'enterTop 1.5s forwards';
     }
 }

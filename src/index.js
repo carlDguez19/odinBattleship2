@@ -34,29 +34,32 @@ player2.openBoard(".player2HiddenBoard");
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
 
-player2.turnTook = true;
+player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn
+player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn
 
-while(!player1.pBoard.allShipsSunk() && !player2.pBoard.allShipsSunk()){
-    console.log("mede it here");
-    // if(!player1.turnTook){
-    //     while(!player1.turnTook){
-    //         if(player2.clickCell(".player2HiddenBoard", ".player2Board")){
-    //             player1.turnTook = true;
-    //             player2.turnTook = false;
-    //             player1.swap1Boards(".player1Board",".player1HiddenBoard");
-    //         }
-    //     }
-    // }
-    // else if(!player2.turnTook){
-    //     while(!player2.turnTook){
-    //         if(player1.clickCell(".player1HiddenBoard", ".player1Board")){
-    //             player2.turnTook = true;
-    //             player1.turnTook = false;
-    //             player2.swap2Boards(".player2Board",".player2HiddenBoard");
-    //         }
-    //     }
-    // }
-}
+//player2.turnTook = true;
+
+// while(!(player1.pBoard.allShipsSunk()) && !(player2.pBoard.allShipsSunk())){
+//     console.log("mede it heere");
+//     if(!player1.turnTook){
+//         while(!player1.turnTook){
+//             if(clickCell1){
+//                 player1.turnTook = true;
+//                 player2.turnTook = false;
+//                 player1.swap1Boards(".player1Board",".player1HiddenBoard");
+//             }
+//         }
+//     }
+//     else if(!player2.turnTook){
+//         while(!player2.turnTook){
+//             if(clickCell2){
+//                 player2.turnTook = true;
+//                 player1.turnTook = false;
+//                 player2.swap2Boards(".player2Board",".player2HiddenBoard");
+//             }
+//         }
+//     }
+// }
 
 //i will need a function or method in one of these files that determines the currentTurn(influenced by tictactoe)
 //player1.clickCell(".player1HiddenBoard", ".player1Board");

@@ -1,35 +1,19 @@
 /* enter and exit leftleftleftleftleft */
-@keyframes exitLeft {
+@keyframes exitUp {
   from {
+    top: 9%;
   }
   to {
-    left: -50%;
+    top: -100%;
   }
 }
 
-@keyframes enterLeft {
+@keyframes enterTop {
   from {
-    left: -50%;
+    top: -100%;
   }
   to {
-    left: 0;
-  }
-}
-
-/* enter and exit rightrightrightrightright */
-@keyframes exitRight {
-  from {
-  }
-  to {
-    right: -50%;
-  }
-}
-@keyframes enterRight {
-  from {
-    right: -50%;
-  }
-  to {
-    right: 0;
+    top: 9%;
   }
 }
 
