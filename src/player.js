@@ -38,7 +38,7 @@ export class Player{
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
-                    this.turnTook = true;
+                    // this.turnTook = true;
                     return true;
                 }else{
                     return false;
@@ -88,5 +88,19 @@ export class Player{
         cells.forEach((cell) => {
             cell.remove();
         })
+    }
+
+    swap1Boards(oldBoard, newBoard){
+        let oBoard = document.querySelector(oldBoard);
+        let nBoard = document.querySelector(newBoard);
+        oBoard.style.animation = 'exitLeft 1.5s forwards';
+        nBoard.style.animation = 'enterLeft 1.5s forwards';
+    }
+
+    swap2Boards(oldBoard, newBoard){
+        let oBoard = document.querySelector(oldBoard);
+        let nBoard = document.querySelector(newBoard);
+        oBoard.style.animation = 'exitRight 1.5s forwards';
+        nBoard.style.animation = 'enterRight 1.5s forwards';
     }
 }
