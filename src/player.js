@@ -4,7 +4,8 @@ export class Player{
     constructor(type, length){
         this.type = type;
         this.pBoard = new Gameboard(length);
-        this.turnTook = false;
+        this.turnTook = false;//most likely not needed
+        this.delay = ms => new Promise(res => setTimeout(res, ms));
     }
 
     //player should choose location of ships and gameboard should placeShip
@@ -24,6 +25,7 @@ export class Player{
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
 
+
     clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
@@ -38,7 +40,6 @@ export class Player{
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
-                    // this.turnTook = true;
                     if(this.pBoard.allShipsSunk()){//      ...for this board, this player loses.
                         console.log("the winner is player "+ winner);
                     }
@@ -46,11 +47,7 @@ export class Player{
                         this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
                         this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
                     }
-                    //return true;
                 }
-                // else{
-                //     return false;
-                // }
             }
         });
     }
@@ -98,13 +95,15 @@ export class Player{
         })
     }
 
-    swapBoards(oldBoard, newBoard){
+    async swapBoards(oldBoard, newBoard){
+        await this.delay(2000);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
         oBoard.style.animation = 'exitUp 1.5s forwards';
         nBoard.style.animation = 'fadeIn 1.5s forwards';
     }
-    swapEnemyBoards(oldBoard, newBoard){
+    async swapEnemyBoards(oldBoard, newBoard){
+        await this.delay(2000);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
         oBoard.style.animation = 'fadeOut 1.5s forwards';

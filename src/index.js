@@ -18,7 +18,8 @@ const player2 = new Player("real", 10);
 player1.pBoard.placeShip(3,[2,3],1);
 player1.pBoard.placeShip(2,[0,1],0);
 player1.pBoard.placeShip(2,[2,0],0);
-player1.pBoard.placeShip(4,[9,6],0);player1.pBoard.placeShip(5,[3,8],1);
+player1.pBoard.placeShip(4,[9,6],0);
+player1.pBoard.placeShip(5,[3,8],1);
 
 player2.pBoard.placeShip(3,[1,2],0);
 player2.pBoard.placeShip(2,[2,1],1);
@@ -36,7 +37,6 @@ player2.displayShips(".player2Board");
 
 player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn
 player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn
-
 //player2.turnTook = true;
 
 // while(!(player1.pBoard.allShipsSunk()) && !(player2.pBoard.allShipsSunk())){
