@@ -1,13 +1,23 @@
 @import url("modernReset.css");
 @import url("kFrames.css");
 
-.gamingArea {
+.gamingArea,
+.censorCurtain {
   display: flex;
   justify-content: center;
   align-items: center;
   width: auto;
   height: 100vh;
   background-color: darkgreen;
+}
+
+.censorCurtain {
+  position: absolute;
+  height: 100%;
+  width: 100vw;
+  background-color: #222;
+  top: -150%;
+  z-index: 10;
 }
 
 .player1Board,
@@ -26,6 +36,7 @@
 .player1HiddenBoard,
 .player2HiddenBoard {
   position: absolute;
+  z-index: 5;
 }
 
 /* starting locations of all the boards before the game starts */
@@ -46,6 +57,11 @@
 .player2Board {
   background-color: olivedrab;
   opacity: 0;
+}
+
+.player1Board,
+.player2Board {
+  z-index: 1;
 }
 /* starting locations of all the boards before the game starts */
 

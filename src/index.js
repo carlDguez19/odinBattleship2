@@ -2,7 +2,6 @@ import "./styles.css";
 import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
 import { Player } from "./player";
-
 //here we will have the flow of the game...
 //game setup
 //ask how many ships per board
@@ -35,8 +34,11 @@ player2.openBoard(".player2HiddenBoard");
 player1.displayShips(".player1Board");
 player2.displayShips(".player2Board");
 
-player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn
-player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn
+player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
+player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
+
+//console.log("player 1 turn coords: row: " + attackCoords[0] + " col: " + attackCoords[1]);
+//console.log("player 2 turn coords: row: " + attackCoords[0] + " col: " + attackCoords[1]);
 //player2.turnTook = true;
 
 // while(!(player1.pBoard.allShipsSunk()) && !(player2.pBoard.allShipsSunk())){

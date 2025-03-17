@@ -40,6 +40,8 @@ export class Player{
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                    this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
+                    this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
                     if(this.pBoard.allShipsSunk()){//      ...for this board, this player loses.
                         console.log("the winner is player "+ winner);
                     }
@@ -49,8 +51,22 @@ export class Player{
                     }
                 }
             }
-        });
+        }
+        );
     }
+
+    // updateCellSwapBoards(coords, playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard){//, winner
+    //     let gbh = document.querySelector(playerHiddenBoardDOM);
+    //     let hiddenTable = gbh.firstElementChild;
+    //     let gbt = document.querySelector(playerTrueBoardDOM);
+    //     let trueTable = gbt.firstElementChild;
+    //     if(this.pBoard.receiveAttack([coords[0],coords[1]],this.pBoard.board)){
+    //         this.pBoard.updateHitOrMiss([coords[0],coords[1]], hiddenTable);
+    //         this.pBoard.updateHitOrMiss([coords[0],coords[1]], trueTable);
+    //         this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
+    //         this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
+    //     }
+    // }
 
     displayShips(playerBoardDOM){
         let gb = document.querySelector(playerBoardDOM);
@@ -96,17 +112,44 @@ export class Player{
     }
 
     async swapBoards(oldBoard, newBoard){
-        await this.delay(2000);
+        await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitUp 1.5s forwards';
-        nBoard.style.animation = 'fadeIn 1.5s forwards';
+        oBoard.style.animation = 'exitUp 0.5s forwards';
+        nBoard.style.animation = 'fadeIn 0.5s forwards';
     }
     async swapEnemyBoards(oldBoard, newBoard){
-        await this.delay(2000);
+        await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'fadeOut 1.5s forwards';
-        nBoard.style.animation = 'enterTop 1.5s forwards';
+        oBoard.style.animation = 'fadeOut 0.5s forwards';
+        nBoard.style.animation = 'enterTop 0.5s forwards';
     }
 }
+
+// export let attackCoords = [];
+
+// function clickCellFunc(e){
+//     if(e.target.tagName === 'TD'){
+//         const row = e.target.parentElement;
+//         let cIndex = e.target.cellIndex;
+//         let rIndex = row.rowIndex
+//         //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+//         attackCoords = [rIndex, cIndex];
+//         console.log("attackCoords[0]: "+ attackCoords[0]);
+//         console.log("attackCoords[1]: "+ attackCoords[1]);
+//         // if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
+//         //     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
+//         //     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+//         //     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
+//         //     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
+//         //     // if(this.pBoard.allShipsSunk()){//      ...for this board, this player loses.
+//         //     //     console.log("the winner is player "+ winner);
+//         //     // }
+//         //     // else{
+//         //     //     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
+//         //     //     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
+//         //     // }
+//         // }
+//     }
+// }
