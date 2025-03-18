@@ -40,12 +40,16 @@ export class Player{
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                    this.censorCurtainEnter();
+                    this.censorCurtainExit();
                     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
                     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
                     if(this.pBoard.allShipsSunk()){//      ...for this board, this player loses.
                         console.log("the winner is player "+ winner);
                     }
                     else{
+                        this.censorCurtainEnter();
+                        this.censorCurtainExit();
                         this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
                         this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
                     }
@@ -111,19 +115,29 @@ export class Player{
         })
     }
 
+    censorCurtainEnter(){
+        let curtain = document.querySelector(".censorCurtain");
+        curtain.style.animation = 'curtainEnter 2.2s forwards';
+    }
+    async censorCurtainExit(){
+        await this.delay(5000);
+        let curtain = document.querySelector(".censorCurtain");
+        curtain.style.animation = 'exitUp 1s forwards';
+    }
+
     async swapBoards(oldBoard, newBoard){
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitUp 0.5s forwards';
-        nBoard.style.animation = 'fadeIn 0.5s forwards';
+        oBoard.style.animation = 'exitUp 1.5s forwards';
+        nBoard.style.animation = 'fadeIn 1.5s forwards';
     }
     async swapEnemyBoards(oldBoard, newBoard){
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'fadeOut 0.5s forwards';
-        nBoard.style.animation = 'enterTop 0.5s forwards';
+        oBoard.style.animation = 'fadeOut 1.5s forwards';
+        nBoard.style.animation = 'enterTop 1.5s forwards';
     }
 }
 

@@ -35,3 +35,13 @@
     opacity: 1;
   }
 }
+
+/* censorCurtaincensorCurtaincensorCurtaincensorCurtaincensorCurtaincensorCurtaincensorCurtain */
+@keyframes curtainEnter {
+  from {
+    top: -150%;
+  }
+  to {
+    top: auto;
+  }
+}
