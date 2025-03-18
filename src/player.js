@@ -117,7 +117,7 @@ export class Player{
 
     censorCurtainEnter(){
         let curtain = document.querySelector(".censorCurtain");
-        curtain.style.animation = 'curtainEnter 2.2s forwards';
+        curtain.style.animation = 'curtainEnter 1.8s forwards';
     }
     async censorCurtainExit(){
         await this.delay(5000);
@@ -129,15 +129,15 @@ export class Player{
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitUp 1.5s forwards';
-        nBoard.style.animation = 'fadeIn 1.5s forwards';
+        oBoard.style.animation = 'exitUp 0.5s forwards';
+        nBoard.style.animation = 'fadeIn 0.5s forwards';
     }
     async swapEnemyBoards(oldBoard, newBoard){
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'fadeOut 1.5s forwards';
-        nBoard.style.animation = 'enterTop 1.5s forwards';
+        oBoard.style.animation = 'fadeOut 0.5s forwards';
+        nBoard.style.animation = 'enterTop 0.5s forwards';
     }
 }
 
