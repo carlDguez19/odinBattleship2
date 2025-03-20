@@ -141,6 +141,10 @@ export class Player{
     }
 }
 
+export function enterPlayerSelectionOverlay(){
+    
+}
+
 // export let attackCoords = [];
 
 // function clickCellFunc(e){
