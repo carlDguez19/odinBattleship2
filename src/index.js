@@ -1,6 +1,6 @@
 import "./styles.css";
 import { Ship } from "./ship";
-import { Gameboard } from "./gameboard";
+import { Gameboard, gameTypeListeners } from "./gameboard";
 import { Player } from "./player";
 //here we will have the flow of the game...
 //game setup
@@ -11,31 +11,32 @@ import { Player } from "./player";
 //start gameloop
 //each player takes turn choosing a coord until either of the players allShipsSunk
 
-const player1 = new Player("real", 10);
-const player2 = new Player("real", 10);
+gameTypeListeners();
+// // // // const player1 = new Player("real", 10);
+// // // // const player2 = new Player("real", 10);
 
-player1.pBoard.placeShip(3,[2,3],1);
-player1.pBoard.placeShip(2,[0,1],0);
-player1.pBoard.placeShip(2,[2,0],0);
-player1.pBoard.placeShip(4,[9,6],0);
-player1.pBoard.placeShip(5,[3,8],1);
+// // // // player1.pBoard.placeShip(3,[2,3],1);
+// // // // player1.pBoard.placeShip(2,[0,1],0);
+// // // // player1.pBoard.placeShip(2,[2,0],0);
+// // // // player1.pBoard.placeShip(4,[9,6],0);
+// // // // player1.pBoard.placeShip(5,[3,8],1);
 
-player2.pBoard.placeShip(3,[1,2],0);
-player2.pBoard.placeShip(2,[2,1],1);
-player2.pBoard.placeShip(2,[3,3],1);
-player2.pBoard.placeShip(4,[9,3],0);
-player2.pBoard.placeShip(5,[3,5],1);
+// // // // player2.pBoard.placeShip(3,[1,2],0);
+// // // // player2.pBoard.placeShip(2,[2,1],1);
+// // // // player2.pBoard.placeShip(2,[3,3],1);
+// // // // player2.pBoard.placeShip(4,[9,3],0);
+// // // // player2.pBoard.placeShip(5,[3,5],1);
 
-player1.openBoard(".player1Board");
-player2.openBoard(".player2Board");
-player1.openBoard(".player1HiddenBoard");
-player2.openBoard(".player2HiddenBoard");
+// // // // player1.openBoard(".player1Board");
+// // // // player2.openBoard(".player2Board");
+// // // // player1.openBoard(".player1HiddenBoard");
+// // // // player2.openBoard(".player2HiddenBoard");
 
-player1.displayShips(".player1Board");
-player2.displayShips(".player2Board");
+// // // // player1.displayShips(".player1Board");
+// // // // player2.displayShips(".player2Board");
 
-player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
+// // // // player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
+// // // // player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
 
 //console.log("player 1 turn coords: row: " + attackCoords[0] + " col: " + attackCoords[1]);
 //console.log("player 2 turn coords: row: " + attackCoords[0] + " col: " + attackCoords[1]);

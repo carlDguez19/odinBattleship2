@@ -4,7 +4,7 @@ export class Player{
     constructor(type, length){
         this.type = type;
         this.pBoard = new Gameboard(length);
-        this.turnTook = false;//most likely not needed
+        //this.turnTook = false;//most likely not needed
         this.delay = ms => new Promise(res => setTimeout(res, ms));
     }
 
