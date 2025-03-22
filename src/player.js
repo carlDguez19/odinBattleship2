@@ -37,6 +37,7 @@ export class Player{
     }
     cpuPlayerAttacks(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//called by human(coords from cpuPicksCoords)
         //get coords(from param gotten from cpuPicksCoords)
+        this.pauseForComputerPlayer();
         const coords = this.cpuPicksCoords();
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
@@ -58,7 +59,7 @@ export class Player{
     }
 
 //write a similar method to clickCell that will handle computer attack choices
-    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
+    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner, enemy){//this should update the hidden board and the true board at the same time
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
         let gbt = document.querySelector(playerTrueBoardDOM);
@@ -76,9 +77,11 @@ export class Player{
                     this.censorCurtainExit();//bring down curtain and exit
                     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
                     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                    this.gotAttacked = true;
                     if(this.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
                         console.log("the winner is player "+ winner);
+                    }else if(enemy == "cpu"){
+                        //call method that will let computer attack
+                        this.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);
                     }
                     // else{
                     //     this.censorCurtainEnter();
@@ -151,6 +154,9 @@ export class Player{
     censorCurtainEnter(){
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'curtainEnter 1.8s forwards';
+    }
+    async pauseForComputerPlayer(){
+        await this.delay(9000);
     }
     async censorCurtainExit(){
         await this.delay(5000);
