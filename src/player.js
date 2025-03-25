@@ -24,42 +24,43 @@ export class Player{
     // getRndInteger(min, max) {
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
-    cpuPicksCoords(){
+    cpuPicksCoords(enemy){
         //returns coords
         let coords = [];
         const min = Math.ceil(0);
         const max = Math.floor(9);
-        for(let i = 0; i < 2; i++){
-            let randInt = Math.floor(Math.random() * (max - min + 1) + min);;
-            coords.push(randInt);
-        }
+        do{
+            for(let i = 0; i < 2; i++){
+                let randInt = Math.floor(Math.random() * (max - min + 1) + min);;
+                coords.push(randInt);
+            }
+        }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));
+        
         return coords;
     }
-    cpuPlayerAttacks(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//called by human(coords from cpuPicksCoords)
+    cpuPlayerAttacks(coords, playerTrueBoardDOM, winner, enemy){//called by human(coords from cpuPicksCoords)
         //get coords(from param gotten from cpuPicksCoords)
-        this.pauseForComputerPlayer();
-        const coords = this.cpuPicksCoords();
-        let gbh = document.querySelector(playerHiddenBoardDOM);
-        let hiddenTable = gbh.firstElementChild;
+        //const coords = this.cpuPicksCoords();
+        console.log("sideandspeedy");
+        //let gbh = document.querySelector(playerHiddenBoardDOM);
+        //let hiddenTable = gbh.firstElementChild;
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;
-        if(this.pBoard.receiveAttack(coords, this.pBoard.board)){
-            this.pBoard.updateHitOrMiss(coords, hiddenTable);//update hiddenBoard
-                    this.pBoard.updateHitOrMiss(coords, trueTable);//update trueBoard
-                    this.censorCurtainEnter();
-                    this.censorCurtainExit();//bring down curtain and exit
-                    this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-                    this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                    this.gotAttacked = true;
-                    if(this.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
-                        console.log("the winner is player "+ winner);
-                    }
+        //this.pBoard.board is not right we need to send the enemy's pBoard.board
+        //enemy.pBoard.cpuHitOrMiss(coords, hiddenTable);//update hiddenBoard
+        enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
+        //enemy.censorCurtainEnter();
+        //enemy.censorCurtainExit();//bring down curtain and exit
+        //enemy.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+        //enemy.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+        enemy.gotAttacked = true;
+        if(enemy.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
+            console.log("the winner is player "+ winner);
         }
 
     }
 
-//write a similar method to clickCell that will handle computer attack choices
-    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner, enemy){//this should update the hidden board and the true board at the same time
+    cpuGameClickCell(playerHiddenBoardDOM, playerTrueBoardDOM, winner, enemy){//this should update the hidden board and the true board at the same time
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
         let gbt = document.querySelector(playerTrueBoardDOM);
@@ -71,18 +72,70 @@ export class Player{
                 let rIndex = row.rowIndex//get coords of cell
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-                    this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                    this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
-                    this.censorCurtainEnter();
-                    this.censorCurtainExit();//bring down curtain and exit
-                    this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-                    this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                    if(this.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
+                    if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
+                        let coords = this.cpuPicksCoords(enemy);
+                        this.cpuPlayerAttacks(coords, ".player1Board",2, enemy);
+                        //this.censorCurtainEnter();
+                        //this.censorCurtainExit();//bring down curtain and exit
+                        //this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+                        //this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                        console.log("lollipop");
+                    }else{
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
-                    }else if(enemy == "cpu"){
-                        //call method that will let computer attack
-                        this.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);
                     }
+                }
+            }
+        }
+        );
+    }
+
+//write a similar method to clickCell that will handle computer attack choices
+    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
+        let gbh = document.querySelector(playerHiddenBoardDOM);
+        let hiddenTable = gbh.firstElementChild;
+        let gbt = document.querySelector(playerTrueBoardDOM);
+        let trueTable = gbt.firstElementChild;
+        hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
+            if(e.target.tagName === 'TD'){
+                const row = e.target.parentElement;//
+                let cIndex = e.target.cellIndex;//
+                let rIndex = row.rowIndex//get coords of cell
+                console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
+                    let shipsSunk = this.pBoard.allShipsSunk();
+                    if(!(shipsSunk)){//      if this boards ships sunk then we lost...
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
+                        this.censorCurtainEnter();
+                        this.censorCurtainExit();//bring down curtain and exit
+                        this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+                        this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                        console.log("lollipop");
+                    }else{
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                        console.log("the winner is player "+ winner);
+                    }
+                    // this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                    // this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
+                    // this.censorCurtainEnter();
+                    // this.censorCurtainExit();//bring down curtain and exit
+                    // this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+                    // this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                    // console.log("lollipop");
+                    // if(this.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
+                    //     console.log("the winner is player "+ winner);
+                    // }
+                    // else if(enemy.type == "cpu"){
+                    //     //call method that will let computer attack
+                    //     console.log("lollipop2");
+                    //     this.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2, enemy);
+                    // }
+                    
                     // else{
                     //     this.censorCurtainEnter();
                     //     this.censorCurtainExit();
@@ -154,9 +207,6 @@ export class Player{
     censorCurtainEnter(){
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'curtainEnter 1.8s forwards';
-    }
-    async pauseForComputerPlayer(){
-        await this.delay(9000);
     }
     async censorCurtainExit(){
         await this.delay(5000);

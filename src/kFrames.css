@@ -45,3 +45,13 @@
     top: auto;
   }
 }
+
+/* timeDelayBorderRadiusCPUPlayertimeDelayBorderRadiusCPUPlayertimeDelayBorderRadiusCPUPlayer */
+@keyframes timeDelayBorderRadius{
+  from{
+    border-radius: 0px;
+  }
+  to{
+    border-radius: 0px;
+  }
+}

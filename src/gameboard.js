@@ -7,6 +7,7 @@ export class Gameboard{
         this.numOfShips = 0;
         this.ships = [];
         this.board = this.generateGameboard(this.size);
+        this.delay = ms => new Promise(res => setTimeout(res, ms));
     }
     generateGameboard(size){
         let arr = [];
@@ -132,6 +133,34 @@ export class Gameboard{
             cell.style.borderRadius = "50px";
         }
     }
+    cpuHitOrMiss(coords,table){
+        if(this.board[coords[0]][coords[1]] == "0"){
+            //update table cell to miss
+            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
+            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+            this.cpuMissedCell(cell);
+            //cell.style.backgroundColor = "teal";
+        }else if(this.board[coords[0]][coords[1]] == "X"){
+            //update ship to hit
+            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
+            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+            this.cpuShipAttackedCell(cell);
+            //cell.style.backgroundColor = "darkred";
+            //cell.style.borderRadius = "50px";
+        }
+    }
+
+    async cpuShipAttackedCell(cell){
+        await this.delay(1500);
+        cell.style.backgroundColor = "darkred";
+        cell.style.borderRadius = "50px";
+        //cell.style.animation = "timeDelayBorderRadius 2s forwards";
+    }
+    async cpuMissedCell(cell){
+        await this.delay(1500);
+        cell.style.backgroundColor = "teal";
+    }
+
 }
 
 const submitButton = document.querySelector(".submitButton");
@@ -205,7 +234,7 @@ export function gameTypeListeners(){
             player2.displayShips(".player2Board");
 
             //player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-            player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1, "cpu");//this means player 1 turn//
+            player2.cpuGameClickCell(".player2HiddenBoard", ".player2Board",1, player1);//this means player 1 turn//
             // while(!(player1.pBoard.allShipsSunk()) || !(player2.pBoard.allShipsSunk())){
             //     if(player2.gotAttacked){
             //         player1.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);
