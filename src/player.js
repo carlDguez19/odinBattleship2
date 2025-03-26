@@ -34,25 +34,22 @@ export class Player{
                 let randInt = Math.floor(Math.random() * (max - min + 1) + min);;
                 coords.push(randInt);
             }
-        }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));
+        }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
         
         return coords;
     }
-    cpuPlayerAttacks(coords, playerTrueBoardDOM, winner, enemy){//called by human(coords from cpuPicksCoords)
-        //get coords(from param gotten from cpuPicksCoords)
-        //const coords = this.cpuPicksCoords();
-        console.log("sideandspeedy");
-        //let gbh = document.querySelector(playerHiddenBoardDOM);
-        //let hiddenTable = gbh.firstElementChild;
+    cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy){//called by human(coords from cpuPicksCoords)
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;
-        //this.pBoard.board is not right we need to send the enemy's pBoard.board
-        //enemy.pBoard.cpuHitOrMiss(coords, hiddenTable);//update hiddenBoard
+        let coords = this.cpuPicksCoords(enemy);
+        while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){
+            this.consecutiveHit(enemy, coords, trueTable);
+            //enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
+            coords = this.cpuPicksCoords(enemy);
+            console.log("cpu picked coords: " + coords);
+        }
+        console.log("cpu picked coords: " + coords);
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
-        //enemy.censorCurtainEnter();
-        //enemy.censorCurtainExit();//bring down curtain and exit
-        //enemy.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-        //enemy.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
         enemy.gotAttacked = true;
         if(enemy.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
             console.log("the winner is player "+ winner);
@@ -70,18 +67,19 @@ export class Player{
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
-                console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+                //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
-                        let coords = this.cpuPicksCoords(enemy);
-                        this.cpuPlayerAttacks(coords, ".player1Board",2, enemy);
+                        if(this.pBoard.board[rIndex][cIndex] == "0"){
+                            this.cpuPlayerAttacks(".player1Board",2, enemy);
+                        }
                         //this.censorCurtainEnter();
                         //this.censorCurtainExit();//bring down curtain and exit
                         //this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
                         //this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                        console.log("lollipop");
+                        //console.log("lollipop");
                     }else{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
@@ -110,10 +108,12 @@ export class Player{
                     if(!(shipsSunk)){//      if this boards ships sunk then we lost...
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
-                        this.censorCurtainEnter();
-                        this.censorCurtainExit();//bring down curtain and exit
-                        this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-                        this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                        if(this.pBoard.board[rIndex][cIndex] == "0"){
+                            this.censorCurtainEnter();
+                            this.censorCurtainExit();//bring down curtain and exit
+                            this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+                            this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                        }
                         console.log("lollipop");
                     }else{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
@@ -207,6 +207,10 @@ export class Player{
     censorCurtainEnter(){
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'curtainEnter 1.8s forwards';
+    }
+    async consecutiveHit(enemy, coords, trueTable){
+        await this.delay(700);
+        enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
     }
     async censorCurtainExit(){
         await this.delay(5000);

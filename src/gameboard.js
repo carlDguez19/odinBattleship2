@@ -151,13 +151,13 @@ export class Gameboard{
     }
 
     async cpuShipAttackedCell(cell){
-        await this.delay(1500);
+        await this.delay(700);
         cell.style.backgroundColor = "darkred";
         cell.style.borderRadius = "50px";
         //cell.style.animation = "timeDelayBorderRadius 2s forwards";
     }
     async cpuMissedCell(cell){
-        await this.delay(1500);
+        await this.delay(700);
         cell.style.backgroundColor = "teal";
     }
 
