@@ -1,6 +1,7 @@
 @import url("modernReset.css");
 @import url("kFrames.css");
 @import url("gameType.css");
+@import url("winnerOverlay.css");
 
 @font-face {
   font-family: byteFont;

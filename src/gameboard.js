@@ -163,6 +163,13 @@ export class Gameboard{
 
 }
 
+export function displayWinner(winner){
+    let winnerMsg = document.querySelector(".trueWinner");
+    let winnerOverlay = document.querySelector(".winnerOverlay");
+    winnerMsg.textContent = "player " + winner;
+    winnerOverlay.style.animation = "enterTop 1s forwards";
+}
+
 const submitButton = document.querySelector(".submitButton");
 const closeButton = document.querySelector(".closeButton");
 const pvp = document.querySelector(".pvp");

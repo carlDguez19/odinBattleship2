@@ -1,4 +1,4 @@
-import { Gameboard } from "./gameboard";
+import { displayWinner, Gameboard } from "./gameboard";
 
 export class Player{
     constructor(type, length){
@@ -24,18 +24,23 @@ export class Player{
     // getRndInteger(min, max) {
     //     return Math.floor(Math.random() * (max - min) ) + min;
     // }
+    getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
     cpuPicksCoords(enemy){
         //returns coords
         let coords = [];
-        const min = Math.ceil(0);
-        const max = Math.floor(9);
         do{
+            coords = [];
+            console.log("upcoming coords:");
             for(let i = 0; i < 2; i++){
-                let randInt = Math.floor(Math.random() * (max - min + 1) + min);;
+                let randInt = this.getRandomIntInclusive(0, 9);
+                console.log("cpu picked coords: " + randInt);
                 coords.push(randInt);
             }
         }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
-        
         return coords;
     }
     cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy){//called by human(coords from cpuPicksCoords)
@@ -43,16 +48,16 @@ export class Player{
         let trueTable = gbt.firstElementChild;
         let coords = this.cpuPicksCoords(enemy);
         while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){
-            this.consecutiveHit(enemy, coords, trueTable);
-            //enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
+            //this.consecutiveHit(enemy, coords, trueTable);
+            enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
             coords = this.cpuPicksCoords(enemy);
-            console.log("cpu picked coords: " + coords);
         }
-        console.log("cpu picked coords: " + coords);
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
         enemy.gotAttacked = true;
         if(enemy.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
             console.log("the winner is player "+ winner);
+            this.censorCurtainEnter();
+            displayWinner(winner);
         }
 
     }
@@ -84,6 +89,8 @@ export class Player{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
+                        this.censorCurtainEnter();
+                        displayWinner(winner);
                     }
                 }
             }
@@ -119,6 +126,8 @@ export class Player{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
+                        this.censorCurtainEnter();
+                        displayWinner(winner);
                     }
                     // this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                     // this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
@@ -217,7 +226,12 @@ export class Player{
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'exitUp 1s forwards';
     }
-
+    async coordPickTimeDelay(enemy){
+        await this.delay(800);
+        let coordinates = []
+        coordinates = this.cpuPicksCoords(enemy);
+        return coordinates;
+    }
     async swapBoards(oldBoard, newBoard){
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);

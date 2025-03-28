@@ -1,0 +1,26 @@
+.winnerOverlay {
+  width: 800px;
+  height: 500px;
+  border: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: orangered;
+  font-family: "byteFont", Arial, Helvetica, sans-serif;
+  font-size: 52pt;
+  color: antiquewhite;
+  position: absolute;
+  z-index: 11;
+}
+.playAgain {
+  font-size: 40pt;
+  cursor: pointer;
+}
+.playAgain:hover {
+  background-color: black;
+  color: antiquewhite;
+}
+.playAgain:active {
+  scale: 0.95;
+}
