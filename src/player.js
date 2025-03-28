@@ -48,9 +48,10 @@ export class Player{
         let trueTable = gbt.firstElementChild;
         let coords = this.cpuPicksCoords(enemy);
         while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){
-            //this.consecutiveHit(enemy, coords, trueTable);
-            enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
+            this.consecutiveHit(enemy, coords, trueTable);
+            //enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
             coords = this.cpuPicksCoords(enemy);
+            //coords = this.coordPickTimeDelay(enemy);
         }
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
         enemy.gotAttacked = true;
@@ -226,12 +227,19 @@ export class Player{
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'exitUp 1s forwards';
     }
-    async coordPickTimeDelay(enemy){
-        await this.delay(800);
-        let coordinates = []
-        coordinates = this.cpuPicksCoords(enemy);
-        return coordinates;
-    }
+    coordPickTimeDelay(enemy) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(this.cpuPicksCoords(enemy));
+          }, 1000);
+        });
+      }
+    // async coordPickTimeDelay(enemy){
+    //     await this.delay(800);
+    //     let coordinates = []
+    //     coordinates = this.cpuPicksCoords(enemy);
+    //     return coordinates;
+    // }
     async swapBoards(oldBoard, newBoard){
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
