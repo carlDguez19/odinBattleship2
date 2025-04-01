@@ -172,19 +172,28 @@ export function displayWinner(winner){
     winnerOverlay.style.animation = "enterTop 1s forwards";
 }
 
-function playAgainButtonListener(){
-    playAgainButton.addEventListener('click',function(){
-        winnerOverlay.style.animation = "exitUp 1s forwards";
-        let curtain = document.querySelector(".censorCurtain");
-        curtain.style.animation = 'exitUp 1s forwards';
-    })
-}
-
 const submitButton = document.querySelector(".submitButton");
 const closeButton = document.querySelector(".closeButton");
 const pvp = document.querySelector(".pvp");
 const pve = document.querySelector(".pve");
-const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
+export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
+
+function clearBoards(player1, player2){
+    player1.pBoard.board = player1.pBoard.generateGameboard(10);
+    player2.pBoard.board = player2.pBoard.generateGameboard(10);
+    player1.pBoard.ships = [];
+    player2.pBoard.ships = [];
+}
+
+function playAgainButtonListener(p1,p2){
+    playAgainButton.addEventListener('click',function(){//reset boards here and the 2d arrays
+        winnerOverlay.style.animation = "exitUp 1s forwards";
+        let curtain = document.querySelector(".censorCurtain");
+        curtain.style.animation = 'exitUp 1s forwards';
+        clearBoards(p1,p2);
+        gameTypeOverlay.style.animation = "enterTop 2s forwards";
+    })
+}
 
 export function gameTypeListeners(){
     closeButton.addEventListener('click', function(){
@@ -221,7 +230,7 @@ export function gameTypeListeners(){
 
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
-            playAgainButtonListener();
+            playAgainButtonListener(player1,player2);
             pvp.checked = false;
             pve.checked = false;
             gameTypeOverlay.style.animation = "exitUp 1s forwards";
@@ -253,7 +262,7 @@ export function gameTypeListeners(){
 
             //player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.cpuGameClickCell(".player2HiddenBoard", ".player2Board",1, player1);//this means player 1 turn//
-            playAgainButtonListener();
+            playAgainButtonListener(player1,player2);
             // while(!(player1.pBoard.allShipsSunk()) || !(player2.pBoard.allShipsSunk())){
             //     if(player2.gotAttacked){
             //         player1.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);

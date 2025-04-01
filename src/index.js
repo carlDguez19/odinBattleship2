@@ -1,6 +1,6 @@
 import "./styles.css";
 import { Ship } from "./ship";
-import { Gameboard, gameTypeListeners } from "./gameboard";
+import { Gameboard, gameTypeListeners, gameTypeOverlay } from "./gameboard";
 import { Player } from "./player";
 //here we will have the flow of the game...
 //game setup
@@ -10,7 +10,6 @@ import { Player } from "./player";
 //else generate random coords for ships and place them(all of this in a method in gameboard???)
 //start gameloop
 //each player takes turn choosing a coord until either of the players allShipsSunk
-
 gameTypeListeners();
 // // // // const player1 = new Player("real", 10);
 // // // // const player2 = new Player("real", 10);
