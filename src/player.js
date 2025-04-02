@@ -43,7 +43,7 @@ export class Player{
         }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
         return coords;
     }
-    cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy){//called by human(coords from cpuPicksCoords)
+    cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy,cpuHiddenTable){//called by human(coords from cpuPicksCoords)
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;
         let coords = this.cpuPicksCoords(enemy);
@@ -57,17 +57,19 @@ export class Player{
         enemy.gotAttacked = true;
         if(enemy.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
             console.log("the winner is player "+ winner);
+            this.clearGrid(trueTable);
+            this.clearGrid(cpuHiddenTable);
             this.censorCurtainEnter();
             displayWinner(winner);
         }
 
     }
 
-    cpuGameClickCell(playerHiddenBoardDOM, playerTrueBoardDOM, winner, enemy){//this should update the hidden board and the true board at the same time
+    cpuGameClickCell(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
-        let gbt = document.querySelector(playerTrueBoardDOM);
-        let trueTable = gbt.firstElementChild;
+        let gbt = document.querySelector(enemyTrueBoard);
+        let enemyTrueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
             if(e.target.tagName === 'TD'){
                 const row = e.target.parentElement;//
@@ -77,9 +79,9 @@ export class Player{
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
+                        //this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
-                            this.cpuPlayerAttacks(".player1Board",2, enemy);
+                            this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
                         }
                         //this.censorCurtainEnter();
                         //this.censorCurtainExit();//bring down curtain and exit
@@ -88,9 +90,11 @@ export class Player{
                         //console.log("lollipop");
                     }else{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                        //this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
                         this.censorCurtainEnter();
+                        this.clearGrid(hiddenTable);
+                        this.clearGrid(enemyTrueTable);
                         displayWinner(winner);
                     }
                 }
@@ -128,6 +132,12 @@ export class Player{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
                         this.censorCurtainEnter();
+                        this.clearGrid(hiddenTable);
+                        this.clearGrid(trueTable);
+                        let enemyOldTable = document.querySelector(enemyOldBoard);
+                        let enemyNewTable = document.querySelector(enemyNewBoard);
+                        this.clearGrid(enemyOldTable.firstElementChild);
+                        this.clearGrid(enemyNewTable.firstElementChild);
                         displayWinner(winner);
                     }
                     // this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
@@ -190,7 +200,7 @@ export class Player{
         let gc = document.querySelector(playerBoardDOM);
     
         //clear grid of any previous size grid
-        this.clearGrid(gc);
+        //this.clearGrid(gc);
     
         //fill grid with a table for easier access of each cell
         let table = document.createElement('table');
@@ -207,11 +217,8 @@ export class Player{
         gc.appendChild(table);
     }
 
-    clearGrid(grid){
-        let cells = grid.querySelectorAll('div');
-        cells.forEach((cell) => {
-            cell.remove();
-        })
+    clearGrid(table){
+        table.remove();
     }
 
     censorCurtainEnter(){
@@ -254,10 +261,6 @@ export class Player{
         oBoard.style.animation = 'fadeOut 0.5s forwards';
         nBoard.style.animation = 'enterTop 0.5s forwards';
     }
-}
-
-export function enterPlayerSelectionOverlay(){
-    
 }
 
 // export let attackCoords = [];

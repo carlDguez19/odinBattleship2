@@ -167,7 +167,7 @@ let winnerOverlay = document.querySelector(".winnerOverlay");
 const playAgainButton = document.querySelector(".playAgain");
 
 export function displayWinner(winner){
-    let winnerMsg = document.querySelector(".trueWinner");
+   let winnerMsg = document.querySelector(".trueWinner");
     winnerMsg.textContent = "player " + winner;
     winnerOverlay.style.animation = "enterTop 1s forwards";
 }
@@ -177,6 +177,7 @@ const closeButton = document.querySelector(".closeButton");
 const pvp = document.querySelector(".pvp");
 const pve = document.querySelector(".pve");
 export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
+
 
 function clearBoards(player1, player2){
     player1.pBoard.board = player1.pBoard.generateGameboard(10);
@@ -261,7 +262,7 @@ export function gameTypeListeners(){
             player2.displayShips(".player2Board");
 
             //player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-            player2.cpuGameClickCell(".player2HiddenBoard", ".player2Board",1, player1);//this means player 1 turn//
+            player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
             playAgainButtonListener(player1,player2);
             // while(!(player1.pBoard.allShipsSunk()) || !(player2.pBoard.allShipsSunk())){
             //     if(player2.gotAttacked){
