@@ -15,6 +15,101 @@
           Play Again!
         </button>
       </div>
+      <div class="multShipsPlacementOverlay">
+        <div class="shipsDiagram">
+          <table class="ship two">
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          <table class="ship two2">
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          <table class="ship three">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          <table class="ship four">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          <table class="ship five">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- end mulShips diagram -->
+      <div class="shipInputsOverlay">
+        <div class="singleShipDiagram"></div>
+        <div class="Inputs">
+          <div class="coords">
+            <form action="@" name="shipLocation">
+              <label for="xaxis">X-Axis</label>
+              <select name="xAxis" id="xaxis">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+                <option value="8">9</option>
+                <option value="9">10</option>
+              </select>
+              <label for="yaxis">Y-Axis</label>
+              <select name="yAxis" id="yaxis">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+                <option value="8">9</option>
+                <option value="9">10</option>
+              </select>
+              <label for="xRadio">Horizontal</label>
+              <input
+                type="radio"
+                name="position"
+                class="xRadio"
+                id="xRadio"
+                value="0"
+              />
+              <label for="yRadio">Vertical</label>
+              <input
+                type="radio"
+                name="position"
+                class="yRadio"
+                id="yRadio"
+                value="1"
+              />
+            </form>
+          </div>
+          <!-- end coords -->
+        </div>
+        <!-- end Inputs -->
+      </div>
+      <!-- end shipInputsOverlay -->
       <div class="playerSelectionOverlay">
         <div class="gameTypeDiv">
           <div class="gameTypeText"><p>Please select game type</p></div>
@@ -73,11 +168,14 @@
             </button>
           </div>
         </div>
+        <!-- end gameTypeDiv -->
       </div>
+      <!-- end playerSelectionOverlay -->
       <div class="player1Board">real</div>
       <div class="player2Board">cpu</div>
       <div class="player1HiddenBoard">real</div>
       <div class="player2HiddenBoard">cpu</div>
     </div>
+    <!-- end gamingArea -->
   </body>
 </html>

@@ -2,6 +2,7 @@
 @import url("kFrames.css");
 @import url("gameType.css");
 @import url("winnerOverlay.css");
+@import url("shipPlacement.css");
 
 @font-face {
   font-family: byteFont;

@@ -1,0 +1,63 @@
+.multShipsPlacementOverlay,
+.shipInputsOverlay {
+  width: 500px;
+  height: 500px;
+  background-color: darkgoldenrod;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 10;
+  font-family: "byteFont", Arial, Helvetica, sans-serif;
+  font-size: 52pt;
+  color: antiquewhite;
+  border-radius: 50px;
+}
+
+.shipInputsOverlay {
+  width: 250px;
+  height: 400px;
+  background-color: orchid;
+  font-size: 24pt;
+}
+
+input[class="xRadio"],
+input[class="yRadio"] {
+  opacity: 1;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  margin: 6px;
+  padding: 0;
+  border: 3px solid yellow;
+  border-radius: 50%;
+  appearance: none;
+  /* background-color: transparent; */
+  outline: none;
+}
+
+input[type="radio"]:not(:disabled):checked {
+  border-color: yellow;
+  background-color: purple;
+  background-clip: content-box;
+  padding: 2px;
+  background-image: radial-gradient(
+    circle,
+    red 0%,
+    orange 50%,
+    transparent 60%,
+    transparent 100%
+  );
+}
+
+input[class="xRadio"]:disabled:checked,
+input[class="yRadio"]:disabled:checked {
+  background-image: radial-gradient(
+    circle,
+    lime 0%,
+    magenta 50%,
+    transparent 50%,
+    transparent 100%
+  );
+}
