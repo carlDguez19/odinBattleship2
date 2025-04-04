@@ -16,43 +16,57 @@
         </button>
       </div>
       <div class="multShipsPlacementOverlay">
+        <p class="chooseShipMsg">Select a ship to choose its coordinates...</p>
         <div class="shipsDiagram">
           <table class="ship two">
             <tr>
-              <td></td>
-              <td></td>
+              <!-- <td class="u"></td>
+              <td class="u"></td>
+              <td class="u"></td> -->
+              <td class="n"></td>
+              <td class="n"></td>
             </tr>
           </table>
           <table class="ship two2">
             <tr>
-              <td></td>
-              <td></td>
+              <!-- <td class="u"></td>
+              <td class="u"></td>
+              <td class="u"></td> -->
+              <td class="n"></td>
+              <td class="n"></td>
             </tr>
           </table>
           <table class="ship three">
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
+              <!-- <td class="u"></td>
+              <td class="u"></td> -->
+              <td class="n"></td>
+              <td class="n"></td>
+              <td class="n"></td>
             </tr>
           </table>
           <table class="ship four">
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <!-- <td class="u"></td> -->
+              <td class="n"></td>
+              <td class="n"></td>
+              <td class="n"></td>
+              <td class="n"></td>
             </tr>
           </table>
           <table class="ship five">
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td class="n"></td>
+              <td class="n"></td>
+              <td class="n"></td>
+              <td class="n"></td>
+              <td class="n"></td>
             </tr>
           </table>
+        </div>
+        <div class="shipChoiceButtons">
+          <button type="submit" class="confirmShip">OK</button>
+          <button type="reset" class="cancelShip">Cancel</button>
         </div>
       </div>
       <!-- end mulShips diagram -->
@@ -60,49 +74,61 @@
         <div class="singleShipDiagram"></div>
         <div class="Inputs">
           <div class="coords">
-            <form action="@" name="shipLocation">
-              <label for="xaxis">X-Axis</label>
-              <select name="xAxis" id="xaxis">
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
-                <option value="5">6</option>
-                <option value="6">7</option>
-                <option value="7">8</option>
-                <option value="8">9</option>
-                <option value="9">10</option>
-              </select>
-              <label for="yaxis">Y-Axis</label>
-              <select name="yAxis" id="yaxis">
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
-                <option value="5">6</option>
-                <option value="6">7</option>
-                <option value="7">8</option>
-                <option value="8">9</option>
-                <option value="9">10</option>
-              </select>
-              <label for="xRadio">Horizontal</label>
-              <input
-                type="radio"
-                name="position"
-                class="xRadio"
-                id="xRadio"
-                value="0"
-              />
-              <label for="yRadio">Vertical</label>
-              <input
-                type="radio"
-                name="position"
-                class="yRadio"
-                id="yRadio"
-                value="1"
-              />
+            <form action="@" name="shipLocation" class="shipLocation">
+              <div class="axis">
+                <label for="xaxis">X-Axis</label>
+                <select name="xAxis" id="xaxis">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                  <option value="3">4</option>
+                  <option value="4">5</option>
+                  <option value="5">6</option>
+                  <option value="6">7</option>
+                  <option value="7">8</option>
+                  <option value="8">9</option>
+                  <option value="9">10</option>
+                </select>
+                <label for="yaxis">Y-Axis</label>
+                <select name="yAxis" id="yaxis">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                  <option value="3">4</option>
+                  <option value="4">5</option>
+                  <option value="5">6</option>
+                  <option value="6">7</option>
+                  <option value="7">8</option>
+                  <option value="8">9</option>
+                  <option value="9">10</option>
+                </select>
+              </div>
+              <div class="radios">
+                <label for="xRadio" class="radioLabel x">Horizontal</label>
+                <input
+                  type="radio"
+                  name="position"
+                  class="xRadio"
+                  id="xRadio"
+                  value="0"
+                />
+                <label for="yRadio" class="radioLabel y">Vertical</label>
+                <input
+                  type="radio"
+                  name="position"
+                  class="yRadio"
+                  id="yRadio"
+                  value="1"
+                />
+              </div>
+              <div class="shipLocationButtons">
+                <button type="submit" form="shipLocation" class="confirmCoords">
+                  OK
+                </button>
+                <button type="reset" form="shipLocation" class="cancelCoords">
+                  NAH
+                </button>
+              </div>
             </form>
           </div>
           <!-- end coords -->

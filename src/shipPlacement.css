@@ -1,8 +1,8 @@
 .multShipsPlacementOverlay,
 .shipInputsOverlay {
-  width: 500px;
+  width: 600px;
   height: 500px;
-  background-color: darkgoldenrod;
+  background-color: teal;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,12 +14,63 @@
   color: antiquewhite;
   border-radius: 50px;
 }
+.chooseShipMsg {
+  font-size: 30pt;
+  margin-left: 30px;
+}
+.shipChoiceButtons {
+  margin-top: 20px;
+}
+.confirmShip,
+.cancelShip {
+  font-size: 32pt;
+}
+.ship {
+  width: 125px;
+  height: 25px;
+  margin: 20px;
+}
+.four {
+  width: 100px;
+}
+.three {
+  width: 75px;
+}
+.two,
+.two2 {
+  width: 50px;
+}
+
+.ship:hover {
+  background-color: orange;
+  border: 2px solid lime;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
 .shipInputsOverlay {
   width: 250px;
   height: 400px;
   background-color: orchid;
   font-size: 24pt;
+  top: -150%;
+}
+
+.axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.radios {
+  margin-left: 35px;
+  margin-top: 20px;
+}
+.shipLocationButtons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input[class="xRadio"],
@@ -33,7 +84,7 @@ input[class="yRadio"] {
   border: 3px solid yellow;
   border-radius: 50%;
   appearance: none;
-  /* background-color: transparent; */
+  background-color: transparent;
   outline: none;
 }
 
@@ -41,6 +92,7 @@ input[type="radio"]:not(:disabled):checked {
   border-color: yellow;
   background-color: purple;
   background-clip: content-box;
+  margin: 6px;
   padding: 2px;
   background-image: radial-gradient(
     circle,
@@ -53,6 +105,7 @@ input[type="radio"]:not(:disabled):checked {
 
 input[class="xRadio"]:disabled:checked,
 input[class="yRadio"]:disabled:checked {
+  margin: 6px;
   background-image: radial-gradient(
     circle,
     lime 0%,
@@ -60,4 +113,32 @@ input[class="yRadio"]:disabled:checked {
     transparent 50%,
     transparent 100%
   );
+}
+
+.shipsDiagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.n {
+  background-color: darkred;
+  border-radius: 50px;
+}
+.u {
+  background-color: darkgoldenrod;
+}
+
+.confirmCoords:hover,
+.cancelCoords:hover,
+.confirmShip:hover,
+.cancelShip:hover {
+  background-color: black;
+  color: white;
+}
+
+.confirmCoords:active,
+.cancelCoords:active,
+.confirmShip:active,
+.cancelShip:active {
+  scale: 0.9;
 }
