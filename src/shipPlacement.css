@@ -25,10 +25,15 @@
 .cancelShip {
   font-size: 32pt;
 }
-.ship {
-  width: 125px;
+.five,
+.four,
+.three,
+.two {
   height: 25px;
   margin: 20px;
+}
+.five {
+  width: 125px;
 }
 .four {
   width: 100px;
@@ -36,14 +41,15 @@
 .three {
   width: 75px;
 }
-.two,
-.two2 {
+.two {
   width: 50px;
 }
 
-.ship:hover {
+table.two:hover,
+table.three:hover,
+table.four:hover,
+table.five:hover {
   background-color: orange;
-  border: 2px solid lime;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -120,12 +126,12 @@ input[class="yRadio"]:disabled:checked {
   justify-content: center;
   align-items: center;
 }
-.n {
+td.two,
+td.three,
+td.four,
+td.five {
   background-color: darkred;
   border-radius: 50px;
-}
-.u {
-  background-color: darkgoldenrod;
 }
 
 .confirmCoords:hover,

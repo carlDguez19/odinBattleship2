@@ -186,6 +186,16 @@ function clearBoards(player1, player2){
     player2.pBoard.ships = [];
 }
 
+function multShipsListener(){
+    let multShipsDiagram = document.querySelector(".shipsDiagram");
+    multShipsDiagram.addEventListener('click', (e) => {
+        if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
+            let shipClass = e.target.className;
+            console.log(shipClass);
+        }
+    })
+}
+
 function playAgainButtonListener(p1,p2){
     playAgainButton.addEventListener('click',function(){//reset boards here and the 2d arrays
         winnerOverlay.style.animation = "exitUp 1s forwards";
@@ -229,6 +239,7 @@ export function gameTypeListeners(){
             player1.displayShips(".player1Board");
             player2.displayShips(".player2Board");
 
+            multShipsListener();
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
             playAgainButtonListener(player1,player2);
