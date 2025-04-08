@@ -8,6 +8,9 @@
   <body>
     <div class="censorCurtain">Changing Boards. Game will continue shortly</div>
     <div class="gamingArea">
+      <div class="coordsTakenOverlay">
+        <p class="diffCoordsMsg">Coords alredy taken pick diff coords.</p>
+      </div>
       <div class="winnerOverlay">
         <p class="winnerMainMsg">The winner is</p>
         <p class="trueWinner"></p>
@@ -18,40 +21,40 @@
       <div class="multShipsPlacementOverlay">
         <p class="chooseShipMsg">Select a ship to choose its coordinates...</p>
         <div class="shipsDiagram">
-          <table class="two" id="2">
+          <table class="2" id="two">
             <tr>
-              <td class="two"></td>
-              <td class="two"></td>
+              <td class="2"></td>
+              <td class="2"></td>
             </tr>
           </table>
-          <table class="two" id="22">
+          <table class="2" id="22">
             <tr>
-              <td class="two"></td>
-              <td class="two"></td>
+              <td class="2"></td>
+              <td class="2"></td>
             </tr>
           </table>
-          <table class="three" id="3">
+          <table class="3" id="three">
             <tr>
-              <td class="three"></td>
-              <td class="three"></td>
-              <td class="three"></td>
+              <td class="3"></td>
+              <td class="3"></td>
+              <td class="3"></td>
             </tr>
           </table>
-          <table class="four" id="4">
+          <table class="4" id="four">
             <tr>
-              <td class="four"></td>
-              <td class="four"></td>
-              <td class="four"></td>
-              <td class="four"></td>
+              <td class="4"></td>
+              <td class="4"></td>
+              <td class="4"></td>
+              <td class="4"></td>
             </tr>
           </table>
-          <table class="five" id="5">
+          <table class="5" id="five">
             <tr>
-              <td class="five"></td>
-              <td class="five"></td>
-              <td class="five"></td>
-              <td class="five"></td>
-              <td class="five"></td>
+              <td class="5"></td>
+              <td class="5"></td>
+              <td class="5"></td>
+              <td class="5"></td>
+              <td class="5"></td>
             </tr>
           </table>
         </div>
@@ -68,7 +71,7 @@
             <form action="@" name="shipLocation" class="shipLocation">
               <div class="axis">
                 <label for="xaxis">X-Axis</label>
-                <select name="xAxis" id="xaxis">
+                <select name="xAxis" id="xaxis" class="xAxis">
                   <option value="0">1</option>
                   <option value="1">2</option>
                   <option value="2">3</option>
@@ -81,7 +84,7 @@
                   <option value="9">10</option>
                 </select>
                 <label for="yaxis">Y-Axis</label>
-                <select name="yAxis" id="yaxis">
+                <select name="yAxis" id="yaxis" class="yAxis">
                   <option value="0">1</option>
                   <option value="1">2</option>
                   <option value="2">3</option>

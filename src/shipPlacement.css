@@ -25,30 +25,30 @@
 .cancelShip {
   font-size: 32pt;
 }
-.five,
-.four,
-.three,
-.two {
+.\35,
+.\34,
+.\33,
+.\32 {
   height: 25px;
   margin: 20px;
 }
-.five {
+.\35 {
   width: 125px;
 }
-.four {
+.\34 {
   width: 100px;
 }
-.three {
+.\33 {
   width: 75px;
 }
-.two {
+.\32 {
   width: 50px;
 }
 
-table.two:hover,
-table.three:hover,
-table.four:hover,
-table.five:hover {
+table.\32:hover,
+table.\33:hover,
+table.\34:hover,
+table.\35:hover {
   background-color: orange;
   border-radius: 10px;
   cursor: pointer;
@@ -126,10 +126,10 @@ input[class="yRadio"]:disabled:checked {
   justify-content: center;
   align-items: center;
 }
-td.two,
-td.three,
-td.four,
-td.five {
+td.\32,
+td.\33,
+td.\34,
+td.\35 {
   background-color: darkred;
   border-radius: 50px;
 }
@@ -147,4 +147,22 @@ td.five {
 .confirmShip:active,
 .cancelShip:active {
   scale: 0.9;
+}
+.coordsTakenOverlay {
+  width: 400px;
+  height: 300px;
+  background-color: red;
+  font-size: 24pt;
+  font-family: "byteFont", Arial, Helvetica, sans-serif;
+  color: antiquewhite;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: absolute;
+  border-radius: 50px;
+  z-index: 11;
+  top: -100%;
+}
+.diffCoordsMsg {
+  margin: 25% 5%;
 }

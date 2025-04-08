@@ -24,7 +24,7 @@ export class Gameboard{
         }
     }
     coordsNotTaken(board, coords, axis, length){//cells are empty before placing
-        if(axis == "y"){//if ship is placed vertically then fill the cells it will take up with the length
+        if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
                 if(board[coords[0]+i][coords[1]] != undefined){//if ship at these coords then ...
                     return false;
@@ -172,12 +172,19 @@ export function displayWinner(winner){
     winnerOverlay.style.animation = "enterTop 1s forwards";
 }
 
-const submitButton = document.querySelector(".submitButton");
-const closeButton = document.querySelector(".closeButton");
+const gameTypesubmitButton = document.querySelector(".submitButton");
+const gameTypecloseButton = document.querySelector(".closeButton");
 const pvp = document.querySelector(".pvp");
 const pve = document.querySelector(".pve");
 export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
 
+const shipCoordsOverlay = document.querySelector(".shipInputsOverlay");
+const shipCoordsSubmit = document.querySelector(".confirmCoords");
+const shipCoordsCancel = document.querySelector(".cancelCoords");
+const xAxis = document.querySelector(".xAxis");
+const yAxis = document.querySelector(".yAxis");
+const xRadio = document.querySelector(".xRadio");
+const yRadio = document.querySelector(".yRadio");
 
 function clearBoards(player1, player2){
     player1.pBoard.board = player1.pBoard.generateGameboard(10);
@@ -186,14 +193,48 @@ function clearBoards(player1, player2){
     player2.pBoard.ships = [];
 }
 
-function multShipsListener(){
+function multShipsListener(player){
     let multShipsDiagram = document.querySelector(".shipsDiagram");
     multShipsDiagram.addEventListener('click', (e) => {
         if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
-            let shipClass = e.target.className;
-            console.log(shipClass);
+            let shipClassLength = e.target.className;
+            shipCoordsOverlay.style.animation = "enterTop 1s forwards";
+            coordsOverlayListener(player,shipClassLength);
         }
     })
+}
+
+function coordsOverlayListener(player,shipLength){
+    shipCoordsSubmit.addEventListener("click", function(){
+        let xCoord = xAxis.value;
+        let yCoord = yAxis.value;
+        let hOrV = 0;
+        if(xRadio.checked){
+            hOrV = 0;
+        }else{
+            hOrV = 1;
+        }
+        if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
+            player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV);
+        }else{
+            coordsOccupiedError();
+        }
+    })
+    shipCoordsCancel.addEventListener('click', function(){
+        xAxis.value = 0;
+        yAxis.value = 0;
+        xRadio.checked = false;
+        yRadio.checked = false;
+        shipCoordsOverlay.style.animation = "exitUp 1s forwards";
+    })
+}
+
+function coordsOccupiedError(){
+    let coordError = document.querySelector('.coordsTakenOverlay');
+    coordError.style.animation = "enterTop 1s forwards";
+    setTimeout(() => {
+        coordError.style.animation = "exitUp 1s forwards";
+    }, 2000);
 }
 
 function playAgainButtonListener(p1,p2){
@@ -207,12 +248,12 @@ function playAgainButtonListener(p1,p2){
 }
 
 export function gameTypeListeners(){
-    closeButton.addEventListener('click', function(){
+    gameTypecloseButton.addEventListener('click', function(){
         pvp.checked = false;
         pve.checked = false;
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
     });
-    submitButton.addEventListener('click', function(){
+    gameTypesubmitButton.addEventListener('click', function(){
         if(pvp.checked){
             //ill put the code here that is currently in the index.js file
             //code for human vs human game
@@ -229,14 +270,14 @@ export function gameTypeListeners(){
             player2.pBoard.placeShip(2,[2,1],1);
             player2.pBoard.placeShip(2,[3,3],1);
             player2.pBoard.placeShip(4,[9,3],0);
-            player2.pBoard.placeShip(5,[3,5],1);
+            player2.pBoard.placeShip(5,[3,5],1);//...along with these
 
             player1.openBoard(".player1Board");
             player2.openBoard(".player2Board");
             player1.openBoard(".player1HiddenBoard");
             player2.openBoard(".player2HiddenBoard");
 
-            player1.displayShips(".player1Board");
+            player1.displayShips(".player1Board");//this will be in the listener that listens for submit of multShips overlay...^
             player2.displayShips(".player2Board");
 
             multShipsListener();
