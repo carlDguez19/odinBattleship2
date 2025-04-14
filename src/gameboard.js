@@ -179,20 +179,39 @@ function clearBoards(player1, player2){
     player2.pBoard.ships = [];
 }
 
-function multShipsListener(player){
+function multShipsListener(player,enemy){
     let multShipsDiagram = document.querySelector(".shipsDiagram");
+    let confirmShipsButton = document.querySelector(".confirmShip");
+    let cancelShipsOverlay = document.querySelector(".cancelShip");
     multShipsDiagram.addEventListener('click', (e) => {
         if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
             let shipClassLength = e.target.className;
             shipCoordsOverlay.style.animation = "enterTop 1s forwards";
-            coordsOverlayListener(player,shipClassLength);
+            if(player.pBoard.ships.length < 5){
+                coordsOverlayListener(player,shipClassLength,e.target.id);    
+            }else{
+                coordsOverlayListener(enemy,shipClassLength,e.target.id);
+            }
+            
         }
+    })
+    confirmShipsButton.addEventListener('click', function(){
+        if(player.pBoard.ships.length == 5 && enemy.pBoard.ships == []){
+            // reset the overlay for coords
+        }else if(enemy.pBoard.ships.length == 5){
+            //get rid of all overlays and start game
+        }
+    })
+    cancelShipsOverlay.addEventListener('click', function(){
+        //clear whatever has been done to place ships on either board
+        //take away multShipsOverlay and bring in gameType overlay
     })
     //add listener for submit and close buttons if enemy in params then call censor curtain then call mult ships again for enemy???
 }
 
-function coordsOverlayListener(player,shipLength){
+function coordsOverlayListener(player,shipLength,id){
     shipCoordsSubmit.addEventListener("click", function(){
+        
         let xCoord = xAxis.value;
         let yCoord = yAxis.value;
         let hOrV = 0;
