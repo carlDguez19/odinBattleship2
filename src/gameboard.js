@@ -55,13 +55,13 @@ export class Gameboard{
             }
         }
     }
-    placeShip(length, coords, axis){
+    placeShip(length, coords, axis, id){
         const inRange = this.coordsInRange(coords);//coordinates are not bigger than the board itself
         const shipFits = this.fitsOnBoard(length, coords, axis);//pieces of the ship are not left 'hanging' outside the board
         if((length <= this.size) && inRange && shipFits){//if ship is not bigger than board itself and ... ^
             const notTaken = this.coordsNotTaken(this.board, coords, axis, length);//we can remove board and replace it with this.baord//make sure spots are empty for ship to be placed
             if(notTaken){
-                const testShip = new Ship(length);
+                const testShip = new Ship(length,id,coords,axis);
                 this.ships.push(testShip);
                 if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
                     for(let i = 0; i < length; i++){
@@ -95,6 +95,22 @@ export class Gameboard{
                 return true;
             }
         }
+    }
+    removeShip(ship){
+        //ill go through the board array and kill the old ship
+        //finally ill remove the array entry that pertains to the ship
+        for(let i = 0; i < ship.length; i++){
+            if(ship.axis == 0){
+                this.board[i][ship.cdnts[1]] = undefined;
+            }else{
+                this.board[ship.cdnts[0]][i] = undefined
+            }
+        }
+        //ill go through the DOM grid and kill the old ship      
+
+    }
+    removeShipDOM(ship,hiddenT,trueT){
+        
     }
     allShipsSunk(){
         for(let i = 0; i < this.ships.length; i++){
@@ -172,11 +188,9 @@ const yAxis = document.querySelector(".yAxis");
 const xRadio = document.querySelector(".xRadio");
 const yRadio = document.querySelector(".yRadio");
 
-function clearBoards(player1, player2){
-    player1.pBoard.board = player1.pBoard.generateGameboard(10);
-    player2.pBoard.board = player2.pBoard.generateGameboard(10);
-    player1.pBoard.ships = [];
-    player2.pBoard.ships = [];
+function clearBoard(player){
+    player.pBoard.board = player.pBoard.generateGameboard(10);
+    player.pBoard.ships = [];
 }
 
 function multShipsListener(player,enemy){
@@ -187,10 +201,18 @@ function multShipsListener(player,enemy){
         if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
             let shipClassLength = e.target.className;
             shipCoordsOverlay.style.animation = "enterTop 1s forwards";
-            if(player.pBoard.ships.length < 5){
-                coordsOverlayListener(player,shipClassLength,e.target.id);    
-            }else{
-                coordsOverlayListener(enemy,shipClassLength,e.target.id);
+            if(player.pBoard.ships.length < 5){//if player1 hasnt picked all locations for all ships
+                let p1gbh = document.querySelector(".player1HiddenBoard");
+                let p1hiddenTable = gbh.firstElementChild;
+                let p1gbt = document.querySelector(".player1Board");
+                let p1trueTable = gbt.firstElementChild;
+                coordsOverlayListener(player,shipClassLength,p1hiddenTable,p1trueTable);    
+            }else{//player1 finished picking its now player2 turn to pick locations
+                let p2gbh = document.querySelector(".player2HiddenBoard");
+                let p2hiddenTable = gbh.firstElementChild;
+                let p2gbt = document.querySelector(".player2Board");
+                let p2trueTable = gbt.firstElementChild;
+                coordsOverlayListener(enemy,shipClassLength,p2hiddenTable,p2trueTable);
             }
             
         }
@@ -209,19 +231,27 @@ function multShipsListener(player,enemy){
     //add listener for submit and close buttons if enemy in params then call censor curtain then call mult ships again for enemy???
 }
 
-function coordsOverlayListener(player,shipLength,id){
+function coordsOverlayListener(player,shipL,hiddenTable,trueTable){
     shipCoordsSubmit.addEventListener("click", function(){
-        
+        let shipLength = shipL.charAt(0);
         let xCoord = xAxis.value;
         let yCoord = yAxis.value;
         let hOrV = 0;
+        for(let i = 0; i < player.pBoard.ships.length; i++){
+            let ship = player.pBoard.ships[i];
+            if(ship.id == shipL){//clicked on multShip was already placed before
+                //remove previous location of ship
+                player.pBoard.removeShip(ship);
+                player.pBoard.removeShipDOM(ship,hiddenTable,trueTable);
+            }
+        }
         if(xRadio.checked){
             hOrV = 0;
         }else{
             hOrV = 1;
         }
         if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
-            player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV);
+            player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,shipL);
         }else{
             coordsOccupiedError();
         }
@@ -248,7 +278,8 @@ function playAgainButtonListener(p1,p2){
         winnerOverlay.style.animation = "exitUp 1s forwards";
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'exitUp 1s forwards';
-        clearBoards(p1,p2);
+        clearBoard(p1);
+        clearBoard(p2);
         gameTypeOverlay.style.animation = "enterTop 2s forwards";
     })
 }

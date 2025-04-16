@@ -1,10 +1,13 @@
 export class Ship{
-    constructor(length){//maybe include an if statement to check length is not 0
+    constructor(length,id,coords,axis){//maybe include an if statement to check length is not 0
         if(length == 0){
             return NaN;
         }
         this.length = length;
         this.hits = 0;
+        this.id = "";
+        this.cdnts = coords;
+        this.axis = axis;
     }
 
     hit(){

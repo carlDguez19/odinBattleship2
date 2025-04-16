@@ -28,7 +28,8 @@
 .\35,
 .\34,
 .\33,
-.\32 {
+.\32 a,
+.\32 b {
   height: 25px;
   margin: 20px;
 }
@@ -41,11 +42,13 @@
 .\33 {
   width: 75px;
 }
-.\32 {
+.\32 a,
+.\32 b{
   width: 50px;
 }
 
-table.\32:hover,
+table.\32 a:hover,
+table.\32 b:hover,
 table.\33:hover,
 table.\34:hover,
 table.\35:hover {
@@ -126,7 +129,8 @@ input[class="yRadio"]:disabled:checked {
   justify-content: center;
   align-items: center;
 }
-td.\32,
+td.\32 a,
+td.\32 b,
 td.\33,
 td.\34,
 td.\35 {
