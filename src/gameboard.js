@@ -96,21 +96,28 @@ export class Gameboard{
             }
         }
     }
-    removeShip(ship){
+    removeShip(ship,hiddenT,trueT){
         //ill go through the board array and kill the old ship
-        //finally ill remove the array entry that pertains to the ship
         for(let i = 0; i < ship.length; i++){
             if(ship.axis == 0){
-                this.board[i][ship.cdnts[1]] = undefined;
+                this.board[ship.cdnts[0]][ship.cdnts[1]+i] = undefined;
+                let row = hiddenT.rows[ship.cdnts[0]];// go through the DOM grid and kill the old ship
+                let cell = row.cells[ship.cdnts[1]+i];
+                cell.style.backgroundColor = "limegreen";
+                cell.style.borderRadius = "5px";
             }else{
-                this.board[ship.cdnts[0]][i] = undefined
+                this.board[i][ship.cdnts[1]] = undefined;
+                let row = hiddenT.rows[ship.cdnts[0]+i];// go through the DOM grid and kill the old ship
+                let cell = row.cells[ship.cdnts[1]];
+                cell.style.backgroundColor = "limegreen";
+                cell.style.borderRadius = "5px";
             }
         }
-        //ill go through the DOM grid and kill the old ship      
-
-    }
-    removeShipDOM(ship,hiddenT,trueT){
-        
+        for(let j = 0; j < this.ships.length; j++){//remove the array entry that pertains to the ship
+            if(this.ships[j] == ship){
+                this.ships.splice(j,1);
+            }
+        }
     }
     allShipsSunk(){
         for(let i = 0; i < this.ships.length; i++){
@@ -203,25 +210,36 @@ function multShipsListener(player,enemy){
             shipCoordsOverlay.style.animation = "enterTop 1s forwards";
             if(player.pBoard.ships.length < 5){//if player1 hasnt picked all locations for all ships
                 let p1gbh = document.querySelector(".player1HiddenBoard");
-                let p1hiddenTable = gbh.firstElementChild;
+                let p1hiddenTable = p1gbh.firstElementChild;
                 let p1gbt = document.querySelector(".player1Board");
-                let p1trueTable = gbt.firstElementChild;
+                let p1trueTable = p1gbt.firstElementChild;
                 coordsOverlayListener(player,shipClassLength,p1hiddenTable,p1trueTable);    
             }else{//player1 finished picking its now player2 turn to pick locations
                 let p2gbh = document.querySelector(".player2HiddenBoard");
-                let p2hiddenTable = gbh.firstElementChild;
+                let p2hiddenTable = p2gbh.firstElementChild;
                 let p2gbt = document.querySelector(".player2Board");
-                let p2trueTable = gbt.firstElementChild;
+                let p2trueTable = p2gbt.firstElementChild;
                 coordsOverlayListener(enemy,shipClassLength,p2hiddenTable,p2trueTable);
             }
             
         }
     })
     confirmShipsButton.addEventListener('click', function(){
-        if(player.pBoard.ships.length == 5 && enemy.pBoard.ships == []){
+        if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){
             // reset the overlay for coords
-        }else if(enemy.pBoard.ships.length == 5){
+            xRadio.checked = false;
+            yRadio.checked = false;
+            xAxis.value = 0;
+            yAxis.value = 0;
+            player.censorCurtainEnter();
+            player.censorCurtainExit();
+        }else if(enemy.pBoard.numOfShips == 5){
             //get rid of all overlays and start game
+            xRadio.checked = false;
+            yRadio.checked = false;
+            xAxis.value = 0;
+            yAxis.value = 0;
+            multShipsDiagram.style.animation = "exitUp 2s forwards";
         }
     })
     cancelShipsOverlay.addEventListener('click', function(){
@@ -241,8 +259,7 @@ function coordsOverlayListener(player,shipL,hiddenTable,trueTable){
             let ship = player.pBoard.ships[i];
             if(ship.id == shipL){//clicked on multShip was already placed before
                 //remove previous location of ship
-                player.pBoard.removeShip(ship);
-                player.pBoard.removeShipDOM(ship,hiddenTable,trueTable);
+                player.pBoard.removeShip(ship,hiddenTable,trueTable);
             }
         }
         if(xRadio.checked){
@@ -317,7 +334,7 @@ export function gameTypeListeners(){
             player1.displayShips(".player1Board");//this will be in the listener that listens for submit of multShips overlay...^
             player2.displayShips(".player2Board");
 
-            multShipsListener();
+            multShipsListener(player1,player2);
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
             playAgainButtonListener(player1,player2);
