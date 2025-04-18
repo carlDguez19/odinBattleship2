@@ -43,6 +43,19 @@ export class Player{
         }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
         return coords;
     }
+    cpuPicksShipsLocations(arr){
+        for(let i = 0; i < arr.length; i++){
+            arr[i].coords = [];
+        }
+        for(let j = 0; j < arr.length; j++){
+            arr[i].coords = [];
+            do{
+                let xCoord = this.getRandomIntInclusive(0,9);
+                let yCoord = this.getRandomIntInclusive(0,9);
+                let coords = [xCoord, yCoord];
+            }while()
+        }
+    }
     cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy,cpuHiddenTable){//called by human(coords from cpuPicksCoords)
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;

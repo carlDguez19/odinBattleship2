@@ -233,6 +233,15 @@ function multShipsListener(player,enemy){
             yAxis.value = 0;
             player.censorCurtainEnter();
             player.censorCurtainExit();
+        }else if(player.pBoard.numOfShips == 5 && enemy.type=="cpu"){
+            //enemy picks random locations for its ships no need for the multShipOverlay
+            let enemyArr = player.pBoard.ships;
+            xRadio.checked = false;
+            yRadio.checked = false;
+            xAxis.value = 0;
+            yAxis.value = 0;
+            multShipsDiagram.style.animation = "exitUp 2s forwards";
+            enemy.cpuPicksShipsLocations(enemyArr);
         }else if(enemy.pBoard.numOfShips == 5){
             //get rid of all overlays and start game
             xRadio.checked = false;
@@ -245,6 +254,14 @@ function multShipsListener(player,enemy){
     cancelShipsOverlay.addEventListener('click', function(){
         //clear whatever has been done to place ships on either board
         //take away multShipsOverlay and bring in gameType overlay
+        xRadio.checked = false;
+        yRadio.checked = false;
+        xAxis.value = 0;
+        yAxis.value = 0;
+        clearBoard(player);
+        clearBoard(enemy);
+        multShipsDiagram.style.animation = "exitUp 2s forwards";
+        gameTypeOverlay.style.animation = "enterTop 1s forwards";
     })
     //add listener for submit and close buttons if enemy in params then call censor curtain then call mult ships again for enemy???
 }
