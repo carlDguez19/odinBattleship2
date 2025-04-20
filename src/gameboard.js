@@ -384,15 +384,8 @@ export function gameTypeListeners(){
             player1.displayShips(".player1Board");
             player2.displayShips(".player2Board");
 
-            //player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
             playAgainButtonListener(player1,player2);
-            // while(!(player1.pBoard.allShipsSunk()) || !(player2.pBoard.allShipsSunk())){
-            //     if(player2.gotAttacked){
-            //         player1.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);
-            //         player2.gotAttacked = false;
-            //     }
-            // }
 
             pvp.checked = false;
             pve.checked = false;

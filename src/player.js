@@ -49,11 +49,17 @@ export class Player{
         }
         for(let j = 0; j < arr.length; j++){
             arr[i].coords = [];
-            do{
-                let xCoord = this.getRandomIntInclusive(0,9);
-                let yCoord = this.getRandomIntInclusive(0,9);
-                let coords = [xCoord, yCoord];
-            }while()
+            let xCoord = this.getRandomIntInclusive(0,9);
+            let yCoord = this.getRandomIntInclusive(0,9);
+            let coords = [xCoord, yCoord];
+            let axis = this.getRandomIntInclusive(0,1);
+            while(!(this.pBoard.coordsNotTaken(this.pBoard.board,coords,axis,arr[j].length))){
+                xCoord = this.getRandomIntInclusive(0,9);
+                yCoord = this.getRandomIntInclusive(0,9);
+                coords = [xCoord, yCoord];
+                axis = this.getRandomIntInclusive(0,1);
+            }
+            this.pBoard.placeShip(arr[j].length,coords,axis,arr[j].id);
         }
     }
     cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy,cpuHiddenTable){//called by human(coords from cpuPicksCoords)
