@@ -96,7 +96,7 @@ export class Gameboard{
             }
         }
     }
-    removeShip(ship,hiddenT,trueT){
+    removeShip(ship,hiddenT){
         //ill go through the board array and kill the old ship
         for(let i = 0; i < ship.length; i++){
             if(ship.axis == 0){
@@ -154,8 +154,6 @@ export class Gameboard{
             const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
             const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
             this.cpuShipAttackedCell(cell);
-            //cell.style.backgroundColor = "darkred";
-            //cell.style.borderRadius = "50px";
         }
     }
 
@@ -163,7 +161,6 @@ export class Gameboard{
         await this.delay(700);
         cell.style.backgroundColor = "darkred";
         cell.style.borderRadius = "50px";
-        //cell.style.animation = "timeDelayBorderRadius 2s forwards";
     }
     async cpuMissedCell(cell){
         await this.delay(700);
@@ -220,8 +217,7 @@ function multShipsListener(player,enemy){
                 let p2gbt = document.querySelector(".player2Board");
                 let p2trueTable = p2gbt.firstElementChild;
                 coordsOverlayListener(enemy,shipClassLength,p2hiddenTable,p2trueTable);
-            }
-            
+            }   
         }
     })
     confirmShipsButton.addEventListener('click', function(){
@@ -331,27 +327,28 @@ export function gameTypeListeners(){
             const player1 = new Player("real", 10);
             const player2 = new Player("real", 10);
 
-            player1.pBoard.placeShip(3,[2,3],1);
-            player1.pBoard.placeShip(2,[0,1],0);
-            player1.pBoard.placeShip(2,[2,0],0);
-            player1.pBoard.placeShip(4,[9,6],0);
-            player1.pBoard.placeShip(5,[3,8],1);
+            // player1.pBoard.placeShip(3,[2,3],1);
+            // player1.pBoard.placeShip(2,[0,1],0);
+            // player1.pBoard.placeShip(2,[2,0],0);
+            // player1.pBoard.placeShip(4,[9,6],0);
+            // player1.pBoard.placeShip(5,[3,8],1);
 
-            player2.pBoard.placeShip(3,[1,2],0);
-            player2.pBoard.placeShip(2,[2,1],1);
-            player2.pBoard.placeShip(2,[3,3],1);
-            player2.pBoard.placeShip(4,[9,3],0);
-            player2.pBoard.placeShip(5,[3,5],1);//...along with these
+            // player2.pBoard.placeShip(3,[1,2],0);
+            // player2.pBoard.placeShip(2,[2,1],1);
+            // player2.pBoard.placeShip(2,[3,3],1);
+            // player2.pBoard.placeShip(4,[9,3],0);
+            // player2.pBoard.placeShip(5,[3,5],1);//...along with these
 
             player1.openBoard(".player1Board");
             player2.openBoard(".player2Board");
             player1.openBoard(".player1HiddenBoard");
             player2.openBoard(".player2HiddenBoard");
 
+            multShipsListener(player1,player2);
+
             player1.displayShips(".player1Board");//this will be in the listener that listens for submit of multShips overlay...^
             player2.displayShips(".player2Board");
 
-            multShipsListener(player1,player2);
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
             playAgainButtonListener(player1,player2);
@@ -364,22 +361,24 @@ export function gameTypeListeners(){
             const player1 = new Player("real", 10);
             const player2 = new Player("cpu", 10);
 
-            player1.pBoard.placeShip(3,[2,3],1);
-            player1.pBoard.placeShip(2,[0,1],0);
-            player1.pBoard.placeShip(2,[2,0],0);
-            player1.pBoard.placeShip(4,[9,6],0);
-            player1.pBoard.placeShip(5,[3,8],1);
+            // player1.pBoard.placeShip(3,[2,3],1);
+            // player1.pBoard.placeShip(2,[0,1],0);
+            // player1.pBoard.placeShip(2,[2,0],0);
+            // player1.pBoard.placeShip(4,[9,6],0);
+            // player1.pBoard.placeShip(5,[3,8],1);
 
-            player2.pBoard.placeShip(3,[1,2],0);
-            player2.pBoard.placeShip(2,[2,1],1);
-            player2.pBoard.placeShip(2,[3,3],1);
-            player2.pBoard.placeShip(4,[9,3],0);
-            player2.pBoard.placeShip(5,[3,5],1);
+            // player2.pBoard.placeShip(3,[1,2],0);
+            // player2.pBoard.placeShip(2,[2,1],1);
+            // player2.pBoard.placeShip(2,[3,3],1);
+            // player2.pBoard.placeShip(4,[9,3],0);
+            // player2.pBoard.placeShip(5,[3,5],1);
 
             player1.openBoard(".player1Board");
             player2.openBoard(".player2Board");
             player1.openBoard(".player1HiddenBoard");
             player2.openBoard(".player2HiddenBoard");
+
+            multShipsListener(player1,player2);
 
             player1.displayShips(".player1Board");
             player2.displayShips(".player2Board");

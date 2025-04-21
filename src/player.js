@@ -7,23 +7,6 @@ export class Player{
         this.gotAttacked = false;
         this.delay = ms => new Promise(res => setTimeout(res, ms));
     }
-
-    //player should choose location of ships and gameboard should placeShip
-    // chooseLocation(length, coords, axis){
-    //     if(this.type == "real"){
-    //         this.board.placeShip(length, coords, axis, this.board.board);
-    //     }else{
-    //         //placeShip at random locations if player is a computer player
-    //         let row = this.getRndInteger(0, this.board.board.length);
-    //         let col = this.getRndInteger(0, this.board.board.length);
-    //         let randAxis = this.getRndInteger(0, 2);
-    //         this.board.placeShip(length, [row,col], randAxis, this.board.board);
-    //     }
-    // }
-
-    // getRndInteger(min, max) {
-    //     return Math.floor(Math.random() * (max - min) ) + min;
-    // }
     getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -68,9 +51,7 @@ export class Player{
         let coords = this.cpuPicksCoords(enemy);
         while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){
             this.consecutiveHit(enemy, coords, trueTable);
-            //enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
             coords = this.cpuPicksCoords(enemy);
-            //coords = this.coordPickTimeDelay(enemy);
         }
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
         enemy.gotAttacked = true;
@@ -94,22 +75,14 @@ export class Player{
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
-                //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        //this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
                             this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
                         }
-                        //this.censorCurtainEnter();
-                        //this.censorCurtainExit();//bring down curtain and exit
-                        //this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-                        //this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                        //console.log("lollipop");
                     }else{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        //this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
                         this.censorCurtainEnter();
                         this.clearGrid(hiddenTable);
@@ -159,47 +132,11 @@ export class Player{
                         this.clearGrid(enemyNewTable.firstElementChild);
                         displayWinner(winner);
                     }
-                    // this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                    // this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
-                    // this.censorCurtainEnter();
-                    // this.censorCurtainExit();//bring down curtain and exit
-                    // this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-                    // this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                    // console.log("lollipop");
-                    // if(this.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
-                    //     console.log("the winner is player "+ winner);
-                    // }
-                    // else if(enemy.type == "cpu"){
-                    //     //call method that will let computer attack
-                    //     console.log("lollipop2");
-                    //     this.cpuPlayerAttacks(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2, enemy);
-                    // }
-                    
-                    // else{
-                    //     this.censorCurtainEnter();
-                    //     this.censorCurtainExit();
-                    //     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
-                    //     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
-                    // }
                 }
             }
         }
         );
     }
-
-    // updateCellSwapBoards(coords, playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard){//, winner
-    //     let gbh = document.querySelector(playerHiddenBoardDOM);
-    //     let hiddenTable = gbh.firstElementChild;
-    //     let gbt = document.querySelector(playerTrueBoardDOM);
-    //     let trueTable = gbt.firstElementChild;
-    //     if(this.pBoard.receiveAttack([coords[0],coords[1]],this.pBoard.board)){
-    //         this.pBoard.updateHitOrMiss([coords[0],coords[1]], hiddenTable);
-    //         this.pBoard.updateHitOrMiss([coords[0],coords[1]], trueTable);
-    //         this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
-    //         this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
-    //     }
-    // }
-
     displayShips(playerBoardDOM){
         let gb = document.querySelector(playerBoardDOM);
         let table = gb.firstElementChild;
@@ -217,9 +154,6 @@ export class Player{
 
     openBoard(playerBoardDOM){//html element is the param. Create a table/grid
         let gc = document.querySelector(playerBoardDOM);
-    
-        //clear grid of any previous size grid
-        //this.clearGrid(gc);
     
         //fill grid with a table for easier access of each cell
         let table = document.createElement('table');
@@ -260,12 +194,6 @@ export class Player{
           }, 1000);
         });
       }
-    // async coordPickTimeDelay(enemy){
-    //     await this.delay(800);
-    //     let coordinates = []
-    //     coordinates = this.cpuPicksCoords(enemy);
-    //     return coordinates;
-    // }
     async swapBoards(oldBoard, newBoard){
         await this.delay(500);
         let oBoard = document.querySelector(oldBoard);
@@ -281,30 +209,3 @@ export class Player{
         nBoard.style.animation = 'enterTop 0.5s forwards';
     }
 }
-
-// export let attackCoords = [];
-
-// function clickCellFunc(e){
-//     if(e.target.tagName === 'TD'){
-//         const row = e.target.parentElement;
-//         let cIndex = e.target.cellIndex;
-//         let rIndex = row.rowIndex
-//         //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
-//         attackCoords = [rIndex, cIndex];
-//         console.log("attackCoords[0]: "+ attackCoords[0]);
-//         console.log("attackCoords[1]: "+ attackCoords[1]);
-//         // if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){
-//         //     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);
-//         //     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
-//         //     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
-//         //     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
-//         //     // if(this.pBoard.allShipsSunk()){//      ...for this board, this player loses.
-//         //     //     console.log("the winner is player "+ winner);
-//         //     // }
-//         //     // else{
-//         //     //     this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);
-//         //     //     this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);
-//         //     // }
-//         // }
-//     }
-// }
