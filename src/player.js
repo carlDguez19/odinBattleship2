@@ -31,7 +31,7 @@ export class Player{
             arr[i].coords = [];
         }
         for(let j = 0; j < arr.length; j++){
-            arr[i].coords = [];
+            arr[j].coords = [];
             let xCoord = this.getRandomIntInclusive(0,9);
             let yCoord = this.getRandomIntInclusive(0,9);
             let coords = [xCoord, yCoord];
@@ -138,12 +138,12 @@ export class Player{
         );
     }
     displayShips(playerBoardDOM){
-        let gb = document.querySelector(playerBoardDOM);
-        let table = gb.firstElementChild;
+        // let gb = document.querySelector(playerBoardDOM);
+        // let table = gb.firstElementChild;
         for(let i = 0; i < this.pBoard.board.length; i++){
             for(let j = 0; j < this.pBoard.board[i].length; j++){
                 if(this.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
-                    const row = table.rows[i]//querySelector(`tr:nth-child(${i})`);
+                    const row = playerBoardDOM.rows[i]//querySelector(`tr:nth-child(${i})`);
                     const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
                     cell.style.backgroundColor = "gray";
                     cell.style.borderRadius = "50px";
