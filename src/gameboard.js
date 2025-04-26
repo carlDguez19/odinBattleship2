@@ -88,29 +88,13 @@ export class Gameboard{
             }
         }
     }
-    removeShip(ship,hiddenT,trueT){
+    removeShip(ship){
         //ill go through the board array and kill the old ship
         for(let i = 0; i < ship.length; i++){
             if(ship.axis == 0){
                 this.board[ship.cdnts[0]][ship.cdnts[1]+i] = undefined;
-                let rowH = hiddenT.rows[ship.cdnts[0]];// go through the DOM grid and kill the old ship
-                let cellH = rowH.cells[(ship.cdnts[1]+i)];
-                cellH.style.backgroundColor = "limegreen";
-                cellH.style.borderRadius = "5px";
-                let rowT = trueT.rows[ship.cdnts[0]];
-                let cellT = rowT.cells[(ship.cdnts[1]+i)];
-                cellT.style.backgroundColor = "limegreen";
-                cellT.style.borderRadius = "5px";
             }else{
                 this.board[ship.cdnts[0]+i][ship.cdnts[1]] = undefined;
-                let rowH = hiddenT.rows[(ship.cdnts[0]+i)];// go through the DOM grid and kill the old ship
-                let cellH = rowH.cells[ship.cdnts[1]];
-                cellH.style.backgroundColor = "limegreen";
-                cellH.style.borderRadius = "5px";
-                let rowT = trueT.rows[(ship.cdnts[0]+i)];
-                let cellT = rowT.cells[ship.cdnts[1]];
-                cellT.style.backgroundColor = "limegreen";
-                cellT.style.borderRadius = "5px";
             }
         }
         for(let j = 0; j < this.ships.length; j++){//remove the array entry that pertains to the ship
@@ -171,8 +155,8 @@ export class Gameboard{
 }
 
 let winnerOverlay = document.querySelector(".winnerOverlay");
-const playAgainButton = document.querySelector(".playAgain");
-
+let multShipsDiagram = document.querySelector(".shipsDiagram");
+let multShipsMovement = document.querySelector(".multShipsPlacementOverlay");
 export function displayWinner(winner){
    let winnerMsg = document.querySelector(".trueWinner");
     winnerMsg.textContent = "player " + winner;
@@ -193,6 +177,7 @@ const yAxis = document.querySelector(".yAxis");
 const xRadio = document.querySelector(".xRadio");
 const yRadio = document.querySelector(".yRadio");
 let multShipSize = 0;
+let multOKClicked = false;
 
 function clearBoard(player){
     player.pBoard.board = player.pBoard.generateGameboard(10);
@@ -214,7 +199,9 @@ function multShipsListener(player,enemy){
             // reset the overlay for coords
             coordsOverlayReset();
             player.censorCurtainEnter();
+            multShipsMovement.style.animation = "slideLeft 0.5s forwards";
             player.censorCurtainExit();
+            multOKClicked = true;
         }else if(player.pBoard.numOfShips == 5 && enemy.type=="cpu"){
             //enemy picks random locations for its ships no need for the multShipOverlay
             let enemyArr = player.pBoard.ships;
@@ -242,22 +229,17 @@ function multShipsListener(player,enemy){
 function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
     shipCoordsSubmit.addEventListener("click", function(){
         let player;
-        let hiddenTable;
         let trueTable;
         let hOrV;
         let shipLength = Number(multShipSize.charAt(0));
         let xCoord = Number(xAxis.value);
         let yCoord = Number(yAxis.value);
-        if(player1.pBoard.numOfShips < 5){
+        if(player1.pBoard.numOfShips <= 5 && !multOKClicked){
             player = player1;
-            let p1gbh = document.querySelector(".player1HiddenBoard");
-            hiddenTable = p1gbh.firstElementChild;
             let p1gbt = document.querySelector(".player1Board");
             trueTable = p1gbt.firstElementChild;
         }else{
             player = player2;
-            let p2gbh = document.querySelector(".player2HiddenBoard");
-            hiddenTable = p2gbh.firstElementChild;
             let p2gbt = document.querySelector(".player2Board");
             trueTable = p2gbt.firstElementChild;
         }
@@ -265,7 +247,7 @@ function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
             let ship = player.pBoard.ships[i];
             if(ship.id == multShipSize){//clicked on multShip was already placed before
                 //remove previous location of ship
-                player.pBoard.removeShip(ship,hiddenTable,trueTable);
+                player.pBoard.removeShip(ship);
             }
         }
         if(xRadio.checked){
@@ -304,6 +286,7 @@ function coordsOverlayReset(){
 }
 
 function playAgainButtonListener(p1,p2){
+    const playAgainButton = document.querySelector(".playAgain");
     playAgainButton.addEventListener('click',function(){//reset boards here and the 2d arrays
         winnerOverlay.style.animation = "exitUp 1s forwards";
         let curtain = document.querySelector(".censorCurtain");
@@ -332,11 +315,9 @@ export function gameTypeListeners(){
             player1.openBoard(".player1HiddenBoard");
             player2.openBoard(".player2HiddenBoard");
 
+            multShipsMovement.style.animation = "diagonalRight 2s forwards";
             multShipsListener(player1,player2);
             coordsOverlayListener(player1,player2);
-
-            // player1.displayShips(".player1Board");//this will be in the listener that listens for submit of multShips overlay...^
-            // player2.displayShips(".player2Board");
 
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//

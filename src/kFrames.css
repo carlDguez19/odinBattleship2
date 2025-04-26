@@ -46,12 +46,22 @@
   }
 }
 
-/* timeDelayBorderRadiusCPUPlayertimeDelayBorderRadiusCPUPlayertimeDelayBorderRadiusCPUPlayer */
-@keyframes timeDelayBorderRadius{
-  from{
-    border-radius: 0px;
+@keyframes diagonalRight {
+  from {
+    top: -100%;
+    right: 50%;
   }
-  to{
-    border-radius: 0px;
+  to {
+    top: 9%;
+    right: 5%;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    right: 9%;
+  }
+  to {
+    left: 9%;
   }
 }

@@ -13,6 +13,7 @@
   font-size: 52pt;
   color: antiquewhite;
   border-radius: 50px;
+  top: -100%;
 }
 .chooseShipMsg {
   font-size: 30pt;
@@ -43,7 +44,7 @@
   width: 75px;
 }
 .\32 a,
-.\32 b{
+.\32 b {
   width: 50px;
 }
 
