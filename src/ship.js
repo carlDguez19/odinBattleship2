@@ -5,7 +5,7 @@ export class Ship{
         }
         this.length = length;
         this.hits = 0;
-        this.id = "";
+        this.id = id;
         this.cdnts = coords;
         this.axis = axis;
     }

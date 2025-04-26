@@ -94,20 +94,20 @@ export class Gameboard{
             if(ship.axis == 0){
                 this.board[ship.cdnts[0]][ship.cdnts[1]+i] = undefined;
                 let rowH = hiddenT.rows[ship.cdnts[0]];// go through the DOM grid and kill the old ship
-                let cellH = rowH.cells[ship.cdnts[1]+i];
+                let cellH = rowH.cells[(ship.cdnts[1]+i)];
                 cellH.style.backgroundColor = "limegreen";
                 cellH.style.borderRadius = "5px";
                 let rowT = trueT.rows[ship.cdnts[0]];
-                let cellT = rowT.cells[ship.cdnts[1]+i];
+                let cellT = rowT.cells[(ship.cdnts[1]+i)];
                 cellT.style.backgroundColor = "limegreen";
                 cellT.style.borderRadius = "5px";
             }else{
-                this.board[i][ship.cdnts[1]] = undefined;
-                let rowH = hiddenT.rows[ship.cdnts[0]+i];// go through the DOM grid and kill the old ship
+                this.board[ship.cdnts[0]+i][ship.cdnts[1]] = undefined;
+                let rowH = hiddenT.rows[(ship.cdnts[0]+i)];// go through the DOM grid and kill the old ship
                 let cellH = rowH.cells[ship.cdnts[1]];
                 cellH.style.backgroundColor = "limegreen";
                 cellH.style.borderRadius = "5px";
-                let rowT = trueT.rows[ship.cdnts[0]+i];
+                let rowT = trueT.rows[(ship.cdnts[0]+i)];
                 let cellT = rowT.cells[ship.cdnts[1]];
                 cellT.style.backgroundColor = "limegreen";
                 cellT.style.borderRadius = "5px";
