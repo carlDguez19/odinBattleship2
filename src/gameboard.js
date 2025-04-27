@@ -155,7 +155,6 @@ export class Gameboard{
 }
 
 let winnerOverlay = document.querySelector(".winnerOverlay");
-let multShipsDiagram = document.querySelector(".shipsDiagram");
 let multShipsMovement = document.querySelector(".multShipsPlacementOverlay");
 export function displayWinner(winner){
    let winnerMsg = document.querySelector(".trueWinner");
@@ -199,7 +198,7 @@ function multShipsListener(player,enemy){
             // reset the overlay for coords
             coordsOverlayReset();
             player.censorCurtainEnter();
-            multShipsMovement.style.animation = "slideLeft 0.5s forwards";
+            multShipsMovement.style.animation = "slideLeft 2s forwards";
             player.censorCurtainExit();
             multOKClicked = true;
         }else if(player.pBoard.numOfShips == 5 && enemy.type=="cpu"){
@@ -260,6 +259,8 @@ function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
             player.displayShips(trueTable);
             coordsOverlayReset();
             shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
+        }else if(xRadio.checked == false && yRadio.checked == false){
+            coordsOccupiedError();
         }else{
             coordsOccupiedError();
         }

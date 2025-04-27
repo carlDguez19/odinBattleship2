@@ -59,9 +59,11 @@
 
 @keyframes slideLeft {
   from {
-    right: 9%;
+    top: 9%;
+    right: 5%;
   }
   to {
-    left: 9%;
+    top: 9%;
+    right: 5%;
   }
 }
