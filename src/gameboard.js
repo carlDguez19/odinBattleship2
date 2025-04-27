@@ -254,13 +254,14 @@ function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
         }else{
             hOrV = 1;
         }
-        if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
+        if(xRadio.checked == false && yRadio.checked == false){
+            coordsOccupiedError();
+        }
+        else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
             player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,multShipSize);
             player.displayShips(trueTable);
             coordsOverlayReset();
             shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
-        }else if(xRadio.checked == false && yRadio.checked == false){
-            coordsOccupiedError();
         }else{
             coordsOccupiedError();
         }
