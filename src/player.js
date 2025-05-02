@@ -1,4 +1,4 @@
-import { displayWinner, Gameboard } from "./gameboard";
+import { displayWinner, Gameboard, multOKClicked } from "./gameboard";
 
 export class Player{
     constructor(type, length){
@@ -71,7 +71,7 @@ export class Player{
         let gbt = document.querySelector(enemyTrueBoard);
         let enemyTrueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD'){
+            if(e.target.tagName === 'TD' && multOKClicked == 2){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
