@@ -142,8 +142,8 @@ export class Player{
         // let table = gb.firstElementChild;
         for(let i = 0; i < this.pBoard.board.length; i++){
             for(let j = 0; j < this.pBoard.board[i].length; j++){
-                const row = playerBoardDOM.rows[i]//querySelector(`tr:nth-child(${i})`);
-                const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
+                const row = playerBoardDOM.rows[i];//querySelector(`tr:nth-child(${i})`);
+                const cell = row.cells[j];//querySelector(`td:nth-child(${j})`);
                 if(this.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
                     // const row = playerBoardDOM.rows[i]//querySelector(`tr:nth-child(${i})`);
                     // const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
@@ -166,8 +166,8 @@ export class Player{
             let row = document.createElement('tr');
             for(let j = 0; j < this.pBoard.size; j++){
                 let cell = document.createElement('td');
-                // cell.style.backgroundColor = "limegreen"; REDUNDANT
-                // cell.style.borderRadius = "5px";
+                cell.style.backgroundColor = "limegreen"; //REDUNDANT
+                cell.style.borderRadius = "5px";
                 row.appendChild(cell);
             } 
             table.appendChild(row);

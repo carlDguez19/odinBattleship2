@@ -60,6 +60,7 @@
 
 .player2HiddenBoard {
   right: 10%;
+  top: -150%;
   background-color: blueviolet;
 }
 
@@ -68,7 +69,7 @@
 }
 .player2Board {
   background-color: olivedrab;
-  opacity: 0;
+  opacity: 1;
 }
 
 .player1Board,
