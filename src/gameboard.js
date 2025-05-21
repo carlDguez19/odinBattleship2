@@ -49,25 +49,38 @@ export class Gameboard{
         }
     }
     placeShip(length, coords, axis, id, player){
-        const shipFits = this.fitsOnBoard(length, coords, axis);//pieces of the ship are not left 'hanging' outside the board
-        if((length <= 10) && shipFits){//&& shipFits...if ship is not bigger than board itself and ... ^
-            const notTaken = this.coordsNotTaken(this.board, coords, axis, length);//we can remove board and replace it with this.baord//make sure spots are empty for ship to be placed
-            if(notTaken){
-                const testShip = new Ship(length,id,coords,axis);
-                this.ships.push(testShip);
-                if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
-                    for(let i = 0; i < length; i++){
-                        this.board[coords[0]+i][coords[1]] = testShip;
-                    }
-                    this.numOfShips++;
-                }else{//ship placed horizontally
-                    for(let i = 0; i < length; i++){
-                        this.board[coords[0]][coords[1]+i] = testShip;
-                    }
-                    player.pBoard.numOfShips++;
-                }
+        const testShip = new Ship(length,id,coords,axis);
+        this.ships.push(testShip);
+        if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
+            for(let i = 0; i < length; i++){
+                this.board[coords[0]+i][coords[1]] = testShip;
             }
+            this.numOfShips++;
+        }else{//ship placed horizontally
+            for(let i = 0; i < length; i++){
+                this.board[coords[0]][coords[1]+i] = testShip;
+            }
+            player.pBoard.numOfShips++;
         }
+        // const shipFits = this.fitsOnBoard(length, coords, axis);//pieces of the ship are not left 'hanging' outside the board
+        // if((length <= 10) && shipFits){//&& shipFits...if ship is not bigger than board itself and ... ^
+        //     const notTaken = this.coordsNotTaken(this.board, coords, axis, length);//we can remove board and replace it with this.baord//make sure spots are empty for ship to be placed
+        //     if(notTaken){
+        //         const testShip = new Ship(length,id,coords,axis);
+        //         this.ships.push(testShip);
+        //         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
+        //             for(let i = 0; i < length; i++){
+        //                 this.board[coords[0]+i][coords[1]] = testShip;
+        //             }
+        //             this.numOfShips++;
+        //         }else{//ship placed horizontally
+        //             for(let i = 0; i < length; i++){
+        //                 this.board[coords[0]][coords[1]+i] = testShip;
+        //             }
+        //             player.pBoard.numOfShips++;
+        //         }
+        //     }
+        // }
     }
     receiveAttack(coords, board){
         if(board[coords[0]][coords[1]] == "X" || board[coords[0]][coords[1]] == "0"){//if previously declared a hit or a miss then leave as a hit or a miss
@@ -206,11 +219,17 @@ function multShipsListener(player,enemy){
             let enemyArr = player.pBoard.ships;
             coordsOverlayReset();
             multShipsMovement.style.animation = "exitUp 2s forwards";
-            enemy.cpuPicksShipsLocations(enemyArr);
+            enemy.cpuPicksShipsLocations(enemyArr,enemy);
         }else if(enemy.pBoard.numOfShips == 5){
             //get rid of all overlays and start game
+            enemy.censorCurtainEnter();
             coordsOverlayReset();
+            enemy.censorCurtainExit();
             multShipsMovement.style.animation = "exitUp 2s forwards";
+            const hidden2Board = document.querySelector(".player2HiddenBoard");
+            const true2Board = document.querySelector(".player2Board");
+            hidden2Board.style.animation = "enterTop 1s forwards";
+            true2Board.style.opacity = 0;
             multOKClicked++;
         }
     })
@@ -260,7 +279,7 @@ function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
         if(xRadio.checked == false && yRadio.checked == false){
             coordsOccupiedError();
         }
-        else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
+        else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength) && player.pBoard.fitsOnBoard(shipLength, [xCoord,yCoord], hOrV)){
             player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,multShipSize, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
             player.displayShips(trueTable);
             coordsOverlayReset();
@@ -298,6 +317,8 @@ function playAgainButtonListener(p1,p2){
         curtain.style.animation = 'exitUp 1s forwards';
         clearBoard(p1);
         clearBoard(p2);
+        pvp.checked = false;
+        pve.checked = false;
         gameTypeOverlay.style.animation = "enterTop 2s forwards";
     })
 }
@@ -319,71 +340,33 @@ export function gameTypeListeners(){
 
         //here
         if(pvp.checked){
+            gameTypeOverlay.style.animation = "exitUp 1s forwards";
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
             player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
+            multShipsMovement.style.animation = "diagonalRight 2s forwards";
         }else{
+            gameTypeOverlay.style.animation = "exitUp 1s forwards";
             player2.type = "cpu";
             player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
-        }
-
-        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+            multShipsMovement.style.animation = "diagonalRight 2s forwards";
+        }//else{
+        //     const errorDiv = document.querySelector(".diffCoordsMsg");
+        //     errorDiv.textContent = "Please select a game type";
+        //     coordsOccupiedError();
+        //     clearBoard(player1);
+        //     clearBoard(player2);
+        //     let p1gbt = document.querySelector(".player1Board");
+        //     let p2gbt = document.querySelector(".player2Board");
+        //     let p1gbh = document.querySelector(".player1HiddenBoard");
+        //     let p2gbh = document.querySelector(".player2HiddenBoard");
+        //     p1gbt.firstChild.remove();
+        //     p2gbt.firstChild.remove();
+        //     p1gbh.firstChild.remove();
+        //     p2gbh.firstChild.remove();
+        // }
         multShipsListener(player1,player2);
         coordsOverlayListener(player1,player2);
 
-        player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-        player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
-
         playAgainButtonListener(player1,player2);
-        pvp.checked = false;
-        pve.checked = false;
-        gameTypeOverlay.style.animation = "exitUp 1s forwards";
-        // if(pvp.checked){
-        //     //ill put the code here that is currently in the index.js file
-        //     //code for human vs human game
-        //     const player1 = new Player("real", 10);
-        //     const player2 = new Player("real", 10);
-
-        //     player1.openBoard(".player1Board");
-        //     player2.openBoard(".player2Board");
-        //     player1.openBoard(".player1HiddenBoard");
-        //     player2.openBoard(".player2HiddenBoard");
-
-        //     //here
-
-        //     multShipsMovement.style.animation = "diagonalRight 2s forwards";
-        //     multShipsListener(player1,player2);
-        //     coordsOverlayListener(player1,player2);
-
-        //     player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-        //     player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
-            
-        //     playAgainButtonListener(player1,player2);
-        //     pvp.checked = false;
-        //     pve.checked = false;
-        //     gameTypeOverlay.style.animation = "exitUp 1s forwards";
-        // }
-        // else if(pve.checked){
-        //     //code for human vs cpu
-        //     const player1 = new Player("real", 10);
-        //     const player2 = new Player("cpu", 10);
-
-        //     player1.openBoard(".player1Board");
-        //     player2.openBoard(".player2Board");
-        //     player1.openBoard(".player1HiddenBoard");
-        //     player2.openBoard(".player2HiddenBoard");
-
-        //     //here
-
-        //     multShipsMovement.style.animation = "diagonalRight 2s forwards";
-        //     multShipsListener(player1,player2);
-        //     coordsOverlayListener(player1,player2);
-
-        //     player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
-            
-        //     playAgainButtonListener(player1,player2);
-        //     pvp.checked = false;
-        //     pve.checked = false;
-        //     gameTypeOverlay.style.animation = "exitUp 1s forwards";
-        // }
     })
 }

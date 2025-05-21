@@ -26,23 +26,18 @@ export class Player{
         }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
         return coords;
     }
-    cpuPicksShipsLocations(arr){
-        for(let i = 0; i < arr.length; i++){
-            arr[i].coords = [];
-        }
+    cpuPicksShipsLocations(arr,cpu){
         for(let j = 0; j < arr.length; j++){
-            arr[j].coords = [];
-            let xCoord = this.getRandomIntInclusive(0,9);
-            let yCoord = this.getRandomIntInclusive(0,9);
-            let coords = [xCoord, yCoord];
+            arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
             let axis = this.getRandomIntInclusive(0,1);
-            while(!(this.pBoard.coordsNotTaken(this.pBoard.board,coords,axis,arr[j].length))){
-                xCoord = this.getRandomIntInclusive(0,9);
-                yCoord = this.getRandomIntInclusive(0,9);
-                coords = [xCoord, yCoord];
+            while(!(this.pBoard.coordsNotTaken(this.pBoard.board,arr[j].coords,axis,arr[j].length)) || !(this.pBoard.fitsOnBoard(arr[j].length, arr[j].coords, axis))){
+                arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
                 axis = this.getRandomIntInclusive(0,1);
             }
-            this.pBoard.placeShip(arr[j].length,coords,axis,arr[j].id);
+            cpu.pBoard.placeShip(arr[j].length,arr[j].coords,axis,arr[j].id, cpu);
+            let p2gbt = document.querySelector(".player2Board");
+            let tableFin = p2gbt.firstElementChild;
+            cpu.displayShips(tableFin);
         }
     }
     cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy,cpuHiddenTable){//called by human(coords from cpuPicksCoords)
@@ -161,7 +156,7 @@ export class Player{
         let gc = document.querySelector(playerBoardDOM);
     
         //fill grid with a table for easier access of each cell
-        let table = document.createElement('table');
+        let table = document.createElement('table');//give table a id to later be able to delete
         for(let i = 0; i < this.pBoard.size; i++){
             let row = document.createElement('tr');
             for(let j = 0; j < this.pBoard.size; j++){

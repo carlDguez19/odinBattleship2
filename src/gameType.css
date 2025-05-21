@@ -64,3 +64,13 @@ input[class="pve"]:focus + svg {
 button {
   margin: 5px;
 }
+
+.submitButton:hover,
+.closeButton:hover {
+  background-color: black;
+  color: antiquewhite;
+}
+.submitButton:active,
+.closeButton:active {
+  scale: 0.9;
+}
