@@ -17,16 +17,21 @@ export class Gameboard{
         return arr;
     }
     coordsNotTaken(board, coords, axis, length){//cells are empty before placing
+        console.log("new ship of length " + length);
         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
-                if(board[coords[0]+i][coords[1]] != undefined){//if ship at these coords then ...
+                console.log("coord 0: " + (coords[0]+i));
+                console.log("coord 1: " + coords[1]);
+                if(board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
             return true;
         }else{//ship placed horizontally
             for(let i = 0; i < length; i++){
-                if(board[coords[0]][coords[1]+i] != undefined){//if ship at these coords then ...
+                console.log("coord 0: " + coords[0]);
+                console.log("coord 1: " + (coords[1]+i));
+                if(board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
@@ -48,39 +53,32 @@ export class Gameboard{
             }
         }
     }
+    printBoardArray(boardArr){
+        for(let i = 0; i < boardArr.length; i++){
+            for(let j = 0; j < boardArr[i].length; j++){
+                console.log(boardArr[i][j]);
+            }
+            console.log("newLine");
+        }
+    }
     placeShip(length, coords, axis, id, player){
         const testShip = new Ship(length,id,coords,axis);
         this.ships.push(testShip);
         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
-                this.board[coords[0]+i][coords[1]] = testShip;
+                player.pBoard.board[coords[0]+i][coords[1]] = testShip;
+                this.printBoardArray(player.pBoard.board);
+                //console.log(player.pBoard.board[coords[0]+i][coords[1]]);
             }
-            this.numOfShips++;
+            player.pBoard.numOfShips++;
         }else{//ship placed horizontally
             for(let i = 0; i < length; i++){
-                this.board[coords[0]][coords[1]+i] = testShip;
+                player.pBoard.board[coords[0]][coords[1]+i] = testShip;
+                this.printBoardArray(player.pBoard.board);
+                //console.log(player.pBoard.board[coords[0]][coords[1]+i]);
             }
             player.pBoard.numOfShips++;
         }
-        // const shipFits = this.fitsOnBoard(length, coords, axis);//pieces of the ship are not left 'hanging' outside the board
-        // if((length <= 10) && shipFits){//&& shipFits...if ship is not bigger than board itself and ... ^
-        //     const notTaken = this.coordsNotTaken(this.board, coords, axis, length);//we can remove board and replace it with this.baord//make sure spots are empty for ship to be placed
-        //     if(notTaken){
-        //         const testShip = new Ship(length,id,coords,axis);
-        //         this.ships.push(testShip);
-        //         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
-        //             for(let i = 0; i < length; i++){
-        //                 this.board[coords[0]+i][coords[1]] = testShip;
-        //             }
-        //             this.numOfShips++;
-        //         }else{//ship placed horizontally
-        //             for(let i = 0; i < length; i++){
-        //                 this.board[coords[0]][coords[1]+i] = testShip;
-        //             }
-        //             player.pBoard.numOfShips++;
-        //         }
-        //     }
-        // }
     }
     receiveAttack(coords, board){
         if(board[coords[0]][coords[1]] == "X" || board[coords[0]][coords[1]] == "0"){//if previously declared a hit or a miss then leave as a hit or a miss
@@ -216,10 +214,14 @@ function multShipsListener(player,enemy){
             multOKClicked++;
         }else if(player.pBoard.numOfShips == 5 && enemy.type=="cpu"){
             //enemy picks random locations for its ships no need for the multShipOverlay
-            let enemyArr = player.pBoard.ships;
+            let enemyArr = [...player.pBoard.ships];
             coordsOverlayReset();
             multShipsMovement.style.animation = "exitUp 2s forwards";
             enemy.cpuPicksShipsLocations(enemyArr,enemy);
+            // enemy.censorCurtainEnter();
+            // enemy.censorCurtainExit();
+            // const p2Hidden = document.querySelector(".player2HiddenBoard");
+            // p2Hidden.style.animation = "enterTop .5s forwards";
         }else if(enemy.pBoard.numOfShips == 5){
             //get rid of all overlays and start game
             enemy.censorCurtainEnter();
@@ -338,7 +340,6 @@ export function gameTypeListeners(){
         player1.openBoard(".player1HiddenBoard");
         player2.openBoard(".player2HiddenBoard");
 
-        //here
         if(pvp.checked){
             gameTypeOverlay.style.animation = "exitUp 1s forwards";
             player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
@@ -349,21 +350,7 @@ export function gameTypeListeners(){
             player2.type = "cpu";
             player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
             multShipsMovement.style.animation = "diagonalRight 2s forwards";
-        }//else{
-        //     const errorDiv = document.querySelector(".diffCoordsMsg");
-        //     errorDiv.textContent = "Please select a game type";
-        //     coordsOccupiedError();
-        //     clearBoard(player1);
-        //     clearBoard(player2);
-        //     let p1gbt = document.querySelector(".player1Board");
-        //     let p2gbt = document.querySelector(".player2Board");
-        //     let p1gbh = document.querySelector(".player1HiddenBoard");
-        //     let p2gbh = document.querySelector(".player2HiddenBoard");
-        //     p1gbt.firstChild.remove();
-        //     p2gbt.firstChild.remove();
-        //     p1gbh.firstChild.remove();
-        //     p2gbh.firstChild.remove();
-        // }
+        }
         multShipsListener(player1,player2);
         coordsOverlayListener(player1,player2);
 

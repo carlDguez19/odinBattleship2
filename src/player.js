@@ -30,11 +30,11 @@ export class Player{
         for(let j = 0; j < arr.length; j++){
             arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
             let axis = this.getRandomIntInclusive(0,1);
-            while(!(this.pBoard.coordsNotTaken(this.pBoard.board,arr[j].coords,axis,arr[j].length)) || !(this.pBoard.fitsOnBoard(arr[j].length, arr[j].coords, axis))){
+            while(!(cpu.pBoard.coordsNotTaken(cpu.pBoard.board,arr[j].coords,axis,arr[j].length)) || !(cpu.pBoard.fitsOnBoard(arr[j].length, arr[j].coords, axis))){
                 arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
                 axis = this.getRandomIntInclusive(0,1);
             }
-            cpu.pBoard.placeShip(arr[j].length,arr[j].coords,axis,arr[j].id, cpu);
+            cpu.pBoard.placeShip(arr[j].length,arr[j].coords,axis,arr[j].id, cpu,cpu.pBoard.board);//pass board as param????
             let p2gbt = document.querySelector(".player2Board");
             let tableFin = p2gbt.firstElementChild;
             cpu.displayShips(tableFin);
