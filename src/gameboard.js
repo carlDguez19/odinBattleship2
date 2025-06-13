@@ -16,13 +16,13 @@ export class Gameboard{
         }
         return arr;
     }
-    coordsNotTaken(board, coords, axis, length){//cells are empty before placing
+    coordsNotTaken(coords, axis, length){//cells are empty before placing
         console.log("new ship of length " + length);
         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
                 console.log("coord 0: " + (coords[0]+i));
                 console.log("coord 1: " + coords[1]);
-                if(board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
+                if(this.board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
@@ -31,7 +31,7 @@ export class Gameboard{
             for(let i = 0; i < length; i++){
                 console.log("coord 0: " + coords[0]);
                 console.log("coord 1: " + (coords[1]+i));
-                if(board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
+                if(this.board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }

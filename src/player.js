@@ -30,7 +30,7 @@ export class Player{
         for(let j = 0; j < arr.length; j++){
             arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
             let axis = this.getRandomIntInclusive(0,1);
-            while(!(cpu.pBoard.coordsNotTaken(cpu.pBoard.board,arr[j].coords,axis,arr[j].length)) || !(cpu.pBoard.fitsOnBoard(arr[j].length, arr[j].coords, axis))){
+            while(!(cpu.pBoard.coordsNotTaken(arr[j].coords,axis,arr[j].length)) || !(cpu.pBoard.fitsOnBoard(arr[j].length, arr[j].coords, axis))){
                 arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
                 axis = this.getRandomIntInclusive(0,1);
             }
