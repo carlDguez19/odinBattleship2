@@ -16,13 +16,13 @@ export class Gameboard{
         }
         return arr;
     }
-    coordsNotTaken(coords, axis, length){//cells are empty before placing
+    coordsNotTaken(board, coords, axis, length){//cells are empty before placing
         console.log("new ship of length " + length);
         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
                 console.log("coord 0: " + (coords[0]+i));
                 console.log("coord 1: " + coords[1]);
-                if(this.board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
+                if(board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
@@ -31,7 +31,7 @@ export class Gameboard{
             for(let i = 0; i < length; i++){
                 console.log("coord 0: " + coords[0]);
                 console.log("coord 1: " + (coords[1]+i));
-                if(this.board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
+                if(board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
                     return false;
                 }
             }
@@ -66,18 +66,22 @@ export class Gameboard{
         this.ships.push(testShip);
         if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
             for(let i = 0; i < length; i++){
-                player.pBoard.board[coords[0]+i][coords[1]] = testShip;
-                this.printBoardArray(player.pBoard.board);
+                this.board[coords[0]+i][coords[1]] = testShip;
+                //player.pBoard.board[coords[0]+i][coords[1]] = testShip;
+                //this.printBoardArray(player.pBoard.board);
                 //console.log(player.pBoard.board[coords[0]+i][coords[1]]);
             }
-            player.pBoard.numOfShips++;
+            //player.pBoard.numOfShips++;
+            this.numOfShips++;
         }else{//ship placed horizontally
             for(let i = 0; i < length; i++){
-                player.pBoard.board[coords[0]][coords[1]+i] = testShip;
-                this.printBoardArray(player.pBoard.board);
+                this.board[coords[0]][coords[1]+i] = testShip;
+                //player.pBoard.board[coords[0]][coords[1]+i] = testShip;
+                //this.printBoardArray(player.pBoard.board);
                 //console.log(player.pBoard.board[coords[0]][coords[1]+i]);
             }
-            player.pBoard.numOfShips++;
+            //player.pBoard.numOfShips++;
+            this.numOfShips++;
         }
     }
     receiveAttack(coords, board){
@@ -218,10 +222,7 @@ function multShipsListener(player,enemy){
             coordsOverlayReset();
             multShipsMovement.style.animation = "exitUp 2s forwards";
             enemy.cpuPicksShipsLocations(enemyArr,enemy);
-            // enemy.censorCurtainEnter();
-            // enemy.censorCurtainExit();
-            // const p2Hidden = document.querySelector(".player2HiddenBoard");
-            // p2Hidden.style.animation = "enterTop .5s forwards";
+            //i thi
         }else if(enemy.pBoard.numOfShips == 5){
             //get rid of all overlays and start game
             enemy.censorCurtainEnter();

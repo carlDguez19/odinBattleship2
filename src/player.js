@@ -28,13 +28,13 @@ export class Player{
     }
     cpuPicksShipsLocations(arr,cpu){
         for(let j = 0; j < arr.length; j++){
-            arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
+            let coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
             let axis = this.getRandomIntInclusive(0,1);
-            while(!(cpu.pBoard.coordsNotTaken(arr[j].coords,axis,arr[j].length)) || !(cpu.pBoard.fitsOnBoard(arr[j].length, arr[j].coords, axis))){
-                arr[j].coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
+            while(!cpu.pBoard.fitsOnBoard(arr[j].length, coords, axis)||!cpu.pBoard.coordsNotTaken(cpu.pBoard.board,coords,axis,arr[j].length)){
+                coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
                 axis = this.getRandomIntInclusive(0,1);
             }
-            cpu.pBoard.placeShip(arr[j].length,arr[j].coords,axis,arr[j].id, cpu,cpu.pBoard.board);//pass board as param????
+            cpu.pBoard.placeShip(arr[j].length,coords,axis,arr[j].id, cpu);//pass board as param????
             let p2gbt = document.querySelector(".player2Board");
             let tableFin = p2gbt.firstElementChild;
             cpu.displayShips(tableFin);
