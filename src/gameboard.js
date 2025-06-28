@@ -194,8 +194,12 @@ let multShipSize = 0;
 export let multOKClicked = 0;
 
 function clearBoard(player){
-    player.pBoard.board = player.pBoard.generateGameboard(10);
-    player.pBoard.ships = [];
+    if(multOKClicked > 0){
+        //reset the board and num of ships
+        player.pBoard.board = player.pBoard.generateGameboard(10);
+        player.pBoard.ships = [];
+        multOKClicked = 0;
+    }
 }
 
 function multShipsListener(player,enemy){
@@ -209,21 +213,27 @@ function multShipsListener(player,enemy){
         }
     })
     confirmShipsButton.addEventListener('click', function(){
-        if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){
+        if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){//p1(real) has placed all ships
             // reset the overlay for coords
             coordsOverlayReset();
             player.censorCurtainEnter();
             multShipsMovement.style.animation = "slideLeft 2s forwards";
             player.censorCurtainExit();
             multOKClicked++;
-        }else if(player.pBoard.numOfShips == 5 && enemy.type=="cpu"){
+        }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
             //enemy picks random locations for its ships no need for the multShipOverlay
             let enemyArr = [...player.pBoard.ships];
-            coordsOverlayReset();
-            multShipsMovement.style.animation = "exitUp 2s forwards";
             enemy.cpuPicksShipsLocations(enemyArr,enemy);
-            //i thi
-        }else if(enemy.pBoard.numOfShips == 5){
+            enemy.censorCurtainEnter();    
+            coordsOverlayReset();
+            enemy.censorCurtainExit();
+            multShipsMovement.style.animation = "exitUp 2s forwards";
+            const hidden2Board = document.querySelector(".player2HiddenBoard");
+            const true2Board = document.querySelector(".player2Board");
+            hidden2Board.style.animation = "enterTopBoard 1s forwards";
+            true2Board.style.opacity = 0;
+            multOKClicked++;
+        }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
             //get rid of all overlays and start game
             enemy.censorCurtainEnter();
             coordsOverlayReset();
@@ -231,7 +241,7 @@ function multShipsListener(player,enemy){
             multShipsMovement.style.animation = "exitUp 2s forwards";
             const hidden2Board = document.querySelector(".player2HiddenBoard");
             const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTop 1s forwards";
+            hidden2Board.style.animation = "enterTopBoard 1s forwards";
             true2Board.style.opacity = 0;
             multOKClicked++;
         }
@@ -317,14 +327,16 @@ function playAgainButtonListener(p1,p2){
     playAgainButton.addEventListener('click',function(){//reset boards here and the 2d arrays
         winnerOverlay.style.animation = "exitUp 1s forwards";
         let curtain = document.querySelector(".censorCurtain");
-        curtain.style.animation = 'exitUp 1s forwards';
-        clearBoard(p1);
-        clearBoard(p2);
+        //curtain.style.animation = 'exitUp 1s forwards';
+        // clearBoard(p1);
+        // clearBoard(p2);
         pvp.checked = false;
         pve.checked = false;
         gameTypeOverlay.style.animation = "enterTop 2s forwards";
+        //multOKClicked = 0;
     })
 }
+let player1, player2;
 
 export function gameTypeListeners(){
     gameTypecloseButton.addEventListener('click', function(){
@@ -333,8 +345,11 @@ export function gameTypeListeners(){
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
     });
     gameTypesubmitButton.addEventListener('click', function(){
-        const player1 = new Player("real", 10);
-        const player2 = new Player("real", 10);
+        clearBoard(player1);
+        clearBoard(player2);
+
+        player1 = new Player("real", 10);
+        player2 = new Player("real", 10);
 
         player1.openBoard(".player1Board");
         player2.openBoard(".player2Board");

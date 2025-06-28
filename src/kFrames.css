@@ -64,6 +64,16 @@
   }
   to {
     top: 30vh;
-    left: 50vw;
+    left: 20vw;
+  }
+}
+
+@keyframes enterTopBoard {
+  from {
+    top: -100%;
+  }
+  to {
+    top: 28vh;
+    right: 20vw;
   }
 }

@@ -50,14 +50,6 @@ export class Player{
         }
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
         enemy.gotAttacked = true;
-        if(enemy.pBoard.allShipsSunk()){//      if this boards ships sunk then we lost...
-            console.log("the winner is player "+ winner);
-            this.clearGrid(trueTable);
-            this.clearGrid(cpuHiddenTable);
-            this.censorCurtainEnter();
-            displayWinner(winner);
-        }
-
     }
 
     cpuGameClickCell(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
@@ -66,7 +58,7 @@ export class Player{
         let gbt = document.querySelector(enemyTrueBoard);
         let enemyTrueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && multOKClicked == 2){
+            if(e.target.tagName === 'TD' && multOKClicked == 1){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
@@ -76,10 +68,10 @@ export class Player{
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
                             this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
                         }
-                    }else{
+                    }
+                    else{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         console.log("the winner is player "+ winner);
-                        this.censorCurtainEnter();
                         this.clearGrid(hiddenTable);
                         this.clearGrid(enemyTrueTable);
                         displayWinner(winner);
@@ -104,7 +96,7 @@ export class Player{
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     let shipsSunk = this.pBoard.allShipsSunk();
-                    if(!(shipsSunk)){//      if this boards ships sunk then we lost...
+                    if(!(shipsSunk)){//ships not sunk
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
@@ -114,11 +106,10 @@ export class Player{
                             this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
                         }
                         console.log("lollipop");
-                    }else{
+                    }else{//ships sunk display winner
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
                         console.log("the winner is player "+ winner);
-                        this.censorCurtainEnter();
                         this.clearGrid(hiddenTable);
                         this.clearGrid(trueTable);
                         let enemyOldTable = document.querySelector(enemyOldBoard);
