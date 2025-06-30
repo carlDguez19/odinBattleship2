@@ -2,8 +2,8 @@ import { Ship } from "./ship";
 import { Player } from "./player";
 
 export class Gameboard{
-    constructor(size){
-        this.size = size;
+    constructor(){
+        this.size = 10;
         this.numOfShips = 0;
         this.ships = [];
         this.board = this.generateGameboard(this.size);
@@ -196,8 +196,9 @@ export let multOKClicked = 0;
 function clearBoard(player){
     if(multOKClicked > 0){
         //reset the board and num of ships
-        player.pBoard.board = player.pBoard.generateGameboard(10);
+        player.pBoard.board = player.pBoard.generateGameboard(player.pBoard.size);
         player.pBoard.ships = [];
+        player.pBoard.numOfShips = 0;
         multOKClicked = 0;
     }
 }

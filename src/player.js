@@ -1,9 +1,9 @@
 import { displayWinner, Gameboard, multOKClicked } from "./gameboard";
 
 export class Player{
-    constructor(type, length){
+    constructor(type){
         this.type = type;
-        this.pBoard = new Gameboard(length);
+        this.pBoard = new Gameboard();
         this.gotAttacked = false;
         this.delay = ms => new Promise(res => setTimeout(res, ms));
     }
