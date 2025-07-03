@@ -95,20 +95,19 @@ export class Player{
                 let rIndex = row.rowIndex//get coords of cell
                 console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-                    let shipsSunk = this.pBoard.allShipsSunk();
-                    if(!(shipsSunk)){//ships not sunk
+                    //let shipsSunk = this.pBoard.allShipsSunk();
+                    if(!(this.pBoard.allShipsSunk())){//ships not sunk
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
                             this.censorCurtainEnter();
                             this.censorCurtainExit();//bring down curtain and exit
                             this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
                             this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
                         }
-                        console.log("lollipop");
                     }else{//ships sunk display winner
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//$%$%$%$%$%$%$%$
                         console.log("the winner is player "+ winner);
                         this.clearGrid(hiddenTable);
                         this.clearGrid(trueTable);
@@ -170,7 +169,7 @@ export class Player{
         curtain.style.animation = 'curtainEnter 1.8s forwards';
     }
     async consecutiveHit(enemy, coords, trueTable){
-        await this.delay(700);
+        //await this.delay(700);//might not be needed
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
     }
     async censorCurtainExit(){

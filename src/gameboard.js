@@ -171,35 +171,36 @@ export class Gameboard{
 
 let winnerOverlay = document.querySelector(".winnerOverlay");
 let multShipsMovement = document.querySelector(".multShipsPlacementOverlay");
+const pvp = document.querySelector(".pvp");
+const pve = document.querySelector(".pve");
+const shipCoordsOverlay = document.querySelector(".shipInputsOverlay");
+const xAxis = document.querySelector(".xAxis");
+const yAxis = document.querySelector(".yAxis");
+const xRadio = document.querySelector(".xRadio");
+const yRadio = document.querySelector(".yRadio");
+let multShipSize = 0;
+export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
+export let multOKClicked = 0;
+
 export function displayWinner(winner){
    let winnerMsg = document.querySelector(".trueWinner");
     winnerMsg.textContent = "player " + winner;
     winnerOverlay.style.animation = "enterTop 1s forwards";
 }
 
-const gameTypesubmitButton = document.querySelector(".submitButton");
-const gameTypecloseButton = document.querySelector(".closeButton");
-const pvp = document.querySelector(".pvp");
-const pve = document.querySelector(".pve");
-export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
-
-const shipCoordsOverlay = document.querySelector(".shipInputsOverlay");
-const shipCoordsSubmit = document.querySelector(".confirmCoords");
-const shipCoordsCancel = document.querySelector(".cancelCoords");
-const xAxis = document.querySelector(".xAxis");
-const yAxis = document.querySelector(".yAxis");
-const xRadio = document.querySelector(".xRadio");
-const yRadio = document.querySelector(".yRadio");
-let multShipSize = 0;
-export let multOKClicked = 0;
-
 function clearBoard(player){
     if(multOKClicked > 0){
         //reset the board and num of ships
+        
+        // console.log("player1 board is the following: " + JSON.stringify(player1.pBoard.board, null, 2));
+        // console.log("player2 board is the following: " + player2.pBoard.board);
+        
         player.pBoard.board = player.pBoard.generateGameboard(player.pBoard.size);
         player.pBoard.ships = [];
         player.pBoard.numOfShips = 0;
-        multOKClicked = 0;
+        
+        console.log("player1 board is the following: " + JSON.stringify(player1.pBoard.board, null, 2));
+        console.log("player2 board is the following: " + player2.pBoard.board);
     }
 }
 
@@ -260,6 +261,8 @@ function multShipsListener(player,enemy){
 }
 
 function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
+    const shipCoordsSubmit = document.querySelector(".confirmCoords");
+    const shipCoordsCancel = document.querySelector(".cancelCoords");
     shipCoordsSubmit.addEventListener("click", function(){
         let player;
         let trueTable;
@@ -340,37 +343,38 @@ function playAgainButtonListener(p1,p2){
 let player1, player2;
 
 export function gameTypeListeners(){
-    gameTypecloseButton.addEventListener('click', function(){
-        pvp.checked = false;
-        pve.checked = false;
+    const gameTypesubmitButton = document.querySelector(".submitButton");
+    gameTypesubmitButton.addEventListener('click', gameTypeSubmitListenerFunction);
+}
+
+function gameTypeSubmitListenerFunction(){
+    clearBoard(player1);
+    clearBoard(player2);
+
+    multOKClicked = 0;
+
+    player1 = new Player("real", 10);
+    player2 = new Player("real", 10);
+
+    player1.openBoard(".player1Board");
+    player2.openBoard(".player2Board");
+    player1.openBoard(".player1HiddenBoard");
+    player2.openBoard(".player2HiddenBoard");
+
+    if(pvp.checked){
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
-    });
-    gameTypesubmitButton.addEventListener('click', function(){
-        clearBoard(player1);
-        clearBoard(player2);
+        player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
+        player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
+        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+    }else{
+        gameTypeOverlay.style.animation = "exitUp 1s forwards";
+        player2.type = "cpu";
+        player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
+        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+    }
+    
+    multShipsListener(player1,player2);
+    coordsOverlayListener(player1,player2);
 
-        player1 = new Player("real", 10);
-        player2 = new Player("real", 10);
-
-        player1.openBoard(".player1Board");
-        player2.openBoard(".player2Board");
-        player1.openBoard(".player1HiddenBoard");
-        player2.openBoard(".player2HiddenBoard");
-
-        if(pvp.checked){
-            gameTypeOverlay.style.animation = "exitUp 1s forwards";
-            player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-            player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
-            multShipsMovement.style.animation = "diagonalRight 2s forwards";
-        }else{
-            gameTypeOverlay.style.animation = "exitUp 1s forwards";
-            player2.type = "cpu";
-            player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
-            multShipsMovement.style.animation = "diagonalRight 2s forwards";
-        }
-        multShipsListener(player1,player2);
-        coordsOverlayListener(player1,player2);
-
-        playAgainButtonListener(player1,player2);
-    })
+    playAgainButtonListener(player1,player2);
 }
