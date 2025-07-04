@@ -248,15 +248,6 @@ function multShipsListener(player,enemy){
             multOKClicked++;
         }
     })
-    cancelShipsOverlay.addEventListener('click', function(){
-        //clear whatever has been done to place ships on either board
-        //take away multShipsOverlay and bring in gameType overlay
-        coordsOverlayReset();
-        clearBoard(player);
-        clearBoard(enemy);
-        multShipsDiagram.style.animation = "exitUp 2s forwards";
-        gameTypeOverlay.style.animation = "enterTop 1s forwards";
-    })
     //add listener for submit and close buttons if enemy in params then call censor curtain then call mult ships again for enemy???
 }
 
