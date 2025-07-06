@@ -51,8 +51,37 @@ export class Player{
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
         enemy.gotAttacked = true;
     }
-
     cpuGameClickCell(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+        let gbh = document.querySelector(playerHiddenBoardDOM);
+        let hiddenTable = gbh.firstElementChild;
+        let gbt = document.querySelector(enemyTrueBoard);
+        let enemyTrueTable = gbt.firstElementChild;
+        hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
+            if(e.target.tagName === 'TD' && multOKClicked == 1){
+                const row = e.target.parentElement;//
+                let cIndex = e.target.cellIndex;//
+                let rIndex = row.rowIndex//get coords of cell
+                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
+                    if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                        if(this.pBoard.board[rIndex][cIndex] == "0"){
+                            this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
+                        }
+                    }
+                    else{
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+                        console.log("the winner is player "+ winner);
+                        this.clearGrid(hiddenTable);
+                        this.clearGrid(enemyTrueTable);
+                        displayWinner(winner);
+                    }
+                }
+            }
+        }
+        );
+    }
+
+    cpuGameClickCell2(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
         let gbt = document.querySelector(enemyTrueBoard);
