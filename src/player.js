@@ -57,7 +57,7 @@ export class Player{
         let gbt = document.querySelector(enemyTrueBoard);
         let enemyTrueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && multOKClicked == 1){
+            if(e.target.tagName === 'TD' && multOKClicked > 0){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
@@ -85,9 +85,9 @@ export class Player{
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
         let gbt = document.querySelector(enemyTrueBoard);
-        let enemyTrueTable = gbt.firstElementChild;
+        let trueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && multOKClicked == 1){
+            if(e.target.tagName === 'TD' && multOKClicked > 0){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
@@ -100,9 +100,8 @@ export class Player{
                     }
                     else{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        console.log("the winner is player "+ winner);
                         this.clearGrid(hiddenTable);
-                        this.clearGrid(enemyTrueTable);
+                        this.clearGrid(trueTable);
                         displayWinner(winner);
                     }
                 }
@@ -118,11 +117,11 @@ export class Player{
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD'){
+            if(e.target.tagName === 'TD' && multOKClicked > 0){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
-                console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+                //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     //let shipsSunk = this.pBoard.allShipsSunk();
                     if(!(this.pBoard.allShipsSunk())){//ships not sunk

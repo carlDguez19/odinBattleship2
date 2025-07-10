@@ -354,8 +354,8 @@ function gameTypeSubmitListenerFunction(){
 
     if(pvp.checked){
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
-        player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//
-        player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//
+        player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2);//this means player 2 turn//here i will add the type of game i.e pvp or pve
+        player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1);//this means player 1 turn//here i will add the type of game i.e pvp or pve
         multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }else{
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
