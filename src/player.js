@@ -4,8 +4,9 @@ export class Player{
     constructor(type){
         this.type = type;
         this.pBoard = new Gameboard();
-        this.gotAttacked = false;
-        this.delay = ms => new Promise(res => setTimeout(res, ms));
+    }
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
     getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
@@ -15,6 +16,7 @@ export class Player{
     cpuPicksCoords(enemy){
         //returns coords
         let coords = [];
+        let attempts = 0;
         do{
             coords = [];
             console.log("upcoming coords:");
@@ -22,6 +24,10 @@ export class Player{
                 let randInt = this.getRandomIntInclusive(0, 9);
                 console.log("cpu picked coords: " + randInt);
                 coords.push(randInt);
+            }
+            attempts++;
+            if(attempts > 100){
+                throw new Error("CPU attempts have exceeded safe limits. Logic is most likely broken.");
             }
         }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
         return coords;
@@ -49,7 +55,6 @@ export class Player{
             coords = this.cpuPicksCoords(enemy);
         }
         enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
-        enemy.gotAttacked = true;
         //add logic to check if all ships sunk
         if(enemy.pBoard.allShipsSunk()){
             console.log("the winner is player "+ winner);
@@ -58,38 +63,38 @@ export class Player{
             displayWinner(winner);
         }
     }
-    cpuGameClickCell(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
-        let gbh = document.querySelector(playerHiddenBoardDOM);
-        let hiddenTable = gbh.firstElementChild;
-        let gbt = document.querySelector(enemyTrueBoard);
-        let enemyTrueTable = gbt.firstElementChild;
-        hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && multOKClicked > 0){
-                const row = e.target.parentElement;//
-                let cIndex = e.target.cellIndex;//
-                let rIndex = row.rowIndex//get coords of cell
-                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-                    if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+    // cpuGameClickCell(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+    //     let gbh = document.querySelector(playerHiddenBoardDOM);
+    //     let hiddenTable = gbh.firstElementChild;
+    //     let gbt = document.querySelector(enemyTrueBoard);
+    //     let enemyTrueTable = gbt.firstElementChild;
+    //     hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
+    //         if(e.target.tagName === 'TD' && multOKClicked > 0){
+    //             const row = e.target.parentElement;//
+    //             let cIndex = e.target.cellIndex;//
+    //             let rIndex = row.rowIndex//get coords of cell
+    //             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
+    //                 if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
+    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         
-                        if(this.pBoard.board[rIndex][cIndex] == "0"){
-                            this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
-                        }
-                    }
-                    else{
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        console.log("the winner is player "+ winner);
-                        this.clearGrid(hiddenTable);
-                        this.clearGrid(enemyTrueTable);
-                        displayWinner(winner);
-                    }
-                }
-            }
-        }
-        );
-    }
+    //                     if(this.pBoard.board[rIndex][cIndex] == "0"){
+    //                         this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
+    //                     }
+    //                 }
+    //                 else{
+    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+    //                     console.log("the winner is player "+ winner);
+    //                     this.clearGrid(hiddenTable);
+    //                     this.clearGrid(enemyTrueTable);
+    //                     displayWinner(winner);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     );
+    // }
 
-    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy,gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
         let gbt;
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
@@ -115,7 +120,7 @@ export class Player{
                                 this.censorCurtainEnter();
                                 this.censorCurtainExit();//bring down curtain and exit
                                 this.swapEnemyBoards(enemyTrueBoard, enemyHiddenBoard);//swap the enemy boards(hidden and true)
-                                this.swapBoards(playerHiddenBoardDOM, enemyTrueBoard);//swap our boards(hidden and true)
+                                this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
                             }
                         }
                     }
@@ -139,48 +144,46 @@ export class Player{
     }
 
 //write a similar method to clickCell that will handle computer attack choices
-    clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
-        let gbh = document.querySelector(playerHiddenBoardDOM);
-        let hiddenTable = gbh.firstElementChild;
-        let gbt = document.querySelector(playerTrueBoardDOM);
-        let trueTable = gbt.firstElementChild;
-        hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && multOKClicked > 0){
-                const row = e.target.parentElement;//
-                let cIndex = e.target.cellIndex;//
-                let rIndex = row.rowIndex//get coords of cell
-                //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
-                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-                    //let shipsSunk = this.pBoard.allShipsSunk();
-                    if(!(this.pBoard.allShipsSunk())){//ships not sunk
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
-                        if(this.pBoard.board[rIndex][cIndex] == "0"){
-                            this.censorCurtainEnter();
-                            this.censorCurtainExit();//bring down curtain and exit
-                            this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-                            this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-                        }
-                    }else{//ships sunk display winner
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//$%$%$%$%$%$%$%$
-                        console.log("the winner is player "+ winner);
-                        this.clearGrid(hiddenTable);
-                        this.clearGrid(trueTable);
-                        let enemyOldTable = document.querySelector(enemyOldBoard);
-                        let enemyNewTable = document.querySelector(enemyNewBoard);
-                        this.clearGrid(enemyOldTable.firstElementChild);
-                        this.clearGrid(enemyNewTable.firstElementChild);
-                        displayWinner(winner);
-                    }
-                }
-            }
-        }
-        );
-    }
+    // clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
+    //     let gbh = document.querySelector(playerHiddenBoardDOM);
+    //     let hiddenTable = gbh.firstElementChild;
+    //     let gbt = document.querySelector(playerTrueBoardDOM);
+    //     let trueTable = gbt.firstElementChild;
+    //     hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
+    //         if(e.target.tagName === 'TD' && multOKClicked > 0){
+    //             const row = e.target.parentElement;//
+    //             let cIndex = e.target.cellIndex;//
+    //             let rIndex = row.rowIndex//get coords of cell
+    //             //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
+    //             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
+    //                 //let shipsSunk = this.pBoard.allShipsSunk();
+    //                 if(!(this.pBoard.allShipsSunk())){//ships not sunk
+    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
+    //                     if(this.pBoard.board[rIndex][cIndex] == "0"){
+    //                         this.censorCurtainEnter();
+    //                         this.censorCurtainExit();//bring down curtain and exit
+    //                         this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+    //                         this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+    //                     }
+    //                 }else{//ships sunk display winner
+    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
+    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//$%$%$%$%$%$%$%$
+    //                     console.log("the winner is player "+ winner);
+    //                     this.clearGrid(hiddenTable);
+    //                     this.clearGrid(trueTable);
+    //                     let enemyOldTable = document.querySelector(enemyOldBoard);
+    //                     let enemyNewTable = document.querySelector(enemyNewBoard);
+    //                     this.clearGrid(enemyOldTable.firstElementChild);
+    //                     this.clearGrid(enemyNewTable.firstElementChild);
+    //                     displayWinner(winner);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     );
+    // }
     displayShips(playerBoardDOM){
-        // let gb = document.querySelector(playerBoardDOM);
-        // let table = gb.firstElementChild;
         for(let i = 0; i < this.pBoard.board.length; i++){
             for(let j = 0; j < this.pBoard.board[i].length; j++){
                 const row = playerBoardDOM.rows[i];//querySelector(`tr:nth-child(${i})`);
@@ -252,6 +255,6 @@ export class Player{
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
         oBoard.style.animation = 'fadeOut 0.5s forwards';
-        nBoard.style.animation = 'enterTop 0.5s forwards';
+        nBoard.style.animation = 'enterTopBoard 0.5s forwards';
     }
 }

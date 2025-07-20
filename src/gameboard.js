@@ -352,15 +352,32 @@ function gameTypeSubmitListenerFunction(){
     player1.openBoard(".player1HiddenBoard");
     player2.openBoard(".player2HiddenBoard");
 
+    //{playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy,gameType}
     if(pvp.checked){
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
-        player1.clickCell(".player1HiddenBoard", ".player1Board", ".player2Board", ".player2HiddenBoard",2,"pvp");//this means player 2 turn//here i will add the type of game i.e pvp or pve
-        player2.clickCell(".player2HiddenBoard", ".player2Board", ".player1Board", ".player1HiddenBoard",1,"pvp");//this means player 1 turn//here i will add the type of game i.e pvp or pve
+        player1.clickCellCore({
+            playerHiddenBoardDOM: ".player1HiddenBoard",
+            playerTrueBoardDOM: ".player1Board",
+            enemyTrueBoard: ".player2Board",
+            enemyHiddenBoard: ".player2HiddenBoard",
+            winner: 2,
+            gameType: "pvp"});//this means player 2 turn//here i will add the type of game i.e pvp or pve
+        player2.clickCellCore({
+            playerHiddenBoardDOM: ".player2HiddenBoard",
+            playerTrueBoardDOM: ".player2Board",
+            enemyTrueBoard: ".player1Board",
+            enemyHiddenBoard: ".player1HiddenBoard",
+            winner: 1,
+            gameType: "pvp"});//this means player 1 turn//here i will add the type of game i.e pvp or pve
         multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }else{
         gameTypeOverlay.style.animation = "exitUp 1s forwards";
         player2.type = "cpu";
-        player2.cpuGameClickCell(".player2HiddenBoard",1, player1, ".player1Board");//, ".player2Board"//this means player 1 turn//
+        player2.clickCellCore({
+            playerHiddenBoardDOM: ".player2HiddenBoard",
+            enemyTrueBoard: ".player1Board",
+            winner: 1,
+            enemy: player1});//, ".player2Board"//this means player 1 turn//
         //player2.clickCellCore(".player2HiddenBoard", ".player1Board", 1, player1)
         multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }
