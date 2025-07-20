@@ -89,10 +89,15 @@ export class Player{
         );
     }
 
-    clickCellCore(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner,gameType){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy,gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+        let gbt;
         let gbh = document.querySelector(playerHiddenBoardDOM);
         let hiddenTable = gbh.firstElementChild;
-        let gbt = document.querySelector(enemyTrueBoard);
+        if(gameType == "pvp"){
+            gbt = document.querySelector(playerTrueBoardDOM);
+        }else{
+            gbt = document.querySelector(enemyTrueBoard);
+        }
         let trueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
             if(e.target.tagName === 'TD' && multOKClicked > 0){
@@ -109,7 +114,7 @@ export class Player{
                             }else{
                                 this.censorCurtainEnter();
                                 this.censorCurtainExit();//bring down curtain and exit
-                                this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
+                                this.swapEnemyBoards(enemyTrueBoard, enemyHiddenBoard);//swap the enemy boards(hidden and true)
                                 this.swapBoards(playerHiddenBoardDOM, enemyTrueBoard);//swap our boards(hidden and true)
                             }
                         }
@@ -118,8 +123,8 @@ export class Player{
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
                         if(gameType == "pvp"){
                             this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//$%$%$%$%$%$%$%$
-                            let enemyOldTable = document.querySelector(enemyOldBoard);
-                            let enemyNewTable = document.querySelector(enemyNewBoard);
+                            let enemyOldTable = document.querySelector(enemyTrueBoard);
+                            let enemyNewTable = document.querySelector(enemyHiddenBoard);
                             this.clearGrid(enemyOldTable.firstElementChild);
                             this.clearGrid(enemyNewTable.firstElementChild);
                         }
