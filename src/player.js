@@ -63,36 +63,6 @@ export class Player{
             displayWinner(winner);
         }
     }
-    // cpuGameClickCell(playerHiddenBoardDOM, winner, enemy, enemyTrueBoard){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
-    //     let gbh = document.querySelector(playerHiddenBoardDOM);
-    //     let hiddenTable = gbh.firstElementChild;
-    //     let gbt = document.querySelector(enemyTrueBoard);
-    //     let enemyTrueTable = gbt.firstElementChild;
-    //     hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-    //         if(e.target.tagName === 'TD' && multOKClicked > 0){
-    //             const row = e.target.parentElement;//
-    //             let cIndex = e.target.cellIndex;//
-    //             let rIndex = row.rowIndex//get coords of cell
-    //             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-    //                 if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
-    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        
-    //                     if(this.pBoard.board[rIndex][cIndex] == "0"){
-    //                         this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
-    //                     }
-    //                 }
-    //                 else{
-    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-    //                     console.log("the winner is player "+ winner);
-    //                     this.clearGrid(hiddenTable);
-    //                     this.clearGrid(enemyTrueTable);
-    //                     displayWinner(winner);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     );
-    // }
 
     clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
         let gbt;
@@ -112,15 +82,18 @@ export class Player{
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
                         this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
+                        if(gameType == "pvp"){
+                            this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
+                        }
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
-                            if(gameType == "cpu"){
-                                this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
-                            }else{
+                            if(gameType == "pvp"){
                                 this.censorCurtainEnter();
                                 this.censorCurtainExit();//bring down curtain and exit
                                 this.swapEnemyBoards(enemyTrueBoard, enemyHiddenBoard);//swap the enemy boards(hidden and true)
                                 this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                            }else{
+                                this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
+                                
                             }
                         }
                     }
@@ -143,46 +116,6 @@ export class Player{
         );
     }
 
-//write a similar method to clickCell that will handle computer attack choices
-    // clickCell(playerHiddenBoardDOM, playerTrueBoardDOM, enemyOldBoard, enemyNewBoard, winner){//this should update the hidden board and the true board at the same time
-    //     let gbh = document.querySelector(playerHiddenBoardDOM);
-    //     let hiddenTable = gbh.firstElementChild;
-    //     let gbt = document.querySelector(playerTrueBoardDOM);
-    //     let trueTable = gbt.firstElementChild;
-    //     hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-    //         if(e.target.tagName === 'TD' && multOKClicked > 0){
-    //             const row = e.target.parentElement;//
-    //             let cIndex = e.target.cellIndex;//
-    //             let rIndex = row.rowIndex//get coords of cell
-    //             //console.log("clicked cell row: " + rIndex + " col: " + cIndex);
-    //             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-    //                 //let shipsSunk = this.pBoard.allShipsSunk();
-    //                 if(!(this.pBoard.allShipsSunk())){//ships not sunk
-    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
-    //                     if(this.pBoard.board[rIndex][cIndex] == "0"){
-    //                         this.censorCurtainEnter();
-    //                         this.censorCurtainExit();//bring down curtain and exit
-    //                         this.swapEnemyBoards(enemyOldBoard, enemyNewBoard);//swap the enemy boards(hidden and true)
-    //                         this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
-    //                     }
-    //                 }else{//ships sunk display winner
-    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-    //                     this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//$%$%$%$%$%$%$%$
-    //                     console.log("the winner is player "+ winner);
-    //                     this.clearGrid(hiddenTable);
-    //                     this.clearGrid(trueTable);
-    //                     let enemyOldTable = document.querySelector(enemyOldBoard);
-    //                     let enemyNewTable = document.querySelector(enemyNewBoard);
-    //                     this.clearGrid(enemyOldTable.firstElementChild);
-    //                     this.clearGrid(enemyNewTable.firstElementChild);
-    //                     displayWinner(winner);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     );
-    // }
     displayShips(playerBoardDOM){
         for(let i = 0; i < this.pBoard.board.length; i++){
             for(let j = 0; j < this.pBoard.board[i].length; j++){

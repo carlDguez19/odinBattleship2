@@ -377,7 +377,8 @@ function gameTypeSubmitListenerFunction(){
             playerHiddenBoardDOM: ".player2HiddenBoard",
             enemyTrueBoard: ".player1Board",
             winner: 1,
-            enemy: player1});//, ".player2Board"//this means player 1 turn//
+            enemy: player1,
+            gameType: "cpu"});//, ".player2Board"//this means player 1 turn//
         //player2.clickCellCore(".player2HiddenBoard", ".player1Board", 1, player1)
         multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }
