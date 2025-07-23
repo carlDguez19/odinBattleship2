@@ -1,4 +1,4 @@
-import { displayWinner, Gameboard, multOKClicked } from "./gameboard";
+import { displayWinner, Gameboard, getMultOKClicked, setMultOKClicked } from "./gameboard";
 
 export class Player{
     constructor(type){
@@ -75,7 +75,7 @@ export class Player{
         }
         let trueTable = gbt.firstElementChild;
         hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && multOKClicked > 0){
+            if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
@@ -108,7 +108,9 @@ export class Player{
                         }
                         this.clearGrid(hiddenTable);
                         this.clearGrid(trueTable);
+                        //setMultOKClicked(0);
                         displayWinner(winner);
+
                     }
                 }
             }

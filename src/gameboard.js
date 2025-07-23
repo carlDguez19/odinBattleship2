@@ -180,7 +180,15 @@ const xRadio = document.querySelector(".xRadio");
 const yRadio = document.querySelector(".yRadio");
 let multShipSize = 0;
 export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
-export let multOKClicked = 0;
+
+let multOKClicked = 0;
+
+export function getMultOKClicked(){
+    return multOKClicked;
+}
+export function setMultOKClicked(val){
+    multOKClicked = val;
+}
 
 export function displayWinner(winner){
    let winnerMsg = document.querySelector(".trueWinner");
@@ -328,7 +336,7 @@ function playAgainButtonListener(p1,p2){
         pvp.checked = false;
         pve.checked = false;
         gameTypeOverlay.style.animation = "enterTop 2s forwards";
-        //multOKClicked = 0;
+        multOKClicked = 0;
     })
 }
 let player1, player2;
