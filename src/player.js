@@ -81,7 +81,8 @@ export class Player{
             gbt = document.querySelector(enemyTrueBoard);
         }
         this.trueTable = gbt.firstElementChild;
-        this.hiddenTable.addEventListener('click', this.cellClicker.bind(this));
+        this.boundedCellClicker = this.cellClicker.bind(this);
+        this.hiddenTable.addEventListener('click', this.boundedCellClicker);
     }
     cellClicker(e){
          if(e.target.tagName === 'TD' && getMultOKClicked() > 0){

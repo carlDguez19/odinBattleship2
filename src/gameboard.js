@@ -215,7 +215,6 @@ function clearBoard(player){
 function multShipsListener(player,enemy){
     let multShipsDiagram = document.querySelector(".shipsDiagram");
     let confirmShipsButton = document.querySelector(".confirmShip");
-    let cancelShipsOverlay = document.querySelector(".cancelShip");
     multShipsDiagram.addEventListener('click', (e) => {
         if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
             multShipSize = e.target.className;
@@ -329,10 +328,6 @@ function playAgainButtonListener(p1,p2){
     const playAgainButton = document.querySelector(".playAgain");
     playAgainButton.addEventListener('click',function(){//reset boards here and the 2d arrays
         winnerOverlay.style.animation = "exitUp 1s forwards";
-        let curtain = document.querySelector(".censorCurtain");
-        //curtain.style.animation = 'exitUp 1s forwards';
-        // clearBoard(p1);
-        // clearBoard(p2);
         pvp.checked = false;
         pve.checked = false;
         gameTypeOverlay.style.animation = "enterTop 2s forwards";
