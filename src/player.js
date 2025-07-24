@@ -90,35 +90,34 @@ export class Player{
                 let rIndex = row.rowIndex//get coords of cell
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        if(gameType == "pvp"){
-                            this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//update trueBoard %$%$%$$%$%$%$%
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                        if(this.gameType == "pvp"){
+                            this.pBoard.updateHitOrMiss([rIndex,cIndex], this.trueTable);//update trueBoard %$%$%$$%$%$%$%
                         }
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
-                            if(gameType == "pvp"){
+                            if(this.gameType == "pvp"){
                                 this.censorCurtainEnter();
                                 this.censorCurtainExit();//bring down curtain and exit
-                                this.swapEnemyBoards(enemyTrueBoard, enemyHiddenBoard);//swap the enemy boards(hidden and true)
-                                this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
+                                this.swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
+                                this.swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
                             }else{
-                                this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
-                                return;
+                                this.cpuPlayerAttacks(".player1Board",2, this.enemy, this.hiddenTable);
                             }
                         }
                     }
                     else{
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], hiddenTable);//update hiddenBoard
-                        if(gameType == "pvp"){
-                            this.pBoard.updateHitOrMiss([rIndex,cIndex], trueTable);//$%$%$%$%$%$%$%$
-                            let enemyOldTable = document.querySelector(enemyTrueBoard);
-                            let enemyNewTable = document.querySelector(enemyHiddenBoard);
+                        this.pBoard.updateHitOrMiss([rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                        if(this.gameType == "pvp"){
+                            this.pBoard.updateHitOrMiss([rIndex,cIndex], this.trueTable);//$%$%$%$%$%$%$%$
+                            let enemyOldTable = document.querySelector(this.enemyTrueBoard);
+                            let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
                             this.clearGrid(enemyOldTable.firstElementChild);
                             this.clearGrid(enemyNewTable.firstElementChild);
                         }
-                        this.clearGrid(hiddenTable);
-                        this.clearGrid(trueTable);
+                        this.clearGrid(this.hiddenTable);
+                        this.clearGrid(this.trueTable);
                         //setMultOKClicked(0);
-                        displayWinner(winner);
+                        displayWinner(this.winner);
 
                     }
                 }
