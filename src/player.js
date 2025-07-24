@@ -65,17 +65,26 @@ export class Player{
     }
 
     clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+        this.playerHiddenBoardDOM = playerHiddenBoardDOM;
+        this.playerTrueBoardDOM = playerTrueBoardDOM;
+        this.enemyTrueBoard = enemyTrueBoard;
+        this.enemyHiddenBoard = enemyHiddenBoard;
+        this.winner = winner;
+        this.enemy = enemy;
+        this.gameType = gameType;
         let gbt;
         let gbh = document.querySelector(playerHiddenBoardDOM);
-        let hiddenTable = gbh.firstElementChild;
+        this.hiddenTable = gbh.firstElementChild;
         if(gameType == "pvp"){
             gbt = document.querySelector(playerTrueBoardDOM);
         }else{
             gbt = document.querySelector(enemyTrueBoard);
         }
-        let trueTable = gbt.firstElementChild;
-        hiddenTable.addEventListener('click', (e) => {//listening for clicks on current players hiddenBoard
-            if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
+        this.trueTable = gbt.firstElementChild;
+        this.hiddenTable.addEventListener('click', this.cellClicker.bind(this));
+    }
+    cellClicker(e){
+         if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
                 const row = e.target.parentElement;//
                 let cIndex = e.target.cellIndex;//
                 let rIndex = row.rowIndex//get coords of cell
@@ -93,7 +102,7 @@ export class Player{
                                 this.swapBoards(playerHiddenBoardDOM, playerTrueBoardDOM);//swap our boards(hidden and true)
                             }else{
                                 this.cpuPlayerAttacks(".player1Board",2, enemy, hiddenTable);
-                                
+                                return;
                             }
                         }
                     }
@@ -114,8 +123,6 @@ export class Player{
                     }
                 }
             }
-        }
-        );
     }
 
     displayShips(playerBoardDOM){
