@@ -259,8 +259,8 @@ function multShipsListener(player,enemy){
     let multShipsDiagram = document.querySelector(".shipsDiagram");
     let confirmShipsButton = document.querySelector(".confirmShip");
     multShipsDiagram.addEventListener('click', shipTypeClicker);
-    this.boundedConfirmShipsPlaced = this.confirmAllShipsPlaced.bind(this);
-    confirmShipsButton.addEventListener('click', this.boundedConfirmShipsPlaced);
+    const wrapConfirmShipsPlaced = () => confirmAllShipsPlaced(player, enemy);
+    confirmShipsButton.addEventListener('click', wrapConfirmShipsPlaced);
 }
 
 function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
