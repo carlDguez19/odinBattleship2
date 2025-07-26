@@ -254,11 +254,13 @@ function confirmAllShipsPlaced(player, enemy){
 }
 
 function multShipsListener(player,enemy){
+    this.player = player;
+    this.enemy = enemy;
     let multShipsDiagram = document.querySelector(".shipsDiagram");
     let confirmShipsButton = document.querySelector(".confirmShip");
     multShipsDiagram.addEventListener('click', shipTypeClicker);
-    confirmShipsButton.addEventListener('click', confirmAllShipsPlaced(player, enemy));
-    //add listener for submit and close buttons if enemy in params then call censor curtain then call mult ships again for enemy???
+    this.boundedConfirmShipsPlaced = this.confirmAllShipsPlaced.bind(this);
+    confirmShipsButton.addEventListener('click', this.boundedConfirmShipsPlaced);
 }
 
 function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
