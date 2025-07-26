@@ -212,16 +212,13 @@ function clearBoard(player){
     }
 }
 
-function multShipsListener(player,enemy){
-    let multShipsDiagram = document.querySelector(".shipsDiagram");
-    let confirmShipsButton = document.querySelector(".confirmShip");
-    multShipsDiagram.addEventListener('click', (e) => {
-        if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
-            multShipSize = e.target.className;
-            shipCoordsOverlay.style.animation = "enterTop 1s forwards";
-        }
-    })
-    confirmShipsButton.addEventListener('click', function(){
+function shipTypeClicker(e){
+    if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
+        multShipSize = e.target.className;
+        shipCoordsOverlay.style.animation = "enterTop 1s forwards";
+    }
+}
+function confirmAllShipsPlaced(player, enemy){
         if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){//p1(real) has placed all ships
             // reset the overlay for coords
             coordsOverlayReset();
@@ -254,7 +251,13 @@ function multShipsListener(player,enemy){
             true2Board.style.opacity = 0;
             multOKClicked++;
         }
-    })
+}
+
+function multShipsListener(player,enemy){
+    let multShipsDiagram = document.querySelector(".shipsDiagram");
+    let confirmShipsButton = document.querySelector(".confirmShip");
+    multShipsDiagram.addEventListener('click', shipTypeClicker);
+    confirmShipsButton.addEventListener('click', confirmAllShipsPlaced(player, enemy));
     //add listener for submit and close buttons if enemy in params then call censor curtain then call mult ships again for enemy???
 }
 
