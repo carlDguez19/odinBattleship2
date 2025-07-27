@@ -212,6 +212,14 @@ function clearBoard(player){
     }
 }
 
+function multShipsListener(player,enemy){
+    let multShipsDiagram = document.querySelector(".shipsDiagram");
+    let confirmShipsButton = document.querySelector(".confirmShip");
+    multShipsDiagram.addEventListener('click', shipTypeClicker);
+    const wrapConfirmShipsPlaced = () => confirmAllShipsPlaced(player, enemy);
+    confirmShipsButton.addEventListener('click', wrapConfirmShipsPlaced)
+}
+
 function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
         multShipSize = e.target.className;
@@ -253,65 +261,60 @@ function confirmAllShipsPlaced(player, enemy){
         }
 }
 
-function multShipsListener(player,enemy){
-    this.player = player;
-    this.enemy = enemy;
-    let multShipsDiagram = document.querySelector(".shipsDiagram");
-    let confirmShipsButton = document.querySelector(".confirmShip");
-    multShipsDiagram.addEventListener('click', shipTypeClicker);
-    const wrapConfirmShipsPlaced = () => confirmAllShipsPlaced(player, enemy);
-    confirmShipsButton.addEventListener('click', wrapConfirmShipsPlaced);
+function acceptCoordInputs(player1, player2){
+    let player;
+    let trueTable;
+    let hOrV;
+    let shipLength = Number(multShipSize.charAt(0));
+    let xCoord = Number(xAxis.value);
+    let yCoord = Number(yAxis.value);
+    if(player1.pBoard.numOfShips <= 5 && multOKClicked == 0){
+        player = player1;
+        let p1gbt = document.querySelector(".player1Board");
+        trueTable = p1gbt.firstElementChild;
+    }else{
+        player = player2;
+        let p2gbt = document.querySelector(".player2Board");
+        trueTable = p2gbt.firstElementChild;
+    }
+    for(let i = 0; i < player.pBoard.ships.length; i++){
+        let ship = player.pBoard.ships[i];
+        if(ship.id == multShipSize){//clicked on multShip was already placed before
+            //remove previous location of ship
+            player.pBoard.removeShip(ship, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS--
+        }
+    }
+
+    if(xRadio.checked){
+        hOrV = 0;
+    }else{
+        hOrV = 1;
+    }
+
+    if(xRadio.checked == false && yRadio.checked == false){
+        coordsOccupiedError();
+    }
+    else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength) && player.pBoard.fitsOnBoard(shipLength, [xCoord,yCoord], hOrV)){
+        player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,multShipSize, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
+        player.displayShips(trueTable);
+        coordsOverlayReset();
+        shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
+    }else{
+        coordsOccupiedError();
+    }
+}
+
+function cancelCoordsInput(){
+    coordsOverlayReset();
+    shipCoordsOverlay.style.animation = "exitUp 1s forwards";
 }
 
 function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
     const shipCoordsSubmit = document.querySelector(".confirmCoords");
     const shipCoordsCancel = document.querySelector(".cancelCoords");
-    shipCoordsSubmit.addEventListener("click", function(){
-        let player;
-        let trueTable;
-        let hOrV;
-        let shipLength = Number(multShipSize.charAt(0));
-        let xCoord = Number(xAxis.value);
-        let yCoord = Number(yAxis.value);
-        if(player1.pBoard.numOfShips <= 5 && multOKClicked == 0){
-            player = player1;
-            let p1gbt = document.querySelector(".player1Board");
-            trueTable = p1gbt.firstElementChild;
-        }else{
-            player = player2;
-            let p2gbt = document.querySelector(".player2Board");
-            trueTable = p2gbt.firstElementChild;
-        }
-        for(let i = 0; i < player.pBoard.ships.length; i++){
-            let ship = player.pBoard.ships[i];
-            if(ship.id == multShipSize){//clicked on multShip was already placed before
-                //remove previous location of ship
-                player.pBoard.removeShip(ship, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS--
-            }
-        }
-
-        if(xRadio.checked){
-            hOrV = 0;
-        }else{
-            hOrV = 1;
-        }
-
-        if(xRadio.checked == false && yRadio.checked == false){
-            coordsOccupiedError();
-        }
-        else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength) && player.pBoard.fitsOnBoard(shipLength, [xCoord,yCoord], hOrV)){
-            player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,multShipSize, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
-            player.displayShips(trueTable);
-            coordsOverlayReset();
-            shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
-        }else{
-            coordsOccupiedError();
-        }
-    })
-    shipCoordsCancel.addEventListener('click', function(){
-        coordsOverlayReset();
-        shipCoordsOverlay.style.animation = "exitUp 1s forwards";
-    })
+    const wrapAcceptCoordInputs = () => acceptCoordInputs(player1, player2);
+    shipCoordsSubmit.addEventListener("click", wrapAcceptCoordInputs)
+    shipCoordsCancel.addEventListener('click', cancelCoordsInput)
 }
 
 function coordsOccupiedError(){
