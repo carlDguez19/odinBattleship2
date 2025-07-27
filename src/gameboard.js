@@ -332,15 +332,17 @@ function coordsOverlayReset(){
     yAxis.value = "0";
 }
 
+function playAgainReset(){
+    winnerOverlay.style.animation = "exitUp 1s forwards";
+    pvp.checked = false;
+    pve.checked = false;
+    gameTypeOverlay.style.animation = "enterTop 2s forwards";
+    multOKClicked = 0;
+}
+
 function playAgainButtonListener(p1,p2){
     const playAgainButton = document.querySelector(".playAgain");
-    playAgainButton.addEventListener('click',function(){//reset boards here and the 2d arrays
-        winnerOverlay.style.animation = "exitUp 1s forwards";
-        pvp.checked = false;
-        pve.checked = false;
-        gameTypeOverlay.style.animation = "enterTop 2s forwards";
-        multOKClicked = 0;
-    })
+    playAgainButton.addEventListener('click',playAgainReset)
 }
 let player1, player2;
 
