@@ -1,6 +1,7 @@
 import { Ship } from "./ship";
 import { Player } from "./player";
-
+import { winnerOverlay, multShipsMovement, pvp, pve, shipCoordsOverlay, xAxis, yAxis, xRadio, yRadio, gameTypeOverlay, setMultShipSize, getMultShipSize, setMultOKClicked, getMultOKClicked } from "./domElemConst";
+import { shipTypeClicker, confirmAllShipsPlaced, acceptCoordInputs, cancelCoordsInput, playAgainReset } from "./setupListeners";
 export class Gameboard{
     constructor(){
         this.size = 10;
@@ -128,66 +129,7 @@ export class Gameboard{
         }
         return true;//if we made it outside the loop then all ships are sunk
     }
-    updateHitOrMiss(coords,table){
-        if(this.board[coords[0]][coords[1]] == "0"){
-            //update table cell to miss
-            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
-            cell.style.backgroundColor = "teal";
-        }else if(this.board[coords[0]][coords[1]] == "X"){
-            //update ship to hit
-            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
-            cell.style.backgroundColor = "darkred";
-            cell.style.borderRadius = "50px";
-        }
-    }
-    cpuHitOrMiss(coords,table){
-        if(this.board[coords[0]][coords[1]] == "0"){
-            //update table cell to miss
-            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
-            this.cpuMissedCell(cell);
-            //cell.style.backgroundColor = "teal";
-        }else if(this.board[coords[0]][coords[1]] == "X"){
-            //update ship to hit
-            const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-            const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
-            this.cpuShipAttackedCell(cell);
-        }
-    }
 
-    async cpuShipAttackedCell(cell){
-        await this.delay(700);
-        cell.style.backgroundColor = "darkred";
-        cell.style.borderRadius = "50px";
-    }
-    async cpuMissedCell(cell){
-        await this.delay(700);
-        cell.style.backgroundColor = "teal";
-    }
-
-}
-
-let winnerOverlay = document.querySelector(".winnerOverlay");
-let multShipsMovement = document.querySelector(".multShipsPlacementOverlay");
-const pvp = document.querySelector(".pvp");
-const pve = document.querySelector(".pve");
-const shipCoordsOverlay = document.querySelector(".shipInputsOverlay");
-const xAxis = document.querySelector(".xAxis");
-const yAxis = document.querySelector(".yAxis");
-const xRadio = document.querySelector(".xRadio");
-const yRadio = document.querySelector(".yRadio");
-let multShipSize = 0;
-export const gameTypeOverlay = document.querySelector(".playerSelectionOverlay");
-
-let multOKClicked = 0;
-
-export function getMultOKClicked(){
-    return multOKClicked;
-}
-export function setMultOKClicked(val){
-    multOKClicked = val;
 }
 
 export function displayWinner(winner){
@@ -197,12 +139,7 @@ export function displayWinner(winner){
 }
 
 function clearBoard(player){
-    if(multOKClicked > 0){
-        //reset the board and num of ships
-        
-        // console.log("player1 board is the following: " + JSON.stringify(player1.pBoard.board, null, 2));
-        // console.log("player2 board is the following: " + player2.pBoard.board);
-        
+    if(getMultOKClicked() > 0){
         player.pBoard.board = player.pBoard.generateGameboard(player.pBoard.size);
         player.pBoard.ships = [];
         player.pBoard.numOfShips = 0;
@@ -220,94 +157,95 @@ function multShipsListener(player,enemy){
     confirmShipsButton.addEventListener('click', wrapConfirmShipsPlaced)
 }
 
-function shipTypeClicker(e){
-    if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
-        multShipSize = e.target.className;
-        shipCoordsOverlay.style.animation = "enterTop 1s forwards";
-    }
-}
-function confirmAllShipsPlaced(player, enemy){
-        if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){//p1(real) has placed all ships
-            // reset the overlay for coords
-            coordsOverlayReset();
-            player.censorCurtainEnter();
-            multShipsMovement.style.animation = "slideLeft 2s forwards";
-            player.censorCurtainExit();
-            multOKClicked++;
-        }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
-            //enemy picks random locations for its ships no need for the multShipOverlay
-            let enemyArr = [...player.pBoard.ships];
-            enemy.cpuPicksShipsLocations(enemyArr,enemy);
-            enemy.censorCurtainEnter();    
-            coordsOverlayReset();
-            enemy.censorCurtainExit();
-            multShipsMovement.style.animation = "exitUp 2s forwards";
-            const hidden2Board = document.querySelector(".player2HiddenBoard");
-            const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTopBoard 1s forwards";
-            true2Board.style.opacity = 0;
-            multOKClicked++;
-        }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
-            //get rid of all overlays and start game
-            enemy.censorCurtainEnter();
-            coordsOverlayReset();
-            enemy.censorCurtainExit();
-            multShipsMovement.style.animation = "exitUp 2s forwards";
-            const hidden2Board = document.querySelector(".player2HiddenBoard");
-            const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTopBoard 1s forwards";
-            true2Board.style.opacity = 0;
-            multOKClicked++;
-        }
-}
+// function shipTypeClicker(e){
+//     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
+//         //multShipSize = e.target.className;
+//         setMultShipSize(e.target.className);
+//         shipCoordsOverlay.style.animation = "enterTop 1s forwards";
+//     }
+// }
+// function confirmAllShipsPlaced(player, enemy){
+//         if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){//p1(real) has placed all ships
+//             // reset the overlay for coords
+//             coordsOverlayReset();
+//             player.censorCurtainEnter();
+//             multShipsMovement.style.animation = "slideLeft 2s forwards";
+//             player.censorCurtainExit();
+//             setMultOKClicked(getMultOKClicked() + 1);
+//         }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
+//             //enemy picks random locations for its ships no need for the multShipOverlay
+//             let enemyArr = [...player.pBoard.ships];
+//             enemy.cpuPicksShipsLocations(enemyArr,enemy);
+//             enemy.censorCurtainEnter();    
+//             coordsOverlayReset();
+//             enemy.censorCurtainExit();
+//             multShipsMovement.style.animation = "exitUp 2s forwards";
+//             const hidden2Board = document.querySelector(".player2HiddenBoard");
+//             const true2Board = document.querySelector(".player2Board");
+//             hidden2Board.style.animation = "enterTopBoard 1s forwards";
+//             true2Board.style.opacity = 0;
+//             setMultOKClicked(getMultOKClicked() + 1);
+//         }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
+//             //get rid of all overlays and start game
+//             enemy.censorCurtainEnter();
+//             coordsOverlayReset();
+//             enemy.censorCurtainExit();
+//             multShipsMovement.style.animation = "exitUp 2s forwards";
+//             const hidden2Board = document.querySelector(".player2HiddenBoard");
+//             const true2Board = document.querySelector(".player2Board");
+//             hidden2Board.style.animation = "enterTopBoard 1s forwards";
+//             true2Board.style.opacity = 0;
+//             setMultOKClicked(getMultOKClicked() + 1);
+//         }
+// }
 
-function acceptCoordInputs(player1, player2){
-    let player;
-    let trueTable;
-    let hOrV;
-    let shipLength = Number(multShipSize.charAt(0));
-    let xCoord = Number(xAxis.value);
-    let yCoord = Number(yAxis.value);
-    if(player1.pBoard.numOfShips <= 5 && multOKClicked == 0){
-        player = player1;
-        let p1gbt = document.querySelector(".player1Board");
-        trueTable = p1gbt.firstElementChild;
-    }else{
-        player = player2;
-        let p2gbt = document.querySelector(".player2Board");
-        trueTable = p2gbt.firstElementChild;
-    }
-    for(let i = 0; i < player.pBoard.ships.length; i++){
-        let ship = player.pBoard.ships[i];
-        if(ship.id == multShipSize){//clicked on multShip was already placed before
-            //remove previous location of ship
-            player.pBoard.removeShip(ship, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS--
-        }
-    }
+// function acceptCoordInputs(player1, player2){
+//     let player;
+//     let trueTable;
+//     let hOrV;
+//     let shipLength = Number(getMultShipSize().charAt(0));
+//     let xCoord = Number(xAxis.value);
+//     let yCoord = Number(yAxis.value);
+//     if(player1.pBoard.numOfShips <= 5 && getMultOKClicked() == 0){
+//         player = player1;
+//         let p1gbt = document.querySelector(".player1Board");
+//         trueTable = p1gbt.firstElementChild;
+//     }else{
+//         player = player2;
+//         let p2gbt = document.querySelector(".player2Board");
+//         trueTable = p2gbt.firstElementChild;
+//     }
+//     for(let i = 0; i < player.pBoard.ships.length; i++){
+//         let ship = player.pBoard.ships[i];
+//         if(ship.id == getMultShipSize()){//clicked on multShip was already placed before
+//             //remove previous location of ship
+//             player.pBoard.removeShip(ship, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS--
+//         }
+//     }
 
-    if(xRadio.checked){
-        hOrV = 0;
-    }else{
-        hOrV = 1;
-    }
+//     if(xRadio.checked){
+//         hOrV = 0;
+//     }else{
+//         hOrV = 1;
+//     }
 
-    if(xRadio.checked == false && yRadio.checked == false){
-        coordsOccupiedError();
-    }
-    else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength) && player.pBoard.fitsOnBoard(shipLength, [xCoord,yCoord], hOrV)){
-        player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,multShipSize, player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
-        player.displayShips(trueTable);
-        coordsOverlayReset();
-        shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
-    }else{
-        coordsOccupiedError();
-    }
-}
+//     if(xRadio.checked == false && yRadio.checked == false){
+//         coordsOccupiedError();
+//     }
+//     else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength) && player.pBoard.fitsOnBoard(shipLength, [xCoord,yCoord], hOrV)){
+//         player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
+//         player.displayShips(trueTable);
+//         coordsOverlayReset();
+//         shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
+//     }else{
+//         coordsOccupiedError();
+//     }
+// }
 
-function cancelCoordsInput(){
-    coordsOverlayReset();
-    shipCoordsOverlay.style.animation = "exitUp 1s forwards";
-}
+// function cancelCoordsInput(){
+//     coordsOverlayReset();
+//     shipCoordsOverlay.style.animation = "exitUp 1s forwards";
+// }
 
 function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
     const shipCoordsSubmit = document.querySelector(".confirmCoords");
@@ -317,28 +255,28 @@ function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
     shipCoordsCancel.addEventListener('click', cancelCoordsInput)
 }
 
-function coordsOccupiedError(){
-    let coordError = document.querySelector('.coordsTakenOverlay');
-    coordError.style.animation = "enterTop 1s forwards";
-    setTimeout(() => {
-        coordError.style.animation = "exitUp 1s forwards";
-    }, 2000);
-}
+// function coordsOccupiedError(){
+//     let coordError = document.querySelector('.coordsTakenOverlay');
+//     coordError.style.animation = "enterTop 1s forwards";
+//     setTimeout(() => {
+//         coordError.style.animation = "exitUp 1s forwards";
+//     }, 2000);
+// }
 
-function coordsOverlayReset(){
-    xRadio.checked = false;
-    yRadio.checked = false;
-    xAxis.value = "0";
-    yAxis.value = "0";
-}
+// function coordsOverlayReset(){
+//     xRadio.checked = false;
+//     yRadio.checked = false;
+//     xAxis.value = "0";
+//     yAxis.value = "0";
+// }
 
-function playAgainReset(){
-    winnerOverlay.style.animation = "exitUp 1s forwards";
-    pvp.checked = false;
-    pve.checked = false;
-    gameTypeOverlay.style.animation = "enterTop 2s forwards";
-    multOKClicked = 0;
-}
+// function playAgainReset(){
+//     winnerOverlay.style.animation = "exitUp 1s forwards";
+//     pvp.checked = false;
+//     pve.checked = false;
+//     gameTypeOverlay.style.animation = "enterTop 2s forwards";
+//     setMultOKClicked(0);
+// }
 
 function playAgainButtonListener(p1,p2){
     const playAgainButton = document.querySelector(".playAgain");
@@ -355,7 +293,7 @@ function gameTypeSubmitListenerFunction(){
     clearBoard(player1);
     clearBoard(player2);
 
-    multOKClicked = 0;
+    setMultOKClicked(0);
 
     player1 = new Player("real", 10);
     player2 = new Player("real", 10);

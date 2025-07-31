@@ -1,12 +1,11 @@
-import { displayWinner, Gameboard, getMultOKClicked, setMultOKClicked } from "./gameboard";
+import { displayWinner, Gameboard } from "./gameboard";
+import { delay, updateHitOrMiss, cpuHitOrMiss } from "./uiController";
+import { getMultOKClicked, setMultOKClicked, getMultShipSize } from "./domElemConst";
 
 export class Player{
     constructor(type){
         this.type = type;
         this.pBoard = new Gameboard();
-    }
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
     }
     getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
@@ -54,7 +53,7 @@ export class Player{
             this.consecutiveHit(enemy, coords, trueTable);
             coords = this.cpuPicksCoords(enemy);
         }
-        enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
+        cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
         //add logic to check if all ships sunk
         if(enemy.pBoard.allShipsSunk()){
             console.log("the winner is player "+ winner);
@@ -91,9 +90,9 @@ export class Player{
                 let rIndex = row.rowIndex//get coords of cell
                 if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
                     if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
                         if(this.gameType == "pvp"){
-                            this.pBoard.updateHitOrMiss([rIndex,cIndex], this.trueTable);//update trueBoard %$%$%$$%$%$%$%
+                            updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//update trueBoard %$%$%$$%$%$%$%
                         }
                         if(this.pBoard.board[rIndex][cIndex] == "0"){
                             if(this.gameType == "pvp"){
@@ -107,9 +106,9 @@ export class Player{
                         }
                     }
                     else{
-                        this.pBoard.updateHitOrMiss([rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
                         if(this.gameType == "pvp"){
-                            this.pBoard.updateHitOrMiss([rIndex,cIndex], this.trueTable);//$%$%$%$%$%$%$%$
+                            updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//$%$%$%$%$%$%$%$
                             let enemyOldTable = document.querySelector(this.enemyTrueBoard);
                             let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
                             this.clearGrid(enemyOldTable.firstElementChild);
@@ -171,10 +170,10 @@ export class Player{
     }
     async consecutiveHit(enemy, coords, trueTable){
         //await this.delay(700);//might not be needed
-        enemy.pBoard.cpuHitOrMiss(coords, trueTable);//update trueBoard
+        cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
     }
     async censorCurtainExit(){
-        await this.delay(5000);
+        await delay(5000);
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'exitUp 1s forwards';
     }
@@ -186,14 +185,14 @@ export class Player{
         });
       }
     async swapBoards(oldBoard, newBoard){
-        await this.delay(500);
+        await delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
         oBoard.style.animation = 'exitUp 0.5s forwards';
         nBoard.style.animation = 'fadeIn 0.5s forwards';
     }
     async swapEnemyBoards(oldBoard, newBoard){
-        await this.delay(500);
+        await delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
         oBoard.style.animation = 'fadeOut 0.5s forwards';
