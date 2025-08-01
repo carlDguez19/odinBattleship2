@@ -1,6 +1,7 @@
 import "./styles.css";
 import { Ship } from "./ship";
-import { Gameboard, gameTypeListeners } from "./gameboard";
+import { Gameboard } from "./gameboard";
 import { Player } from "./player";
+import { gameTypeListeners } from "./listenerHandlers";
 
 gameTypeListeners();

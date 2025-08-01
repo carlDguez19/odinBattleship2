@@ -1,6 +1,7 @@
 import { displayWinner, Gameboard } from "./gameboard";
 import { delay, updateHitOrMiss, cpuHitOrMiss } from "./uiController";
 import { getMultOKClicked, setMultOKClicked, getMultShipSize } from "./domElemConst";
+import { coordsNotTaken, fitsOnBoard } from "./boardUtils";
 
 export class Player{
     constructor(type){
@@ -35,7 +36,7 @@ export class Player{
         for(let j = 0; j < arr.length; j++){
             let coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
             let axis = this.getRandomIntInclusive(0,1);
-            while(!cpu.pBoard.fitsOnBoard(arr[j].length, coords, axis)||!cpu.pBoard.coordsNotTaken(cpu.pBoard.board,coords,axis,arr[j].length)){
+            while(!fitsOnBoard(arr[j].length, coords, axis)||!coordsNotTaken(cpu.pBoard.board,coords,axis,arr[j].length)){
                 coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
                 axis = this.getRandomIntInclusive(0,1);
             }

@@ -1,8 +1,8 @@
-import { setMultOKClicked, getMultOKClicked, setMultShipSize, getMultShipSize } from "./domElemConst";
+import { setMultOKClicked, getMultOKClicked, setMultShipSize, getMultShipSize, shipCoordsOverlay, multShipsMovement, gameTypeOverlay, xAxis, yAxis, xRadio, yRadio, pvp, pve } from "./domElemConst";
 import { Player } from "./player";
-import { shipCoordsOverlay, multShipsMovement, } from "./domElemConst";
 import { Gameboard } from "./gameboard";
-import { xAxis, yAxis, xRadio, yRadio, pve, pvp } from "./domElemConst";
+import { coordsNotTaken, fitsOnBoard, clearBoard } from "./boardUtils";
+import { multShipsListener, coordsOverlayListener, playAgainButtonListener } from "./listenerHandlers";
 
 export function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
@@ -82,7 +82,7 @@ export function acceptCoordInputs(player1, player2){
     if(xRadio.checked == false && yRadio.checked == false){
         coordsOccupiedError();
     }
-    else if(player.pBoard.coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength) && player.pBoard.fitsOnBoard(shipLength, [xCoord,yCoord], hOrV)){
+    else if(fitsOnBoard(shipLength, [xCoord,yCoord], hOrV) && coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
         player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
         player.displayShips(trueTable);
         coordsOverlayReset();
@@ -103,6 +103,60 @@ export function playAgainReset(){
     pve.checked = false;
     gameTypeOverlay.style.animation = "enterTop 2s forwards";
     setMultOKClicked(0);
+}
+
+export function gameTypeSubmitListenerFunction(){
+    let player1 = new Player("real", 10);
+    let player2 = new Player("real", 10);
+    
+    clearBoard(player1);
+    clearBoard(player2);
+
+    setMultOKClicked(0);
+
+    // let player1 = new Player("real", 10);
+    // let player2 = new Player("real", 10);
+
+    player1.openBoard(".player1Board");
+    player2.openBoard(".player2Board");
+    player1.openBoard(".player1HiddenBoard");
+    player2.openBoard(".player2HiddenBoard");
+
+    //{playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy,gameType}
+    if(pvp.checked){
+        gameTypeOverlay.style.animation = "exitUp 1s forwards";
+        player1.clickCellCore({
+            playerHiddenBoardDOM: ".player1HiddenBoard",
+            playerTrueBoardDOM: ".player1Board",
+            enemyTrueBoard: ".player2Board",
+            enemyHiddenBoard: ".player2HiddenBoard",
+            winner: 2,
+            gameType: "pvp"});//this means player 2 turn//here i will add the type of game i.e pvp or pve
+        player2.clickCellCore({
+            playerHiddenBoardDOM: ".player2HiddenBoard",
+            playerTrueBoardDOM: ".player2Board",
+            enemyTrueBoard: ".player1Board",
+            enemyHiddenBoard: ".player1HiddenBoard",
+            winner: 1,
+            gameType: "pvp"});//this means player 1 turn//here i will add the type of game i.e pvp or pve
+        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+    }else{
+        gameTypeOverlay.style.animation = "exitUp 1s forwards";
+        player2.type = "cpu";
+        player2.clickCellCore({
+            playerHiddenBoardDOM: ".player2HiddenBoard",
+            enemyTrueBoard: ".player1Board",
+            winner: 1,
+            enemy: player1,
+            gameType: "cpu"});//, ".player2Board"//this means player 1 turn//
+        //player2.clickCellCore(".player2HiddenBoard", ".player1Board", 1, player1)
+        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+    }
+    
+    multShipsListener(player1,player2);
+    coordsOverlayListener(player1,player2);
+
+    playAgainButtonListener(player1,player2);
 }
 
 function coordsOverlayReset(){
