@@ -1,7 +1,7 @@
 export class Ship{
     constructor(length,id,coords,axis){//maybe include an if statement to check length is not 0
         if(length == 0){
-            return NaN;
+            throw new Error("ship length must be at least 2");
         }
         this.length = length;
         this.hits = 0;

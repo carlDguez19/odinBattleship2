@@ -1,10 +1,7 @@
-import { getMultOKClicked } from "./domElemConst";
+import { getMultOKClicked, winnerOverlay } from "./domElemConst";
 export function coordsNotTaken(board, coords, axis, length){//cells are empty before placing
-    console.log("new ship of length " + length);
     if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
         for(let i = 0; i < length; i++){
-            console.log("coord 0: " + (coords[0]+i));
-            console.log("coord 1: " + coords[1]);
             if(board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
                 return false;
             }
@@ -12,8 +9,6 @@ export function coordsNotTaken(board, coords, axis, length){//cells are empty be
         return true;
     }else{//ship placed horizontally
         for(let i = 0; i < length; i++){
-            console.log("coord 0: " + coords[0]);
-            console.log("coord 1: " + (coords[1]+i));
             if(board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
                 return false;
             }
@@ -53,8 +48,11 @@ export function clearBoard(player){
         player.pBoard.board = player.pBoard.generateGameboard(player.pBoard.size);
         player.pBoard.ships = [];
         player.pBoard.numOfShips = 0;
-        
-        console.log("player1 board is the following: " + JSON.stringify(player1.pBoard.board, null, 2));
-        console.log("player2 board is the following: " + player2.pBoard.board);
     }
+}
+
+export function displayWinner(winner){
+   let winnerMsg = document.querySelector(".trueWinner");
+    winnerMsg.textContent = "player " + winner;
+    winnerOverlay.style.animation = "enterTop 1s forwards";
 }

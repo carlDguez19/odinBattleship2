@@ -1,3 +1,4 @@
+import { xRadio, yRadio, xAxis, yAxis } from "./domElemConst";
 export const delay = ms => new Promise(res => setTimeout(res, ms));
 export function updateHitOrMiss(board,coords,table){
     if(board[coords[0]][coords[1]] == "0"){
@@ -30,6 +31,21 @@ export function cpuHitOrMiss(board,coords,table){
 
 export function clearGrid(table){
     table.remove();
+}
+
+export function coordsOverlayReset(){
+    xRadio.checked = false;
+    yRadio.checked = false;
+    xAxis.value = "0";
+    yAxis.value = "0";
+}
+
+export function coordsOccupiedError(){
+    let coordError = document.querySelector('.coordsTakenOverlay');
+    coordError.style.animation = "enterTop 1s forwards";
+    setTimeout(() => {
+        coordError.style.animation = "exitUp 1s forwards";
+    }, 2000);
 }
 
 async function cpuShipAttackedCell(cell){

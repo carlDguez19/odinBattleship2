@@ -1,7 +1,7 @@
-import { displayWinner, Gameboard } from "./gameboard";
+import { Gameboard } from "./gameboard";
 import { delay, cpuHitOrMiss, clearGrid } from "./uiController";
 import { getMultOKClicked, setMultOKClicked, getMultShipSize } from "./domElemConst";
-import { coordsNotTaken, fitsOnBoard } from "./boardUtils";
+import { coordsNotTaken, fitsOnBoard, displayWinner } from "./boardUtils";
 import { setupCellClicker } from "./listenerHandlers";
 import { cellClicker } from "./setupListeners";
 
@@ -86,46 +86,6 @@ export class Player{
         this.boundedCellClicker = cellClicker.bind(this);
         setupCellClicker(this.hiddenTable, this.boundedCellClicker);
     }
-    // cellClicker(e){
-    //      if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
-    //             const row = e.target.parentElement;//
-    //             let cIndex = e.target.cellIndex;//
-    //             let rIndex = row.rowIndex//get coords of cell
-    //             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-    //                 if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
-    //                     updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
-    //                     if(this.gameType == "pvp"){
-    //                         updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//update trueBoard %$%$%$$%$%$%$%
-    //                     }
-    //                     if(this.pBoard.board[rIndex][cIndex] == "0"){
-    //                         if(this.gameType == "pvp"){
-    //                             this.censorCurtainEnter();
-    //                             this.censorCurtainExit();//bring down curtain and exit
-    //                             this.swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
-    //                             this.swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
-    //                         }else{
-    //                             this.cpuPlayerAttacks(".player1Board",2, this.enemy, this.hiddenTable);
-    //                         }
-    //                     }
-    //                 }
-    //                 else{
-    //                     updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
-    //                     if(this.gameType == "pvp"){
-    //                         updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//$%$%$%$%$%$%$%$
-    //                         let enemyOldTable = document.querySelector(this.enemyTrueBoard);
-    //                         let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
-    //                         this.clearGrid(enemyOldTable.firstElementChild);
-    //                         this.clearGrid(enemyNewTable.firstElementChild);
-    //                     }
-    //                     this.clearGrid(this.hiddenTable);
-    //                     this.clearGrid(this.trueTable);
-    //                     //setMultOKClicked(0);
-    //                     displayWinner(this.winner);
-
-    //                 }
-    //             }
-    //         }
-    // }
 
     displayShips(playerBoardDOM){
         for(let i = 0; i < this.pBoard.board.length; i++){
@@ -162,11 +122,6 @@ export class Player{
         }
         gc.appendChild(table);
     }
-
-    // clearGrid(table){
-    //     table.remove();
-    // }
-
     censorCurtainEnter(){
         let curtain = document.querySelector(".censorCurtain");
         curtain.style.animation = 'curtainEnter 1.8s forwards';

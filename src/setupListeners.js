@@ -1,9 +1,9 @@
 import { setMultOKClicked, getMultOKClicked, setMultShipSize, getMultShipSize, shipCoordsOverlay, multShipsMovement, gameTypeOverlay, xAxis, yAxis, xRadio, yRadio, pvp, pve } from "./domElemConst";
 import { Player } from "./player";
 import { Gameboard } from "./gameboard";
-import { coordsNotTaken, fitsOnBoard, clearBoard } from "./boardUtils";
+import { coordsNotTaken, fitsOnBoard, clearBoard, displayWinner } from "./boardUtils";
 import { multShipsListener, coordsOverlayListener, playAgainButtonListener } from "./listenerHandlers";
-import { updateHitOrMiss, clearGrid } from "./uiController";
+import { updateHitOrMiss, clearGrid, coordsOverlayReset, coordsOccupiedError } from "./uiController";
 
 export function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
@@ -107,6 +107,7 @@ export function playAgainReset(){
 }
 
 export function gameTypeSubmitListenerFunction(){
+    if(getMultOKClicked() > 0) return;
     let player1 = new Player("real", 10);
     let player2 = new Player("real", 10);
     
@@ -158,60 +159,45 @@ export function gameTypeSubmitListenerFunction(){
     coordsOverlayListener(player1,player2);
 
     playAgainButtonListener(player1,player2);
+    
 }
 
-export function cellClicker(e){
-         if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
-                const row = e.target.parentElement;//
-                let cIndex = e.target.cellIndex;//
-                let rIndex = row.rowIndex//get coords of cell
-                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
-                    if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
-                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
-                        if(this.gameType == "pvp"){
-                            updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//update trueBoard %$%$%$$%$%$%$%
-                        }
-                        if(this.pBoard.board[rIndex][cIndex] == "0"){
-                            if(this.gameType == "pvp"){
-                                this.censorCurtainEnter();
-                                this.censorCurtainExit();//bring down curtain and exit
-                                this.swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
-                                this.swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
-                            }else{
-                                this.cpuPlayerAttacks(".player1Board",2, this.enemy, this.hiddenTable);
-                            }
-                        }
+export function cellClicker(e){//when a cell is clicked
+        if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
+            const row = e.target.parentElement;//
+            let cIndex = e.target.cellIndex;//
+            let rIndex = row.rowIndex//get coords of cell
+            if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//determine if miss or hit
+                if(!(this.pBoard.allShipsSunk())){//      if ships have not been sunk then...
+                    updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                    if(this.gameType == "pvp"){
+                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//update trueBoard
                     }
-                    else{
-                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
-                        if(this.gameType == "pvp"){
-                            updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//$%$%$%$%$%$%$%$
-                            let enemyOldTable = document.querySelector(this.enemyTrueBoard);
-                            let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
-                            clearGrid(enemyOldTable.firstElementChild);
-                            clearGrid(enemyNewTable.firstElementChild);
+                    if(this.pBoard.board[rIndex][cIndex] == "0"){//if we missed then switch to enemy turn
+                        if(this.gameType == "pvp"){//switch to human enemy turn
+                            this.censorCurtainEnter();
+                            this.censorCurtainExit();//bring down curtain and exit
+                            this.swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
+                            this.swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
+                        }else{//switch to cpu enemy turn
+                            this.cpuPlayerAttacks(".player1Board",2, this.enemy, this.hiddenTable);
                         }
-                        clearGrid(this.hiddenTable);
-                        clearGrid(this.trueTable);
-                        //setMultOKClicked(0);
-                        displayWinner(this.winner);
-
                     }
                 }
+                else{//if all ships sunk then display winner
+                    updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                    if(this.gameType == "pvp"){
+                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//clear enemy boards if pvp
+                        let enemyOldTable = document.querySelector(this.enemyTrueBoard);
+                        let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
+                        clearGrid(enemyOldTable.firstElementChild);
+                        clearGrid(enemyNewTable.firstElementChild);
+                    }
+                    clearGrid(this.hiddenTable);//clear out boards
+                    clearGrid(this.trueTable);
+                    displayWinner(this.winner);
+
+                }
             }
-    }
-
-function coordsOverlayReset(){
-    xRadio.checked = false;
-    yRadio.checked = false;
-    xAxis.value = "0";
-    yAxis.value = "0";
-}
-
-function coordsOccupiedError(){
-    let coordError = document.querySelector('.coordsTakenOverlay');
-    coordError.style.animation = "enterTop 1s forwards";
-    setTimeout(() => {
-        coordError.style.animation = "exitUp 1s forwards";
-    }, 2000);
+        }
 }

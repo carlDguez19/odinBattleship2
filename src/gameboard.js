@@ -70,9 +70,3 @@ export class Gameboard{
     }
 
 }
-
-export function displayWinner(winner){
-   let winnerMsg = document.querySelector(".trueWinner");
-    winnerMsg.textContent = "player " + winner;
-    winnerOverlay.style.animation = "enterTop 1s forwards";
-}
