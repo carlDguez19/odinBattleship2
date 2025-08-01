@@ -28,6 +28,10 @@ export function cpuHitOrMiss(board,coords,table){
     }
 }
 
+export function clearGrid(table){
+    table.remove();
+}
+
 async function cpuShipAttackedCell(cell){
     await delay(700);
     cell.style.backgroundColor = "darkred";

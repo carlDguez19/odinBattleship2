@@ -3,6 +3,7 @@ import { Player } from "./player";
 import { Gameboard } from "./gameboard";
 import { coordsNotTaken, fitsOnBoard, clearBoard } from "./boardUtils";
 import { multShipsListener, coordsOverlayListener, playAgainButtonListener } from "./listenerHandlers";
+import { updateHitOrMiss, clearGrid } from "./uiController";
 
 export function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
@@ -158,6 +159,47 @@ export function gameTypeSubmitListenerFunction(){
 
     playAgainButtonListener(player1,player2);
 }
+
+export function cellClicker(e){
+         if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
+                const row = e.target.parentElement;//
+                let cIndex = e.target.cellIndex;//
+                let rIndex = row.rowIndex//get coords of cell
+                if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//if miss or hit
+                    if(!(this.pBoard.allShipsSunk())){//      if this boards ships sunk then we lost...
+                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                        if(this.gameType == "pvp"){
+                            updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//update trueBoard %$%$%$$%$%$%$%
+                        }
+                        if(this.pBoard.board[rIndex][cIndex] == "0"){
+                            if(this.gameType == "pvp"){
+                                this.censorCurtainEnter();
+                                this.censorCurtainExit();//bring down curtain and exit
+                                this.swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
+                                this.swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
+                            }else{
+                                this.cpuPlayerAttacks(".player1Board",2, this.enemy, this.hiddenTable);
+                            }
+                        }
+                    }
+                    else{
+                        updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard
+                        if(this.gameType == "pvp"){
+                            updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.trueTable);//$%$%$%$%$%$%$%$
+                            let enemyOldTable = document.querySelector(this.enemyTrueBoard);
+                            let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
+                            clearGrid(enemyOldTable.firstElementChild);
+                            clearGrid(enemyNewTable.firstElementChild);
+                        }
+                        clearGrid(this.hiddenTable);
+                        clearGrid(this.trueTable);
+                        //setMultOKClicked(0);
+                        displayWinner(this.winner);
+
+                    }
+                }
+            }
+    }
 
 function coordsOverlayReset(){
     xRadio.checked = false;

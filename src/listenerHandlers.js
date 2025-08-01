@@ -24,3 +24,7 @@ export function gameTypeListeners(){
     const gameTypesubmitButton = document.querySelector(".submitButton");
     gameTypesubmitButton.addEventListener('click', gameTypeSubmitListenerFunction);
 }
+
+export function setupCellClicker(hiddenTable, cellClickCallBack){
+    hiddenTable.addEventListener('click', cellClickCallBack);
+}
