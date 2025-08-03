@@ -77,3 +77,13 @@
     right: 20vw;
   }
 }
+
+@keyframes exitUpBoard {
+  from {
+    top: 28vh;
+    /* right: 20vw; */
+  }
+  to {
+    top: -100%;
+  }
+}

@@ -2,8 +2,8 @@ import { Gameboard } from "./gameboard";
 import { delay, cpuHitOrMiss, clearGrid, displayShips,consecutiveHit } from "./uiController";
 import { getMultOKClicked, setMultOKClicked, getMultShipSize } from "./domElemConst";
 import { coordsNotTaken, fitsOnBoard, displayWinner, getRandomIntInclusive } from "./boardUtils";
-import { setupCellClicker } from "./listenerHandlers";
-import { cellClicker } from "./setupListeners";
+import { setupCellClicker } from "./setupListeners";
+import { cellClicker } from "./listenerFuncs";
 
 export class Player{
     constructor(type){
@@ -23,7 +23,7 @@ export class Player{
                 coords.push(randInt);
             }
             attempts++;
-            if(attempts > 100){
+            if(attempts > 1000){
                 throw new Error("CPU attempts have exceeded safe limits. Logic is most likely broken.");
             }
         }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
@@ -43,7 +43,7 @@ export class Player{
             displayShips(tableFin, cpu);
         }
     }
-    cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy,cpuHiddenTable){//called by human(coords from cpuPicksCoords)
+    cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy, truePlayer, cpuHiddenTable){//called by human(coords from cpuPicksCoords)
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;
         let coords = this.cpuPicksCoords(enemy);
@@ -54,20 +54,27 @@ export class Player{
         cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
         //add logic to check if all ships sunk
         if(enemy.pBoard.allShipsSunk()){
-            console.log("the winner is player "+ winner);
+            console.log("the winner is player "+ (winner));
             clearGrid(cpuHiddenTable);
             clearGrid(trueTable);
             displayWinner(winner);
         }
+        else if(truePlayer.pBoard.allShipsSunk()){
+            console.log("the winner is player "+ winner-1);
+            clearGrid(cpuHiddenTable);
+            clearGrid(trueTable);
+            displayWinner(winner-1);
+        }
     }
 
-    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, truePlayer , gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
         this.playerHiddenBoardDOM = playerHiddenBoardDOM;
         this.playerTrueBoardDOM = playerTrueBoardDOM;
         this.enemyTrueBoard = enemyTrueBoard;
         this.enemyHiddenBoard = enemyHiddenBoard;
         this.winner = winner;
         this.enemy = enemy;
+        this.truePlayer = truePlayer;
         this.gameType = gameType;
         let gbt;
         let gbh = document.querySelector(playerHiddenBoardDOM);

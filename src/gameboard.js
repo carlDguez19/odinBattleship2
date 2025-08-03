@@ -1,9 +1,5 @@
 import { Ship } from "./ship";
-import { Player } from "./player";
-import { winnerOverlay, multShipsMovement, pvp, pve, shipCoordsOverlay, xAxis, yAxis, xRadio, yRadio, gameTypeOverlay, setMultShipSize, getMultShipSize, setMultOKClicked, getMultOKClicked } from "./domElemConst";
-import { shipTypeClicker, confirmAllShipsPlaced, acceptCoordInputs, cancelCoordsInput, playAgainReset } from "./setupListeners";
 import { placeShipOnBoard } from "./boardUtils";
-import { multShipsListener, coordsOverlayListener, playAgainButtonListener } from "./listenerHandlers";
 export class Gameboard{
     constructor(){
         this.size = 10;
@@ -25,7 +21,10 @@ export class Gameboard{
         this.numOfShips++;
     }
     receiveAttack(coords, board){
-        if(board[coords[0]][coords[1]] == "X" || board[coords[0]][coords[1]] == "0"){//if previously declared a hit or a miss then leave as a hit or a miss
+        if(coords.length !=2){
+            throw new Error("Invalid coordinate");
+        }
+        else if(board[coords[0]][coords[1]] == "X" || board[coords[0]][coords[1]] == "0"){//if previously declared a hit or a miss then leave as a hit or a miss
             return false;
         }
         else{//else emtpy or ship in cell
