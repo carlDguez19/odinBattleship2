@@ -48,6 +48,70 @@ export function coordsOccupiedError(){
     }, 2000);
 }
 
+export function censorCurtainEnter(){
+    let curtain = document.querySelector(".censorCurtain");
+    curtain.style.animation = 'curtainEnter 1.8s forwards';
+}
+
+export async function censorCurtainExit(){
+    await delay(5000);
+    let curtain = document.querySelector(".censorCurtain");
+    curtain.style.animation = 'exitUp 1s forwards';
+}
+
+export async function swapBoards(oldBoard, newBoard){
+        await delay(500);
+        let oBoard = document.querySelector(oldBoard);
+        let nBoard = document.querySelector(newBoard);
+        oBoard.style.animation = 'exitUp 0.5s forwards';
+        nBoard.style.animation = 'fadeIn 0.5s forwards';
+    }
+export async function swapEnemyBoards(oldBoard, newBoard){
+    await delay(500);
+    let oBoard = document.querySelector(oldBoard);
+    let nBoard = document.querySelector(newBoard);
+    oBoard.style.animation = 'fadeOut 0.5s forwards';
+    nBoard.style.animation = 'enterTopBoard 0.5s forwards';
+}
+
+export function displayShips(playerBoardDOM, player){
+    for(let i = 0; i < player.pBoard.board.length; i++){
+        for(let j = 0; j < player.pBoard.board[i].length; j++){
+            const row = playerBoardDOM.rows[i];//querySelector(`tr:nth-child(${i})`);
+            const cell = row.cells[j];//querySelector(`td:nth-child(${j})`);
+            if(player.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
+                cell.style.backgroundColor = "gray";
+                cell.style.borderRadius = "50px";
+            }else{
+                cell.style.backgroundColor = "limegreen";
+                cell.style.borderRadius = "5px";
+            }                
+        }
+    }
+}
+
+export function openBoard(playerBoardDOM, player){//html element is the param. Create a table/grid
+    let gc = document.querySelector(playerBoardDOM);
+
+    //fill grid with a table for easier access of each cell
+    let table = document.createElement('table');//give table a id to later be able to delete
+    for(let i = 0; i < player.pBoard.size; i++){
+        let row = document.createElement('tr');
+        for(let j = 0; j < player.pBoard.size; j++){
+            let cell = document.createElement('td');
+            cell.style.backgroundColor = "limegreen"; //REDUNDANT
+            cell.style.borderRadius = "5px";
+            row.appendChild(cell);
+        } 
+        table.appendChild(row);
+    }
+    gc.appendChild(table);
+}
+
+export async function consecutiveHit(enemy, coords, trueTable){
+    cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
+}
+
 async function cpuShipAttackedCell(cell){
     await delay(700);
     cell.style.backgroundColor = "darkred";

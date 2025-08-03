@@ -3,7 +3,7 @@ import { Player } from "./player";
 import { Gameboard } from "./gameboard";
 import { coordsNotTaken, fitsOnBoard, clearBoard, displayWinner } from "./boardUtils";
 import { multShipsListener, coordsOverlayListener, playAgainButtonListener } from "./listenerHandlers";
-import { updateHitOrMiss, clearGrid, coordsOverlayReset, coordsOccupiedError } from "./uiController";
+import { updateHitOrMiss, clearGrid, coordsOverlayReset, coordsOccupiedError, censorCurtainEnter, censorCurtainExit, swapBoards, swapEnemyBoards, openBoard, displayShips } from "./uiController";
 
 export function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
@@ -18,17 +18,17 @@ export function confirmAllShipsPlaced(player, enemy){
         if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type == "real"){//p1(real) has placed all ships
             // reset the overlay for coords
             coordsOverlayReset();
-            player.censorCurtainEnter();
+            censorCurtainEnter();
             multShipsMovement.style.animation = "slideLeft 2s forwards";
-            player.censorCurtainExit();
+            censorCurtainExit();
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
             //enemy picks random locations for its ships no need for the multShipOverlay
             let enemyArr = [...player.pBoard.ships];
             enemy.cpuPicksShipsLocations(enemyArr,enemy);
-            enemy.censorCurtainEnter();    
+            censorCurtainEnter();    
             coordsOverlayReset();
-            enemy.censorCurtainExit();
+            censorCurtainExit();
             multShipsMovement.style.animation = "exitUp 2s forwards";
             const hidden2Board = document.querySelector(".player2HiddenBoard");
             const true2Board = document.querySelector(".player2Board");
@@ -37,9 +37,9 @@ export function confirmAllShipsPlaced(player, enemy){
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
             //get rid of all overlays and start game
-            enemy.censorCurtainEnter();
+            censorCurtainEnter();
             coordsOverlayReset();
-            enemy.censorCurtainExit();
+            censorCurtainExit();
             multShipsMovement.style.animation = "exitUp 2s forwards";
             const hidden2Board = document.querySelector(".player2HiddenBoard");
             const true2Board = document.querySelector(".player2Board");
@@ -85,7 +85,7 @@ export function acceptCoordInputs(player1, player2){
     }
     else if(fitsOnBoard(shipLength, [xCoord,yCoord], hOrV) && coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
         player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
-        player.displayShips(trueTable);
+        displayShips(trueTable, player);
         coordsOverlayReset();
         shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
     }else{
@@ -119,10 +119,10 @@ export function gameTypeSubmitListenerFunction(){
     // let player1 = new Player("real", 10);
     // let player2 = new Player("real", 10);
 
-    player1.openBoard(".player1Board");
-    player2.openBoard(".player2Board");
-    player1.openBoard(".player1HiddenBoard");
-    player2.openBoard(".player2HiddenBoard");
+    openBoard(".player1Board", player1);
+    openBoard(".player2Board", player2);
+    openBoard(".player1HiddenBoard", player1);
+    openBoard(".player2HiddenBoard", player2);
 
     //{playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy,gameType}
     if(pvp.checked){
@@ -175,10 +175,10 @@ export function cellClicker(e){//when a cell is clicked
                     }
                     if(this.pBoard.board[rIndex][cIndex] == "0"){//if we missed then switch to enemy turn
                         if(this.gameType == "pvp"){//switch to human enemy turn
-                            this.censorCurtainEnter();
-                            this.censorCurtainExit();//bring down curtain and exit
-                            this.swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
-                            this.swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
+                            censorCurtainEnter();
+                            censorCurtainExit();//bring down curtain and exit
+                            swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
+                            swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
                         }else{//switch to cpu enemy turn
                             this.cpuPlayerAttacks(".player1Board",2, this.enemy, this.hiddenTable);
                         }

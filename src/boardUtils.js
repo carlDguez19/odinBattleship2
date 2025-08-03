@@ -56,3 +56,9 @@ export function displayWinner(winner){
     winnerMsg.textContent = "player " + winner;
     winnerOverlay.style.animation = "enterTop 1s forwards";
 }
+
+export function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}

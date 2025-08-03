@@ -1,7 +1,7 @@
 import { Gameboard } from "./gameboard";
-import { delay, cpuHitOrMiss, clearGrid } from "./uiController";
+import { delay, cpuHitOrMiss, clearGrid, displayShips,consecutiveHit } from "./uiController";
 import { getMultOKClicked, setMultOKClicked, getMultShipSize } from "./domElemConst";
-import { coordsNotTaken, fitsOnBoard, displayWinner } from "./boardUtils";
+import { coordsNotTaken, fitsOnBoard, displayWinner, getRandomIntInclusive } from "./boardUtils";
 import { setupCellClicker } from "./listenerHandlers";
 import { cellClicker } from "./setupListeners";
 
@@ -9,11 +9,6 @@ export class Player{
     constructor(type){
         this.type = type;
         this.pBoard = new Gameboard();
-    }
-    getRandomIntInclusive(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1) + min);
     }
     cpuPicksCoords(enemy){
         //returns coords
@@ -23,7 +18,7 @@ export class Player{
             coords = [];
             console.log("upcoming coords:");
             for(let i = 0; i < 2; i++){
-                let randInt = this.getRandomIntInclusive(0, 9);
+                let randInt = getRandomIntInclusive(0, 9);
                 console.log("cpu picked coords: " + randInt);
                 coords.push(randInt);
             }
@@ -36,16 +31,16 @@ export class Player{
     }
     cpuPicksShipsLocations(arr,cpu){
         for(let j = 0; j < arr.length; j++){
-            let coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
-            let axis = this.getRandomIntInclusive(0,1);
+            let coords = [getRandomIntInclusive(0,9),getRandomIntInclusive(0,9)];
+            let axis = getRandomIntInclusive(0,1);
             while(!fitsOnBoard(arr[j].length, coords, axis)||!coordsNotTaken(cpu.pBoard.board,coords,axis,arr[j].length)){
-                coords = [this.getRandomIntInclusive(0,9),this.getRandomIntInclusive(0,9)];
-                axis = this.getRandomIntInclusive(0,1);
+                coords = [getRandomIntInclusive(0,9),getRandomIntInclusive(0,9)];
+                axis = getRandomIntInclusive(0,1);
             }
             cpu.pBoard.placeShip(arr[j].length,coords,axis,arr[j].id, cpu);//pass board as param????
             let p2gbt = document.querySelector(".player2Board");
             let tableFin = p2gbt.firstElementChild;
-            cpu.displayShips(tableFin);
+            displayShips(tableFin, cpu);
         }
     }
     cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy,cpuHiddenTable){//called by human(coords from cpuPicksCoords)
@@ -53,7 +48,7 @@ export class Player{
         let trueTable = gbt.firstElementChild;
         let coords = this.cpuPicksCoords(enemy);
         while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){
-            this.consecutiveHit(enemy, coords, trueTable);
+            consecutiveHit(enemy, coords, trueTable);
             coords = this.cpuPicksCoords(enemy);
         }
         cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
@@ -85,75 +80,5 @@ export class Player{
         this.trueTable = gbt.firstElementChild;
         this.boundedCellClicker = cellClicker.bind(this);
         setupCellClicker(this.hiddenTable, this.boundedCellClicker);
-    }
-
-    displayShips(playerBoardDOM){
-        for(let i = 0; i < this.pBoard.board.length; i++){
-            for(let j = 0; j < this.pBoard.board[i].length; j++){
-                const row = playerBoardDOM.rows[i];//querySelector(`tr:nth-child(${i})`);
-                const cell = row.cells[j];//querySelector(`td:nth-child(${j})`);
-                if(this.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
-                    // const row = playerBoardDOM.rows[i]//querySelector(`tr:nth-child(${i})`);
-                    // const cell = row.cells[j]//querySelector(`td:nth-child(${j})`);
-                    cell.style.backgroundColor = "gray";
-                    cell.style.borderRadius = "50px";
-                }else{
-                    cell.style.backgroundColor = "limegreen";
-                    cell.style.borderRadius = "5px";
-                }                
-            }
-        }
-    }
-
-    openBoard(playerBoardDOM){//html element is the param. Create a table/grid
-        let gc = document.querySelector(playerBoardDOM);
-    
-        //fill grid with a table for easier access of each cell
-        let table = document.createElement('table');//give table a id to later be able to delete
-        for(let i = 0; i < this.pBoard.size; i++){
-            let row = document.createElement('tr');
-            for(let j = 0; j < this.pBoard.size; j++){
-                let cell = document.createElement('td');
-                cell.style.backgroundColor = "limegreen"; //REDUNDANT
-                cell.style.borderRadius = "5px";
-                row.appendChild(cell);
-            } 
-            table.appendChild(row);
-        }
-        gc.appendChild(table);
-    }
-    censorCurtainEnter(){
-        let curtain = document.querySelector(".censorCurtain");
-        curtain.style.animation = 'curtainEnter 1.8s forwards';
-    }
-    async consecutiveHit(enemy, coords, trueTable){
-        //await this.delay(700);//might not be needed
-        cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
-    }
-    async censorCurtainExit(){
-        await delay(5000);
-        let curtain = document.querySelector(".censorCurtain");
-        curtain.style.animation = 'exitUp 1s forwards';
-    }
-    coordPickTimeDelay(enemy) {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(this.cpuPicksCoords(enemy));
-          }, 1000);
-        });
-      }
-    async swapBoards(oldBoard, newBoard){
-        await delay(500);
-        let oBoard = document.querySelector(oldBoard);
-        let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitUp 0.5s forwards';
-        nBoard.style.animation = 'fadeIn 0.5s forwards';
-    }
-    async swapEnemyBoards(oldBoard, newBoard){
-        await delay(500);
-        let oBoard = document.querySelector(oldBoard);
-        let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'fadeOut 0.5s forwards';
-        nBoard.style.animation = 'enterTopBoard 0.5s forwards';
     }
 }
