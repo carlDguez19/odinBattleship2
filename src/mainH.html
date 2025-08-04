@@ -6,19 +6,22 @@
     <title>Document</title>
   </head>
   <body>
+    <div class="titelWrapper">
+      <h1 class="battleshipTitle">NOVA'S FLEET</h1>
+    </div>
     <div class="censorCurtain">Changing Boards. Game will continue shortly</div>
     <div class="gamingArea">
-      <div class="coordsTakenOverlay">
+      <div class="coordsTakenOverlay"> <!-- coordsTakenOverlay starts here -->
         <p class="diffCoordsMsg">Coords alredy taken pick diff coords.</p>
       </div>
-      <div class="winnerOverlay">
+      <div class="winnerOverlay"> <!-- winnerOverlay starts here -->
         <p class="winnerMainMsg">The winner is</p>
         <p class="trueWinner"></p>
         <button type="reset" form="gameTypeForm" class="playAgain">
           Play Again!
         </button>
       </div>
-      <div class="multShipsPlacementOverlay">
+      <div class="multShipsPlacementOverlay"> <!-- mulShips diagram starts here -->
         <p class="chooseShipMsg">Select a ship to choose its coordinates...</p>
         <div class="shipsDiagram">
           <table class="2a" id="two">
@@ -63,7 +66,7 @@
         </div>
       </div>
       <!-- end mulShips diagram -->
-      <div class="shipInputsOverlay">
+      <div class="shipInputsOverlay"> <!--  shipInputsOverlay starts here -->
         <div class="singleShipDiagram"></div>
         <div class="Inputs">
           <div class="coords">
@@ -84,16 +87,16 @@
                 </select>
                 <label for="xaxis">Y-Axis</label>
                 <select name="xAxis" id="xaxis" class="xAxis">
-                  <option value="0">1</option>
-                  <option value="1">2</option>
-                  <option value="2">3</option>
-                  <option value="3">4</option>
-                  <option value="4">5</option>
-                  <option value="5">6</option>
-                  <option value="6">7</option>
-                  <option value="7">8</option>
-                  <option value="8">9</option>
-                  <option value="9">10</option>
+                  <option value="0">A</option>
+                  <option value="1">B</option>
+                  <option value="2">C</option>
+                  <option value="3">D</option>
+                  <option value="4">E</option>
+                  <option value="5">F</option>
+                  <option value="6">G</option>
+                  <option value="7">H</option>
+                  <option value="8">I</option>
+                  <option value="9">J</option>
                 </select>
               </div>
               <div class="radios">
@@ -130,7 +133,7 @@
         <!-- end Inputs -->
       </div>
       <!-- end shipInputsOverlay -->
-      <div class="playerSelectionOverlay">
+      <div class="playerSelectionOverlay"> <!-- gameTypeOverlay starts here -->
         <div class="gameTypeDiv">
           <div class="gameTypeText"><p>Please select game type</p></div>
           <div class="gameTypeForm">
@@ -191,10 +194,16 @@
         <!-- end gameTypeDiv -->
       </div>
       <!-- end playerSelectionOverlay -->
-      <div class="player1Board">real</div>
-      <div class="player2Board">cpu</div>
-      <div class="player1HiddenBoard">real</div>
-      <div class="player2HiddenBoard">cpu</div>
+      <div class="boardWrapper">
+        <div class="playerLabel">Player 1</div>
+        <div class="player1Board"></div>
+        <div class="player1HiddenBoard">here</div>
+      </div>
+      <div class="boardWrapper">
+        <div class="playerLabel">Player 2</div>
+        <div class="player2Board"></div>
+        <div class="player2HiddenBoard"></div>
+      </div>
     </div>
     <!-- end gamingArea -->
   </body>

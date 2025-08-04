@@ -167,8 +167,8 @@ export function gameTypeSubmitListenerFunction(){
 export function cellClicker(e){//when a cell is clicked
         if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
             const row = e.target.parentElement;//
-            let cIndex = e.target.cellIndex;//
-            let rIndex = row.rowIndex//get coords of cell
+            let cIndex = e.target.cellIndex - 1;//
+            let rIndex = row.rowIndex - 1//get coords of cell
             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//determine if miss or hit
                 if(!(this.pBoard.allShipsSunk())){//      if ships have not been sunk then...
                     updateHitOrMiss(this.pBoard.board, [rIndex,cIndex], this.hiddenTable);//update hiddenBoard

@@ -66,6 +66,15 @@ table.\35:hover {
   top: -150%;
 }
 
+select{
+  background-color: #6B9AC4;
+  color: #2D305D;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: inherit;
+}
+
 .axis {
   display: flex;
   flex-direction: column;

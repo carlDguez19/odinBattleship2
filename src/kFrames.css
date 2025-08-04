@@ -13,7 +13,7 @@
     top: -100%;
   }
   to {
-    top: 30vh;
+    top: 30vh; /*30vh*/
   }
 }
 
@@ -80,10 +80,13 @@
 @keyframes enterTopBoard {
   from {
     top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
   }
   to {
-    top: 28vh;
-    right: 20vw;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
   }
 }
 

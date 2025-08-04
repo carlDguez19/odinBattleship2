@@ -3,13 +3,13 @@ export const delay = ms => new Promise(res => setTimeout(res, ms));
 export function updateHitOrMiss(board,coords,table){
     if(board[coords[0]][coords[1]] == "0"){
         //update table cell to miss
-        const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
+        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
         cell.style.backgroundColor = "#BFD8C6";
     }else if(board[coords[0]][coords[1]] == "X"){
         //update ship to hit
-        const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
+        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
         cell.style.backgroundColor = "#F05D23";
         cell.style.borderRadius = "50px";
     }
@@ -17,14 +17,14 @@ export function updateHitOrMiss(board,coords,table){
 export function cpuHitOrMiss(board,coords,table){
     if(board[coords[0]][coords[1]] == "0"){
         //update table cell to miss
-        const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
+        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
         cpuMissedCell(cell);
         //cell.style.backgroundColor = "teal";
     }else if(board[coords[0]][coords[1]] == "X"){
         //update ship to hit
-        const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
+        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
         cpuShipAttackedCell(cell);
     }
 }
