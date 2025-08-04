@@ -2,7 +2,7 @@
 .shipInputsOverlay {
   width: 600px;
   height: 500px;
-  background-color: teal;
+  background-color: #8FCB9B;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,7 +53,7 @@ table.\32 b:hover,
 table.\33:hover,
 table.\34:hover,
 table.\35:hover {
-  background-color: orange;
+  background-color: #F05D23;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -61,7 +61,7 @@ table.\35:hover {
 .shipInputsOverlay {
   width: 250px;
   height: 400px;
-  background-color: orchid;
+  background-color: #F05D23;
   font-size: 24pt;
   top: -150%;
 }
@@ -87,11 +87,11 @@ input[class="xRadio"],
 input[class="yRadio"] {
   opacity: 1;
   box-sizing: border-box;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin: 6px;
   padding: 0;
-  border: 3px solid yellow;
+  border: 5px solid #E3B505;
   border-radius: 50%;
   appearance: none;
   background-color: transparent;
@@ -99,28 +99,15 @@ input[class="yRadio"] {
 }
 
 input[type="radio"]:not(:disabled):checked {
-  border-color: yellow;
-  background-color: purple;
+  /* border-color: yellow;
+  background-color: purple; */
   background-clip: content-box;
   margin: 6px;
   padding: 2px;
   background-image: radial-gradient(
     circle,
-    red 0%,
-    orange 50%,
+    #6B9AC4 100%,
     transparent 60%,
-    transparent 100%
-  );
-}
-
-input[class="xRadio"]:disabled:checked,
-input[class="yRadio"]:disabled:checked {
-  margin: 6px;
-  background-image: radial-gradient(
-    circle,
-    lime 0%,
-    magenta 50%,
-    transparent 50%,
     transparent 100%
   );
 }
@@ -135,7 +122,7 @@ td.\32 b,
 td.\33,
 td.\34,
 td.\35 {
-  background-color: darkred;
+  background-color: #2D305D;
   border-radius: 50px;
 }
 
@@ -143,8 +130,8 @@ td.\35 {
 .cancelCoords:hover,
 .confirmShip:hover,
 .cancelShip:hover {
-  background-color: black;
-  color: white;
+  background-color: #E3B505;
+  color: antiquewhite;
 }
 
 .confirmCoords:active,
@@ -156,7 +143,7 @@ td.\35 {
 .coordsTakenOverlay {
   width: 400px;
   height: 300px;
-  background-color: red;
+  background-color: #F05D23;
   font-size: 24pt;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: antiquewhite;

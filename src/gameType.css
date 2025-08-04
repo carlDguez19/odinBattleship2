@@ -4,7 +4,7 @@
   position: absolute;
   height: 500px;
   width: 600px;
-  background-color: maroon;
+  background-color: #6B9AC4;
   z-index: 10;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: antiquewhite;
@@ -49,12 +49,12 @@ input + svg {
 input[class="pvp"]:hover + svg,
 input[class="pvp"]:checked + svg,
 input[class="pvp"]:focus + svg {
-  fill: rgb(0, 109, 217);
+  fill: #F05d23;
 }
 input[class="pve"]:hover + svg,
 input[class="pve"]:checked + svg,
 input[class="pve"]:focus + svg {
-  fill: rgb(0, 204, 79);
+  fill: #E3B505;
 }
 
 .buttonCont {
@@ -67,7 +67,7 @@ button {
 
 .submitButton:hover,
 .closeButton:hover {
-  background-color: black;
+  background-color: #E3B505;
   color: antiquewhite;
 }
 .submitButton:active,

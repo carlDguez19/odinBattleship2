@@ -42,7 +42,16 @@
     top: -150%;
   }
   to {
-    top: auto;
+    top: 0;
+  }
+}
+
+@keyframes curtainExit {
+  from {
+    top: 0;
+  }
+  to {
+    top: -150%;
   }
 }
 

@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: orangered;
+  background-color: #E3B505;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   font-size: 52pt;
   color: antiquewhite;
@@ -21,7 +21,7 @@
   border-radius: 20px;
 }
 .playAgain:hover {
-  background-color: black;
+  background-color: #F05D23;
   color: antiquewhite;
 }
 .playAgain:active {

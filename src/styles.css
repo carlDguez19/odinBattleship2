@@ -16,14 +16,14 @@
   align-items: center;
   width: auto;
   height: 100vh;
-  background-color: darkgreen;
+  background-color: #2D305D;
 }
 
 .censorCurtain {
   position: absolute;
   height: 100%;
   width: 100vw;
-  background-color: #222;
+  background-color: #2D305D;
   top: -150%;
   z-index: 20;
   font-size: 36pt;
@@ -43,6 +43,7 @@
   justify-content: center;
   align-items: end;
   border-radius: 10px;
+  background-color: #6B9AC4;
 }
 
 .player1HiddenBoard,
@@ -55,20 +56,14 @@
 .player1HiddenBoard {
   left: 10%;
   bottom: 100%;
-  background-color: red;
 }
 
 .player2HiddenBoard {
   right: 10%;
   top: -150%;
-  background-color: blueviolet;
 }
 
-.player1Board {
-  background-color: midnightblue;
-}
 .player2Board {
-  background-color: olivedrab;
   opacity: 1;
 }
 
@@ -88,4 +83,8 @@ table {
 #Player1-board, #Player2-board {
   /* added via js in player.js openBoard method */
   table-layout: fixed;
+}
+
+.censorCurtain, .player1HiddenBoard, .player2HiddenBoard {
+  transition: all 0.5s ease-in-out;
 }

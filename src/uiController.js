@@ -5,12 +5,12 @@ export function updateHitOrMiss(board,coords,table){
         //update table cell to miss
         const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
         const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
-        cell.style.backgroundColor = "teal";
+        cell.style.backgroundColor = "#BFD8C6";
     }else if(board[coords[0]][coords[1]] == "X"){
         //update ship to hit
         const row = table.rows[coords[0]]//querySelector(`tr:nth-child(${i})`);
         const cell = row.cells[coords[1]]//querySelector(`td:nth-child(${j})`);
-        cell.style.backgroundColor = "darkred";
+        cell.style.backgroundColor = "#F05D23";
         cell.style.borderRadius = "50px";
     }
 }
@@ -50,13 +50,13 @@ export function coordsOccupiedError(){
 
 export function censorCurtainEnter(){
     let curtain = document.querySelector(".censorCurtain");
-    curtain.style.animation = 'curtainEnter 1.8s forwards';
+    curtain.style.animation = 'curtainEnter 1.3s forwards';
 }
 
 export async function censorCurtainExit(){
     await delay(5000);
     let curtain = document.querySelector(".censorCurtain");
-    curtain.style.animation = 'exitUp 1s forwards';
+    curtain.style.animation = 'curtainExit 1s forwards';
 }
 
 export async function swapBoards(oldBoard, newBoard){
@@ -80,10 +80,10 @@ export function displayShips(playerBoardDOM, player){
             const row = playerBoardDOM.rows[i +1];//querySelector(`tr:nth-child(${i})`);
             const cell = row.cells[j+1];//querySelector(`td:nth-child(${j})`);
             if(player.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
-                cell.style.backgroundColor = "gray";
+                cell.style.backgroundColor = "#2D305D"; //color for ship
                 cell.style.borderRadius = "50px";
             }else{
-                cell.style.backgroundColor = "limegreen";
+                cell.style.backgroundColor = "#8FCB9B"; //default color for empty cell
                 cell.style.borderRadius = "5px";
             }                
         }
@@ -107,7 +107,7 @@ export function openBoard(playerBoardDOM, player){//html element is the param. C
         colLabel.textContent = j + 1;
         colLabel.style.fontweight = "bold";
         colLabel.style.textAlign = "center";
-        colLabel.style.backgroundColor = "#ddd";
+        colLabel.style.backgroundColor = "#6b9ac4";
         headerRow.appendChild(colLabel);
     }
     table.appendChild(headerRow);
@@ -119,12 +119,12 @@ export function openBoard(playerBoardDOM, player){//html element is the param. C
         rowLabel.textContent = letters[i];
         rowLabel.style.fontweight = "bold";
         rowLabel.style.textAlign = "center";
-        rowLabel.style.backgroundColor = "#ddd";
+        rowLabel.style.backgroundColor = "#6b9ac4";
         row.appendChild(rowLabel);
 
         for(let j = 0; j < player.pBoard.size; j++){
             let cell = document.createElement('td');
-            cell.style.backgroundColor = "limegreen"; //REDUNDANT
+            cell.style.backgroundColor = "#8FCB9B"; //REDUNDANT
             cell.style.borderRadius = "5px";
             row.appendChild(cell);
         } 
@@ -139,10 +139,10 @@ export async function consecutiveHit(enemy, coords, trueTable){
 
 async function cpuShipAttackedCell(cell){
     await delay(700);
-    cell.style.backgroundColor = "darkred";
+    cell.style.backgroundColor = "F05D23";
     cell.style.borderRadius = "50px";
 }
 async function cpuMissedCell(cell){
     await delay(700);
-    cell.style.backgroundColor = "teal";
+    cell.style.backgroundColor = "#BFD8C6";
 }
