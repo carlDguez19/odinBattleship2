@@ -95,8 +95,33 @@ export function openBoard(playerBoardDOM, player){//html element is the param. C
 
     //fill grid with a table for easier access of each cell
     let table = document.createElement('table');//give table a id to later be able to delete
+    const letters = "ABCDEFGHIJ";
+    let headerRow = document.createElement('tr');
+    
+    const cornerCell = document.createElement('td');
+    cornerCell.textContent = "";
+    headerRow.appendChild(cornerCell);
+
+    for(let j = 0; j < player.pBoard.size; j++){
+        const colLabel = document.createElement('td');
+        colLabel.textContent = j + 1;
+        colLabel.style.fontweight = "bold";
+        colLabel.style.textAlign = "center";
+        colLabel.style.backgroundColor = "#ddd";
+        headerRow.appendChild(colLabel);
+    }
+    table.appendChild(headerRow);
+    
     for(let i = 0; i < player.pBoard.size; i++){
         let row = document.createElement('tr');
+
+        const rowLabel = document.createElement('td');
+        rowLabel.textContent = letters[i];
+        rowLabel.style.fontweight = "bold";
+        rowLabel.style.textAlign = "center";
+        rowLabel.style.backgroundColor = "#ddd";
+        row.appendChild(rowLabel);
+        
         for(let j = 0; j < player.pBoard.size; j++){
             let cell = document.createElement('td');
             cell.style.backgroundColor = "limegreen"; //REDUNDANT
