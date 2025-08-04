@@ -77,8 +77,8 @@ export async function swapEnemyBoards(oldBoard, newBoard){
 export function displayShips(playerBoardDOM, player){
     for(let i = 0; i < player.pBoard.board.length; i++){
         for(let j = 0; j < player.pBoard.board[i].length; j++){
-            const row = playerBoardDOM.rows[i];//querySelector(`tr:nth-child(${i})`);
-            const cell = row.cells[j];//querySelector(`td:nth-child(${j})`);
+            const row = playerBoardDOM.rows[i +1];//querySelector(`tr:nth-child(${i})`);
+            const cell = row.cells[j+1];//querySelector(`td:nth-child(${j})`);
             if(player.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
                 cell.style.backgroundColor = "gray";
                 cell.style.borderRadius = "50px";
@@ -92,9 +92,9 @@ export function displayShips(playerBoardDOM, player){
 
 export function openBoard(playerBoardDOM, player){//html element is the param. Create a table/grid
     let gc = document.querySelector(playerBoardDOM);
-
-    //fill grid with a table for easier access of each cell
     let table = document.createElement('table');//give table a id to later be able to delete
+    table.setAttribute('id', `${player.name}-board`);
+    console.log("table id: " + player.pBoard.id);
     const letters = "ABCDEFGHIJ";
     let headerRow = document.createElement('tr');
     
@@ -121,7 +121,7 @@ export function openBoard(playerBoardDOM, player){//html element is the param. C
         rowLabel.style.textAlign = "center";
         rowLabel.style.backgroundColor = "#ddd";
         row.appendChild(rowLabel);
-        
+
         for(let j = 0; j < player.pBoard.size; j++){
             let cell = document.createElement('td');
             cell.style.backgroundColor = "limegreen"; //REDUNDANT

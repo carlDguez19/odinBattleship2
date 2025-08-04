@@ -84,3 +84,8 @@ table {
   height: 400px;
   margin-bottom: 20px;
 }
+
+#Player1-board, #Player2-board {
+  /* added via js in player.js openBoard method */
+  table-layout: fixed;
+}

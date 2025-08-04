@@ -110,8 +110,8 @@ export function playAgainReset(){
 
 export function gameTypeSubmitListenerFunction(){
     if(getMultOKClicked() > 0) return;
-    let player1 = new Player("real", 10);
-    let player2 = new Player("real", 10);
+    let player1 = new Player("real", "Player1");
+    let player2 = new Player("real", "Player2");
     
     clearBoard(player1);
     clearBoard(player2);

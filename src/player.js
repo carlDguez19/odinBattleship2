@@ -6,7 +6,8 @@ import { setupCellClicker } from "./setupListeners";
 import { cellClicker } from "./listenerFuncs";
 
 export class Player{
-    constructor(type){
+    constructor(type, name){
+        this.name = name;
         this.type = type;
         this.pBoard = new Gameboard();
     }
