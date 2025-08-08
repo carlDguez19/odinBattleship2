@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1em;
+  margin: 0;
   position: relative;
 }
 
@@ -71,42 +71,54 @@
 .player2Board,
 .player1HiddenBoard,
 .player2HiddenBoard {
-  margin: 1em;/* margin: 20px; */
   width: clamp(300px, 30vw, 600px );/* width: 500px; */
   aspect-ratio: 1/1;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: center;
   border-radius: 10px;
   background-color: #6B9AC4;
+}
+.player1Board, .player2Board{
+  margin: 1em;/* margin: 20px; */
+  z-index: 1;
+  outline: 5px solid limegreen;
 }
 
 .player1HiddenBoard,
 .player2HiddenBoard {
   position: absolute;
+  /* top: 50%; */
+  top: calc(50% + 0.25em);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(300px, 30vw, 600px );/* width: 500px; */
+  aspect-ratio: 1/1;
   z-index: 5;
+  /* opacity: 0; */
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+  margin: 0;
+  outline: 2px solid red;
 }
 
 /* starting locations of all the boards before the game starts */
-.player1HiddenBoard {
+/* .player1HiddenBoard {
   left: 10%;
   bottom: 200%;
 }
 
 .player2HiddenBoard {
-  /* background-color: #F05D23; */
-  /* right: 10%; */
-  top: -300%;
-}
+   right: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
 
-.player2Board {
+/* .player2Board {
   opacity: 1;
-}
+} */
 
-.player1Board,
-.player2Board {
-  z-index: 1;
-}
 /* starting locations of all the boards before the game starts */
 
 table {
