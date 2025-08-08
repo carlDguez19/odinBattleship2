@@ -89,7 +89,7 @@
 .player2HiddenBoard {
   position: absolute;
   /* top: 50%; */
-  top: calc(50% + 0.25em);
+  top: calc(50% + 1.5em);
   left: 50%;
   transform: translate(-50%, -50%);
   width: clamp(300px, 30vw, 600px );/* width: 500px; */
