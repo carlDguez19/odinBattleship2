@@ -63,7 +63,7 @@ export async function swapBoards(oldBoard, newBoard){
         await delay(500);
         let oBoard = document.querySelector(oldBoard);
         let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitUp 0.5s forwards';
+        oBoard.style.animation = 'exitUpBoard 0.5s forwards';
         nBoard.style.animation = 'fadeIn 0.5s forwards';
     }
 export async function swapEnemyBoards(oldBoard, newBoard){
@@ -71,7 +71,12 @@ export async function swapEnemyBoards(oldBoard, newBoard){
     let oBoard = document.querySelector(oldBoard);
     let nBoard = document.querySelector(newBoard);
     oBoard.style.animation = 'fadeOut 0.5s forwards';
-    nBoard.style.animation = 'enterTopBoard 0.5s forwards';
+    // nBoard.style.animation = 'enterTopBoardp2 0.5s forwards';
+    if(newBoard == ".player2HiddenBoard"){
+        nBoard.style.animation = 'enterTopBoardp2 0.5s forwards';
+    }else{
+        nBoard.style.animation = 'enterTopBoardp1 0.5s forwards';
+    }
 }
 
 export function displayShips(playerBoardDOM, player){

@@ -77,16 +77,29 @@
   }
 }
 
-@keyframes enterTopBoard {
+@keyframes enterTopBoardp2 {
   from {
     top: -100%;
     left: 50%;
     transform: translateX(-50%);
   }
   to {
-    top: 50%;
+    top: 8%;
     right: 50%;
-    transform: translate(50%, -50%);
+    transform: translateX(50%);/* transform: translate(50%, -50%); */
+  }
+}
+
+@keyframes enterTopBoardp1 {
+  from {
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  to {
+    top: 8%;
+    left: 50%;
+    /* transform: translate(50%, -50%); */
   }
 }
 
@@ -96,6 +109,6 @@
     /* right: 20vw; */
   }
   to {
-    top: -100%;
+    top: -200%;
   }
 }

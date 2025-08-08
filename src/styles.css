@@ -94,8 +94,9 @@
 }
 
 .player2HiddenBoard {
-  /* right: 10%;
-  top: -150%; */
+  /* background-color: #F05D23; */
+  /* right: 10%; */
+  top: -300%;
 }
 
 .player2Board {

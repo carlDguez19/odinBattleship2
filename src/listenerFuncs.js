@@ -32,7 +32,7 @@ export function confirmAllShipsPlaced(player, enemy){
             multShipsMovement.style.animation = "exitUp 2s forwards";
             const hidden2Board = document.querySelector(".player2HiddenBoard");
             const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTopBoard 1s forwards";
+            hidden2Board.style.animation = "enterTopBoardp2 1s forwards";
             true2Board.style.opacity = 0;
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
@@ -43,7 +43,7 @@ export function confirmAllShipsPlaced(player, enemy){
             multShipsMovement.style.animation = "exitUp 2s forwards";
             const hidden2Board = document.querySelector(".player2HiddenBoard");
             const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTopBoard 1s forwards";
+            hidden2Board.style.animation = "enterTopBoardp2 1s forwards";
             true2Board.style.animation = "fadeOut 1s forwards";
             setMultOKClicked(getMultOKClicked() + 1);
         }
@@ -177,8 +177,8 @@ export function cellClicker(e){//when a cell is clicked
                     }
                     if(this.pBoard.board[rIndex][cIndex] == "0"){//if we missed then switch to enemy turn
                         if(this.gameType == "pvp"){//switch to human enemy turn
-                            censorCurtainEnter();
-                            censorCurtainExit();//bring down curtain and exit
+                            //censorCurtainEnter();
+                            //censorCurtainExit();//bring down curtain and exit
                             swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
                             swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
                         }else{//switch to cpu enemy turn
