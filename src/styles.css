@@ -102,25 +102,6 @@
   outline: 2px solid red;
 }
 
-/* starting locations of all the boards before the game starts */
-/* .player1HiddenBoard {
-  left: 10%;
-  bottom: 200%;
-}
-
-.player2HiddenBoard {
-   right: 10%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-} */
-
-/* .player2Board {
-  opacity: 1;
-} */
-
-/* starting locations of all the boards before the game starts */
-
 table {
   /* added via js in player.js openBoard method */
   width: clamp(250px, 25vw, 500px);/* width: 400px; */
