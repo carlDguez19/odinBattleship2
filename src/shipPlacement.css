@@ -15,8 +15,9 @@
   border-radius: 50px;
 }
 .multShipsPlacementOverlay {
-  top: 50%;
-  left: 80vw;
+  top: 55%;
+  left: 66vw;
+  transform: translate(-50%, -50%);
 }
 .chooseShipMsg {
   font-size: 30pt;
@@ -164,6 +165,9 @@ td.\35 {
   align-content: center;
   position: absolute;
   border-radius: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 25;
 }
 .diffCoordsMsg {

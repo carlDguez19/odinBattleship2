@@ -53,6 +53,10 @@
   height: 100vh;
   background-color: #2D305D;
 }
+.gamingArea{
+  position: relative;
+  z-index: 25;
+}
 
 .censorCurtain {
   position: absolute;
