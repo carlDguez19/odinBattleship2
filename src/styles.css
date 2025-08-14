@@ -45,30 +45,26 @@
   text-shadow: 1px 1px #F05D23;
 }
 
-.gamingArea,
-.censorCurtain {
+.gamingArea {
   display: flex;
   justify-content: center;
   align-items: center;
   width: auto;
   height: 100vh;
   background-color: #2D305D;
-}
-.gamingArea{
   position: relative;
   z-index: 10;
 }
 
 .censorCurtain {
-  position: absolute;
   height: 100%;
   width: 100vw;
   background-color: #2D305D;
-  z-index: 30;
   font-size: 2rem;
   color: antiquewhite;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   font-weight: bolder;
+  z-index: 25;
 }
 
 .player1Board,
@@ -101,16 +97,6 @@
   margin: 0;
   outline: 2px solid red;
 }
-.fadeToggle{
-  pointer-events: none; /*allows clicks to go through to whatever is underneath*/
-  opacity: 0; /*starts off invisible*/
-  transition: opacity 0.5s ease-in-out;
-}
-.fadeToggle.active{
-    pointer-events: auto; /*enables clicks when active*/
-    opacity: 1;
-}
-
 table {
   /* added via js in player.js openBoard method */
   width: clamp(250px, 25vw, 500px);/* width: 400px; */

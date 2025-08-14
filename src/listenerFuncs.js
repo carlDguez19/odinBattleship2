@@ -23,7 +23,7 @@ export function confirmAllShipsPlaced(player, enemy){
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
             //enemy picks random locations for its ships no need for the multShipOverlay
-            let enemyArr = [...player.pBoard.ships];
+            let enemyArr = [...player.pBoard.ships];//copy of player1(real) ships
             enemy.cpuPicksShipsLocations(enemyArr,enemy);
             censorCurtainEnter();    
             coordsOverlayReset();
@@ -38,6 +38,7 @@ export function confirmAllShipsPlaced(player, enemy){
             coordsOverlayReset();
             censorCurtainExit();
             fadeOUTComplete(multShipsMovement);
+            multShipsMovement.style.animation = "slideOriginal 2s forwards";
             fadeIN('.player2HiddenBoard');
             fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
@@ -52,16 +53,16 @@ export function acceptCoordInputs(player1, player2){
     let shipLength = Number(getMultShipSize().charAt(0));
     let xCoord = Number(xAxis.value);
     let yCoord = Number(yAxis.value);
-    if(player1.pBoard.numOfShips <= 5 && getMultOKClicked() == 0){
+    if(player1.pBoard.numOfShips <= 5 && getMultOKClicked() == 0){//player 1 placing ships
         player = player1;
         let p1gbt = document.querySelector(".player1Board");
         trueTable = p1gbt.firstElementChild;
-    }else{
+    }else{//player 2 placing ships
         player = player2;
         let p2gbt = document.querySelector(".player2Board");
         trueTable = p2gbt.firstElementChild;
     }
-    for(let i = 0; i < player.pBoard.ships.length; i++){
+    for(let i = 0; i < player.pBoard.ships.length; i++){//check if ship of this type was already placed if so remove it
         let ship = player.pBoard.ships[i];
         if(ship.id == getMultShipSize()){//clicked on multShip was already placed before
             //remove previous location of ship
@@ -78,8 +79,8 @@ export function acceptCoordInputs(player1, player2){
     if(xRadio.checked == false && yRadio.checked == false){
         coordsOccupiedError();
     }
-    else if(fitsOnBoard(shipLength, [xCoord,yCoord], hOrV) && coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
-        player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
+    else if(fitsOnBoard(shipLength, [xCoord,yCoord], hOrV, player) && coordsNotTaken(player.pBoard.board,[xCoord,yCoord],hOrV,shipLength)){
+        player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//if it fits and coords are available place and display ship
         displayShips(trueTable, player);
         coordsOverlayReset();
         fadeOUTComplete(shipCoordsOverlay);
@@ -93,18 +94,18 @@ export function cancelCoordsInput(){
     fadeOUTComplete(shipCoordsOverlay);
 }
 
-export function playAgainReset(){
+export function playAgainReset(){//reset game to initial state if play again clicked
     fadeOUTComplete(winnerOverlay);
     pvp.checked = false;
     pve.checked = false;
     fadeINComplete(gameTypeOverlay);
     setMultOKClicked(0);
-    removeListeners();//remove all listeners
+    removeListeners();
     gameTypeListeners();
 }
 
 export function gameTypeSubmitListenerFunction(){
-    if(getMultOKClicked() > 0) return;
+    if(getMultOKClicked() > 0) return;//safety to prevent multiple clicks
     let player1 = new Player("real", "Player1");
     let player2 = new Player("real", "Player2");
     
@@ -113,7 +114,7 @@ export function gameTypeSubmitListenerFunction(){
 
     setMultOKClicked(0);
 
-    openBoard(".player1Board", player1);
+    openBoard(".player1Board", player1);//generate tables for both players boards(hidden and true)
     openBoard(".player2Board", player2);
     openBoard(".player1HiddenBoard", player1);
     openBoard(".player2HiddenBoard", player2);
@@ -126,16 +127,16 @@ export function gameTypeSubmitListenerFunction(){
             enemyTrueBoard: ".player2Board",
             enemyHiddenBoard: ".player2HiddenBoard",
             winner: 2,
-            gameType: "pvp"});//this means player 2 turn//here i will add the type of game i.e pvp or pve
+            gameType: "pvp"});//this means player 2 turn
         player2.clickCellCore({
             playerHiddenBoardDOM: ".player2HiddenBoard",
             playerTrueBoardDOM: ".player2Board",
             enemyTrueBoard: ".player1Board",
             enemyHiddenBoard: ".player1HiddenBoard",
             winner: 1,
-            gameType: "pvp"});//this means player 1 turn//here i will add the type of game i.e pvp or pve//add truePlayer: player1
+            gameType: "pvp"});//this means player 1 turn
         fadeINComplete(multShipsMovement);
-    }else{
+    }else{//pve selected
         fadeOUTComplete(gameTypeOverlay);
         player2.type = "cpu";
         player2.clickCellCore({
@@ -144,7 +145,7 @@ export function gameTypeSubmitListenerFunction(){
             winner: 1,
             enemy: player1,
             truePlayer: player2,
-            gameType: "cpu"});//, ".player2Board"//this means player 1 turn//add truePlayer: player2
+            gameType: "cpu"});//this means player 1 turn
         fadeINComplete(multShipsMovement);
     }
     
@@ -169,7 +170,7 @@ export function cellClicker(e){//when a cell is clicked
                     if(this.pBoard.board[rIndex][cIndex] == "0"){//if we missed then switch to enemy turn
                         if(this.gameType == "pvp"){//switch to human enemy turn
                             censorCurtainEnter();
-                            censorCurtainExit();//bring down curtain and exit
+                            censorCurtainExit();
                             swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
                             swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
                         }else{//switch to cpu enemy turn

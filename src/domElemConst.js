@@ -7,12 +7,22 @@ export const shipCoordsOverlay = document.querySelector(".shipInputsOverlay");
 //gameType selction
 export const pvp = document.querySelector(".pvp");
 export const pve = document.querySelector(".pve");
+export const gameTypesubmitButton = document.querySelector(".submitButton");
 
 //coords for ship placing
 export const xAxis = document.querySelector(".xAxis");
 export const yAxis = document.querySelector(".yAxis");
 export const xRadio = document.querySelector(".xRadio");
 export const yRadio = document.querySelector(".yRadio");
+export const shipCoordsSubmit = document.querySelector(".confirmCoords");
+export const shipCoordsCancel = document.querySelector(".cancelCoords");
+
+//multShip ships and buttons
+export const multShipsDiagram = document.querySelector(".shipsDiagram");
+export const confirmShipsButton = document.querySelector(".confirmShip");
+
+//winner overlay
+export const playAgainButton = document.querySelector(".playAgain");
 
 let multShipSize = 0;//used for size of each ship to be placed
 export function getMultShipSize(){

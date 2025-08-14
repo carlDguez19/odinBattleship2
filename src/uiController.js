@@ -1,30 +1,31 @@
 import { xRadio, yRadio, xAxis, yAxis } from "./domElemConst";
+
 export const delay = ms => new Promise(res => setTimeout(res, ms));
-export function updateHitOrMiss(board,coords,table){
+export function updateHitOrMiss(board,coords,table){//update table based on hit or miss(pvp only)
     if(board[coords[0]][coords[1]] == "0"){
         //update table cell to miss
-        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1];
+        const cell = row.cells[coords[1]+1];
         cell.style.backgroundColor = "#BFD8C6";
     }else if(board[coords[0]][coords[1]] == "X"){
         //update ship to hit
-        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1];
+        const cell = row.cells[coords[1]+1];
         cell.style.backgroundColor = "#F05D23";
         cell.style.borderRadius = "50px";
     }
 }
-export function cpuHitOrMiss(board,coords,table){
+export function cpuHitOrMiss(board,coords,table){//update table based on hit or miss(cpu only)
     if(board[coords[0]][coords[1]] == "0"){
         //update table cell to miss
-        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1];
+        const cell = row.cells[coords[1]+1];
         cpuMissedCell(cell);
         //cell.style.backgroundColor = "teal";
     }else if(board[coords[0]][coords[1]] == "X"){
         //update ship to hit
-        const row = table.rows[coords[0]+1]//querySelector(`tr:nth-child(${i})`);
-        const cell = row.cells[coords[1]+1]//querySelector(`td:nth-child(${j})`);
+        const row = table.rows[coords[0]+1];
+        const cell = row.cells[coords[1]+1];
         cpuShipAttackedCell(cell);
     }
 }
@@ -33,12 +34,13 @@ export function clearGrid(table){
     table.remove();
 }
 
-export function coordsOverlayReset(){
+export function coordsOverlayReset(){//unccheck radios and reset select dropdowns
     xRadio.checked = false;
     yRadio.checked = false;
     xAxis.value = "0";
     yAxis.value = "0";
 }
+
 export function fadeIN(className){
     let element = document.querySelector(className);
     fadeINComplete(element);
@@ -54,7 +56,7 @@ export function fadeOUTComplete(element){
     element.classList.remove('active');
 }
 
-export function coordsOccupiedError(){
+export function coordsOccupiedError(){//display error overlay for 2 seconds
     fadeIN('.coordsTakenOverlay');
     setTimeout(() => {
         fadeOUT('.coordsTakenOverlay');
@@ -71,10 +73,10 @@ export async function censorCurtainExit(){
 }
 
 export async function swapBoards(oldBoard, newBoard){
-        await delay(500);
-        fadeOUT(oldBoard);
-        fadeIN(newBoard);
-    }
+    await delay(500);
+    fadeOUT(oldBoard);
+    fadeIN(newBoard);
+}
 export async function swapEnemyBoards(oldBoardT, newBoardH){
     await delay(500);
     fadeOUT(oldBoardT);
@@ -84,8 +86,8 @@ export async function swapEnemyBoards(oldBoardT, newBoardH){
 export function displayShips(playerBoardDOM, player){
     for(let i = 0; i < player.pBoard.board.length; i++){
         for(let j = 0; j < player.pBoard.board[i].length; j++){
-            const row = playerBoardDOM.rows[i +1];//querySelector(`tr:nth-child(${i})`);
-            const cell = row.cells[j+1];//querySelector(`td:nth-child(${j})`);
+            const row = playerBoardDOM.rows[i +1];
+            const cell = row.cells[j+1];
             if(player.pBoard.board[i][j] != undefined){//if theres a ship at these coords, display it
                 cell.style.backgroundColor = "#2D305D"; //color for ship
                 cell.style.borderRadius = "50px";
@@ -97,19 +99,18 @@ export function displayShips(playerBoardDOM, player){
     }
 }
 
-export function openBoard(playerBoardDOM, player){//html element is the param. Create a table/grid
+export function openBoard(playerBoardDOM, player){//generates the table for the players board
     let gc = document.querySelector(playerBoardDOM);
-    let table = document.createElement('table');//give table a id to later be able to delete
+    let table = document.createElement('table');
     table.setAttribute('id', `${player.name}-board`);
-    console.log("table id: " + player.pBoard.id);
     const letters = "ABCDEFGHIJ";
     let headerRow = document.createElement('tr');
     
-    const cornerCell = document.createElement('td');
+    const cornerCell = document.createElement('td');//get letters ready as key for rows
     cornerCell.textContent = "";
     headerRow.appendChild(cornerCell);
 
-    for(let j = 0; j < player.pBoard.size; j++){
+    for(let j = 0; j < player.pBoard.size; j++){//get numbers ready as key for columns
         const colLabel = document.createElement('td');
         colLabel.textContent = j + 1;
         colLabel.style.fontweight = "bold";
@@ -119,9 +120,8 @@ export function openBoard(playerBoardDOM, player){//html element is the param. C
     }
     table.appendChild(headerRow);
     
-    for(let i = 0; i < player.pBoard.size; i++){
+    for(let i = 0; i < player.pBoard.size; i++){//setting up the rest of the table
         let row = document.createElement('tr');
-
         const rowLabel = document.createElement('td');
         rowLabel.textContent = letters[i];
         rowLabel.style.fontweight = "bold";
@@ -146,7 +146,7 @@ export async function consecutiveHit(enemy, coords, trueTable){
 
 async function cpuShipAttackedCell(cell){
     await delay(700);
-    cell.style.backgroundColor = "F05D23";
+    cell.style.backgroundColor = "#F05D23";
     cell.style.borderRadius = "50px";
 }
 async function cpuMissedCell(cell){

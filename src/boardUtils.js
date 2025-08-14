@@ -1,32 +1,33 @@
 import { getMultOKClicked, winnerOverlay } from "./domElemConst";
 import { fadeINComplete, fadeOUTComplete, clearGrid } from "./uiController";
+
 export function coordsNotTaken(board, coords, axis, length){//cells are empty before placing
-    if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
+    if(axis == 1){
         for(let i = 0; i < length; i++){
-            if(board[(coords[0]+i)][coords[1]] != undefined){//if ship at these coords then ...
+            if(board[(coords[0]+i)][coords[1]] != undefined){//if cells at these coords are not undefined return false
                 return false;
             }
         }
-        return true;
+        return true;//if loop completes then all cells are empty
     }else{//ship placed horizontally
         for(let i = 0; i < length; i++){
-            if(board[coords[0]][(coords[1]+i)] != undefined){//if ship at these coords then ...
+            if(board[coords[0]][(coords[1]+i)] != undefined){//if cells at these coords are not undefined return false
                 return false;
             }
         }
-        return true;
+        return true;//if loop completes then all cells are empty
     }
 }
 
-export function fitsOnBoard(length, coords, axis){//ship wont be left hanging off board
+export function fitsOnBoard(length, coords, axis, player){//ship wont be left hanging off board
     if(axis == 1){//ship wont overhang vertically
-        if(coords[0]+length <= 10){//this.size
+        if(coords[0]+length <= player.pBoard.size){//if it wont overhang return true
             return true;
         }else{
             return false;
         }
     }else{//ship wont overhang horizontally
-        if(coords[1]+length <= 10){//this.size
+        if(coords[1]+length <= player.pBoard.size){//if it wont overhang return true
             return true;
         }else{
             return false;
@@ -34,7 +35,7 @@ export function fitsOnBoard(length, coords, axis){//ship wont be left hanging of
     }
 }
 
-export function placeShipOnBoard(board, ship, coords, axis){
+export function placeShipOnBoard(board, ship, coords, axis){//change 2d array to include ship object at coords
     const [row, col] = coords;
     for(let i = 0; i < ship.length; i++){
         let r = axis == 1 ? row + i : row;
@@ -53,7 +54,7 @@ export function clearBoard(player){
 }
 
 export function displayWinner(winner){
-   let winnerMsg = document.querySelector(".trueWinner");
+    let winnerMsg = document.querySelector(".trueWinner");
     winnerMsg.textContent = "player " + winner;
     fadeINComplete(winnerOverlay);
 }

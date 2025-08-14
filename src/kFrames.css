@@ -1,10 +1,16 @@
 @keyframes slideLeft {
   from {
-    /* top: 30vh; */
     left: 66vw;
   }
   to {
-    /* top: 30vh; */
     left: 34vw;
+  }
+}
+@keyframes slideOriginal {
+  from {
+    left: 34vw;
+  }
+  to {
+    left: 66vw;
   }
 }

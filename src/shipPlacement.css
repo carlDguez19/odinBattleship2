@@ -1,5 +1,4 @@
-.multShipsPlacementOverlay,
-.shipInputsOverlay {
+.multShipsPlacementOverlay {/*multShip overlay*/
   width: 600px;
   height: 500px;
   background-color: #8FCB9B;
@@ -13,11 +12,19 @@
   font-size: 52pt;
   color: antiquewhite;
   border-radius: 50px;
-}
-.multShipsPlacementOverlay {
   top: 55%;
   left: 66vw;
   transform: translate(-50%, -50%);
+}
+.shipInputsOverlay {/*coords overlay*/
+  font-family: "byteFont", Arial, Helvetica, sans-serif;
+  width: 250px;
+  height: 400px;
+  background-color: #2D305D;
+  font-size: 24pt;
+  z-index: 15;
+  color: antiquewhite;
+  border-radius: 50px;
 }
 .chooseShipMsg {
   font-size: 30pt;
@@ -30,7 +37,8 @@
 .cancelShip {
   font-size: 32pt;
 }
-.\35,
+
+.\35,/*ships for multShipsDiagram*/
 .\34,
 .\33,
 .\32 a,
@@ -62,15 +70,7 @@ table.\35:hover {
   cursor: pointer;
 }
 
-.shipInputsOverlay {
-  width: 250px;
-  height: 400px;
-  background-color: #F05D23;
-  font-size: 24pt;
-  z-index: 15;
-}
-
-select{
+select{/*dropdown on shipCoords overlay*/
   background-color: #6B9AC4;
   color: #2D305D;
   border: none;
@@ -89,14 +89,14 @@ select{
   margin-left: 35px;
   margin-top: 20px;
 }
-.shipLocationButtons {
+.shipLocationButtons {/*coordsOverlay buttons*/
   margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-input[class="xRadio"],
+input[class="xRadio"],/*coordsOverlay radio buttons*/
 input[class="yRadio"] {
   opacity: 1;
   box-sizing: border-box;
@@ -112,8 +112,6 @@ input[class="yRadio"] {
 }
 
 input[type="radio"]:not(:disabled):checked {
-  /* border-color: yellow;
-  background-color: purple; */
   background-clip: content-box;
   margin: 6px;
   padding: 2px;
@@ -125,7 +123,7 @@ input[type="radio"]:not(:disabled):checked {
   );
 }
 
-.shipsDiagram {
+.shipsDiagram {/*container for multShip diagram*/
   display: flex;
   justify-content: center;
   align-items: center;
@@ -168,6 +166,15 @@ td.\35 {
   justify-content: center;
   align-items: center;
 }
+.fadeToggle{
+  pointer-events: none; /*allows clicks to go through to whatever is underneath*/
+  opacity: 0; /*starts off invisible*/
+  transition: opacity 0.5s ease-in-out;
+}
+.fadeToggle.active{
+    pointer-events: auto; /*enables clicks when active*/
+    opacity: 1;
+}
 .coordsTakenOverlay {
   width: 400px;
   height: 300px;
@@ -175,13 +182,6 @@ td.\35 {
   font-size: 24pt;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: antiquewhite;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  position: absolute;
   border-radius: 50px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 25;
 }

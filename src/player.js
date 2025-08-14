@@ -1,6 +1,5 @@
 import { Gameboard } from "./gameboard";
 import { delay, cpuHitOrMiss, clearGrid, displayShips,consecutiveHit } from "./uiController";
-import { getMultOKClicked, setMultOKClicked, getMultShipSize } from "./domElemConst";
 import { coordsNotTaken, fitsOnBoard, displayWinner, getRandomIntInclusive } from "./boardUtils";
 import { setupCellClicker } from "./setupListeners";
 import { cellClicker } from "./listenerFuncs";
@@ -17,58 +16,55 @@ export class Player{
         let attempts = 0;
         do{
             coords = [];
-            console.log("upcoming coords:");
             for(let i = 0; i < 2; i++){
-                let randInt = getRandomIntInclusive(0, 9);
-                console.log("cpu picked coords: " + randInt);
+                let randInt = getRandomIntInclusive(0, 9);//get a random int between 0 and 9
                 coords.push(randInt);
             }
             attempts++;
-            if(attempts > 1000){
+            if(attempts > 2000){//safety to prevent loop
                 throw new Error("CPU attempts have exceeded safe limits. Logic is most likely broken.");
             }
-        }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while taken
+        }while(!(enemy.pBoard.receiveAttack(coords, enemy.pBoard.board)));//while coords are taken look for new coords
         return coords;
     }
     cpuPicksShipsLocations(arr,cpu){
-        for(let j = 0; j < arr.length; j++){
-            let coords = [getRandomIntInclusive(0,9),getRandomIntInclusive(0,9)];
-            let axis = getRandomIntInclusive(0,1);
-            while(!fitsOnBoard(arr[j].length, coords, axis)||!coordsNotTaken(cpu.pBoard.board,coords,axis,arr[j].length)){
+        for(let j = 0; j < arr.length; j++){//going through each ship which is a copy of players ships and picking a new location for cpu
+            let coords = [];
+            let axis = 0;
+            do{
                 coords = [getRandomIntInclusive(0,9),getRandomIntInclusive(0,9)];
-                axis = getRandomIntInclusive(0,1);
-            }
-            cpu.pBoard.placeShip(arr[j].length,coords,axis,arr[j].id, cpu);//pass board as param????
+                axis = getRandomIntInclusive(0,1);    
+            }while(!fitsOnBoard(arr[j].length, coords, axis, cpu)||!coordsNotTaken(cpu.pBoard.board,coords,axis,arr[j].length));//if it doesnt fit on board or coords are taken look for new coords
+            cpu.pBoard.placeShip(arr[j].length,coords,axis,arr[j].id, cpu);
             let p2gbt = document.querySelector(".player2Board");
             let tableFin = p2gbt.firstElementChild;
             displayShips(tableFin, cpu);
         }
     }
-    cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy, truePlayer, cpuHiddenTable){//called by human(coords from cpuPicksCoords)
+    async cpuPlayerAttacks(playerTrueBoardDOM, winner, enemy, truePlayer, cpuHiddenTable){//called by human(coords from cpuPicksCoords)
         let gbt = document.querySelector(playerTrueBoardDOM);
         let trueTable = gbt.firstElementChild;
-        let coords = this.cpuPicksCoords(enemy);
-        while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){
+        let coords = this.cpuPicksCoords(enemy);//get coords to attack
+        while(enemy.pBoard.board[coords[0]][coords[1]] == "X"){//if we hit a ship let cpu attack again
             consecutiveHit(enemy, coords, trueTable);
+            await delay(700);
             coords = this.cpuPicksCoords(enemy);
         }
-        cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard
+        cpuHitOrMiss(enemy.pBoard.board, coords, trueTable);//update trueBoard DOM
         //add logic to check if all ships sunk
         if(enemy.pBoard.allShipsSunk()){
-            console.log("the winner is player "+ (winner));
             clearGrid(cpuHiddenTable);
             clearGrid(trueTable);
             displayWinner(winner);
         }
         else if(truePlayer.pBoard.allShipsSunk()){
-            console.log("the winner is player "+ winner-1);
             clearGrid(cpuHiddenTable);
             clearGrid(trueTable);
             displayWinner(winner-1);
         }
     }
 
-    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, truePlayer , gameType}){//, playerTrueBoardDOM//this should update the hidden board and the true board at the same time
+    clickCellCore({playerHiddenBoardDOM, playerTrueBoardDOM, enemyTrueBoard, enemyHiddenBoard, winner, enemy, truePlayer , gameType}){//setup listener for cell click
         this.playerHiddenBoardDOM = playerHiddenBoardDOM;
         this.playerTrueBoardDOM = playerTrueBoardDOM;
         this.enemyTrueBoard = enemyTrueBoard;

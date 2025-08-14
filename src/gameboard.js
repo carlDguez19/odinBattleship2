@@ -12,22 +12,22 @@ export class Gameboard{
         for(let i = 0; i < size; i++){
             arr[i] = new Array(size);
         }
-        return arr;
+        return arr;//2d array of size x size with all values undefined
     }
     placeShip(length, coords, axis, id){
         const testShip = new Ship(length,id,coords,axis);
         this.ships.push(testShip);
-        placeShipOnBoard(this.board, testShip, coords, axis);
+        placeShipOnBoard(this.board, testShip, coords, axis);//fill 2d array with ship object at the coords
         this.numOfShips++;
     }
     receiveAttack(coords, board){
-        if(coords.length !=2){
+        if(coords.length !=2){//safety check
             throw new Error("Invalid coordinate");
         }
         else if(board[coords[0]][coords[1]] == "X" || board[coords[0]][coords[1]] == "0"){//if previously declared a hit or a miss then leave as a hit or a miss
             return false;
         }
-        else{//else emtpy or ship in cell
+        else{//else empty or ship in cell
             if(board[coords[0]][coords[1]] == undefined){//if cell on 2d array is empty then declare a miss
                 board[coords[0]][coords[1]] = "0";
                 return true;
@@ -46,7 +46,7 @@ export class Gameboard{
         //ill go through the board array and kill the old ship
         for(let i = 0; i < ship.length; i++){
             if(ship.axis == 0){
-                this.board[ship.cdnts[0]][ship.cdnts[1]+i] = undefined;
+                this.board[ship.cdnts[0]][ship.cdnts[1]+i] = undefined;//reset 2d array cells to undefined based on axis
             }else{
                 this.board[ship.cdnts[0]+i][ship.cdnts[1]] = undefined;
             }

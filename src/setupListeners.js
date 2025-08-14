@@ -1,10 +1,10 @@
 import { shipTypeClicker, confirmAllShipsPlaced, acceptCoordInputs, cancelCoordsInput, playAgainReset, gameTypeSubmitListenerFunction } from "./listenerFuncs";
+import { multShipsDiagram, confirmShipsButton, shipCoordsSubmit, shipCoordsCancel, playAgainButton, gameTypesubmitButton } from "./domElemConst";
 
-let listeners = [];
+
+let listeners = [];//setup all listeners here so they can be removed later
 
 export function multShipsListener(player,enemy){
-    let multShipsDiagram = document.querySelector(".shipsDiagram");
-    let confirmShipsButton = document.querySelector(".confirmShip");
     multShipsDiagram.addEventListener('click', shipTypeClicker);
     listeners.push(() => multShipsDiagram.removeEventListener('click', shipTypeClicker));
     const wrapConfirmShipsPlaced = () => confirmAllShipsPlaced(player, enemy);
@@ -12,9 +12,7 @@ export function multShipsListener(player,enemy){
     listeners.push(() => confirmShipsButton.removeEventListener('click', wrapConfirmShipsPlaced));
 }
 
-export function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
-    const shipCoordsSubmit = document.querySelector(".confirmCoords");
-    const shipCoordsCancel = document.querySelector(".cancelCoords");
+export function coordsOverlayListener(player1,player2){
     const wrapAcceptCoordInputs = () => acceptCoordInputs(player1, player2);
     shipCoordsSubmit.addEventListener("click", wrapAcceptCoordInputs)
     listeners.push(() => shipCoordsSubmit.removeEventListener('click', wrapAcceptCoordInputs));
@@ -23,13 +21,11 @@ export function coordsOverlayListener(player1,player2){//,hiddenTable,trueTable
 }
 
 export function playAgainButtonListener(p1,p2){
-    const playAgainButton = document.querySelector(".playAgain");
     playAgainButton.addEventListener('click',playAgainReset)
     listeners.push(() => playAgainButton.removeEventListener('click', playAgainReset));
 }
 
 export function gameTypeListeners(){
-    const gameTypesubmitButton = document.querySelector(".submitButton");
     gameTypesubmitButton.addEventListener('click', gameTypeSubmitListenerFunction);
     listeners.push(() => gameTypesubmitButton.removeEventListener('click', gameTypeSubmitListenerFunction));
 }
