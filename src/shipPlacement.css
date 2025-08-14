@@ -169,7 +169,7 @@ td.\35 {
 .fadeToggle{
   pointer-events: none; /*allows clicks to go through to whatever is underneath*/
   opacity: 0; /*starts off invisible*/
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
 }
 .fadeToggle.active{
     pointer-events: auto; /*enables clicks when active*/

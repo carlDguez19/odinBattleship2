@@ -23,14 +23,13 @@ export function confirmAllShipsPlaced(player, enemy){
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
             //enemy picks random locations for its ships no need for the multShipOverlay
+            censorCurtainEnter();
+            fadeOUT('.player2Board');
             let enemyArr = [...player.pBoard.ships];//copy of player1(real) ships
-            enemy.cpuPicksShipsLocations(enemyArr,enemy);
-            censorCurtainEnter();    
+            enemy.cpuPicksShipsLocations(enemyArr,enemy);  
             coordsOverlayReset();
             censorCurtainExit();
             fadeOUTComplete(multShipsMovement);
-            fadeIN('.player2HiddenBoard');
-            fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
             //get rid of all overlays and start game
@@ -138,6 +137,7 @@ export function gameTypeSubmitListenerFunction(){
         fadeINComplete(multShipsMovement);
     }else{//pve selected
         fadeOUTComplete(gameTypeOverlay);
+        fadeIN('.player2HiddenBoard');
         player2.type = "cpu";
         player2.clickCellCore({
             playerHiddenBoardDOM: ".player2HiddenBoard",
