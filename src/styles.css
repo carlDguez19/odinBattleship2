@@ -10,11 +10,12 @@
 }
 
 .titelWrapper {
-  position: relative;
   width: 100%;
   height: auto;
 }
 .battleshipTitle {
+  position: relative;
+  display: block;
   text-align: center;
   font-size: 6rem;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
@@ -22,7 +23,7 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 30px;
+  margin: 30px auto;
   letter-spacing: 0.2rem;
   text-transform: uppercase;
   text-shadow: 2px 2px #F05D23;
@@ -55,7 +56,7 @@
 }
 .gamingArea{
   position: relative;
-  z-index: 25;
+  z-index: 100;
 }
 
 .censorCurtain {
@@ -63,7 +64,7 @@
   height: 100%;
   width: 100vw;
   background-color: #2D305D;
-  z-index: 20;
+  z-index: 10;
   font-size: 2rem;
   color: antiquewhite;
   font-family: "byteFont", Arial, Helvetica, sans-serif;

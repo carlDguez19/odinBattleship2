@@ -7,9 +7,7 @@ import { updateHitOrMiss, clearGrid, coordsOverlayReset, coordsOccupiedError, ce
 
 export function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
-        //multShipSize = e.target.className;
         setMultShipSize(e.target.className);
-        // shipCoordsOverlay.style.animation = "enterTop 1s forwards";//COORDS OVERLAY FADE IN
         fadeINComplete(shipCoordsOverlay);
     }
 }
@@ -30,12 +28,7 @@ export function confirmAllShipsPlaced(player, enemy){
             censorCurtainEnter();    
             coordsOverlayReset();
             censorCurtainExit();
-            // multShipsMovement.style.animation = "exitUp 2s forwards";//MULT SHIP OVERLAY FADE OUT
             fadeOUTComplete(multShipsMovement);
-            // const hidden2Board = document.querySelector(".player2HiddenBoard");
-            // const true2Board = document.querySelector(".player2Board");
-            // hidden2Board.style.animation = "enterTopBoardp2 1s forwards";//BOARD FADE IN
-            // true2Board.style.opacity = 0;//BOARD FADE OUT
             fadeIN('.player2HiddenBoard');
             fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
@@ -44,12 +37,7 @@ export function confirmAllShipsPlaced(player, enemy){
             censorCurtainEnter();
             coordsOverlayReset();
             censorCurtainExit();
-            // multShipsMovement.style.animation = "exitUp 2s forwards";//MULT SHIP OVERLAY FADE OUT
             fadeOUTComplete(multShipsMovement);
-            // const hidden2Board = document.querySelector(".player2HiddenBoard");
-            // const true2Board = document.querySelector(".player2Board");
-            // hidden2Board.style.animation = "enterTopBoardp2 1s forwards";//BOARD FADE IN
-            // true2Board.style.animation = "fadeOut 1s forwards";//BOARD FADE OUT
             fadeIN('.player2HiddenBoard');
             fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
@@ -94,7 +82,6 @@ export function acceptCoordInputs(player1, player2){
         player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
         displayShips(trueTable, player);
         coordsOverlayReset();
-        //shipCoordsOverlay.style.animation = "exitUp 1s forwards";//COORDS OVERLAY FADE OUT
         fadeOUTComplete(shipCoordsOverlay);
     }else{
         coordsOccupiedError();
@@ -103,16 +90,13 @@ export function acceptCoordInputs(player1, player2){
 
 export function cancelCoordsInput(){
     coordsOverlayReset();
-    //shipCoordsOverlay.style.animation = "exitUp 1s forwards";//COORDS OVERLAY FADE OUT
     fadeOUTComplete(shipCoordsOverlay);
 }
 
 export function playAgainReset(){
-    //winnerOverlay.style.animation = "exitUp 1s forwards";//WINNER OVERLAY FADE OUT
     fadeOUTComplete(winnerOverlay);
     pvp.checked = false;
     pve.checked = false;
-    //gameTypeOverlay.style.animation = "enterTop 2s forwards";//GAME TYPE OVERLAY FADE IN
     fadeINComplete(gameTypeOverlay);
     setMultOKClicked(0);
     removeListeners();//remove all listeners
@@ -135,7 +119,6 @@ export function gameTypeSubmitListenerFunction(){
     openBoard(".player2HiddenBoard", player2);
 
     if(pvp.checked){
-        //gameTypeOverlay.style.animation = "exitUp 1s forwards";//FADE OUT GAME TYPE OVERLAY
         fadeOUTComplete(gameTypeOverlay);
         player1.clickCellCore({
             playerHiddenBoardDOM: ".player1HiddenBoard",
@@ -152,9 +135,7 @@ export function gameTypeSubmitListenerFunction(){
             winner: 1,
             gameType: "pvp"});//this means player 1 turn//here i will add the type of game i.e pvp or pve//add truePlayer: player1
         fadeINComplete(multShipsMovement);
-        // multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }else{
-        //gameTypeOverlay.style.animation = "exitUp 1s forwards";//FADE OUT GAME TYPE OVERLAY
         fadeOUTComplete(gameTypeOverlay);
         player2.type = "cpu";
         player2.clickCellCore({
@@ -164,9 +145,7 @@ export function gameTypeSubmitListenerFunction(){
             enemy: player1,
             truePlayer: player2,
             gameType: "cpu"});//, ".player2Board"//this means player 1 turn//add truePlayer: player2
-        //player2.clickCellCore(".player2HiddenBoard", ".player1Board", 1, player1)
         fadeINComplete(multShipsMovement);
-        // multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }
     
     multShipsListener(player1,player2);
@@ -178,8 +157,8 @@ export function gameTypeSubmitListenerFunction(){
 
 export function cellClicker(e){//when a cell is clicked
         if(e.target.tagName === 'TD' && getMultOKClicked() > 0){
-            const row = e.target.parentElement;//
-            let cIndex = e.target.cellIndex - 1;//
+            const row = e.target.parentElement;
+            let cIndex = e.target.cellIndex - 1;
             let rIndex = row.rowIndex - 1//get coords of cell
             if(this.pBoard.receiveAttack([rIndex,cIndex],this.pBoard.board)){//determine if miss or hit
                 if(!(this.pBoard.allShipsSunk())){//      if ships have not been sunk then...
@@ -202,13 +181,8 @@ export function cellClicker(e){//when a cell is clicked
                     if(this.gameType == "pvp"){
                         let enemyOldTable = document.querySelector(this.enemyTrueBoard);//current players boards
                         let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
-                        // let hiddenBoard = document.querySelector(this.playerHiddenBoardDOM);
-                        // let trueBoard = document.querySelector(this.playerTrueBoardDOM);
-                        // hiddenBoard.style.animation = 'exitUpBoard 0.5s forwards';//BOARD FADE OUT
-                        // trueBoard.style.animation = 'fadeIn 0.5s forwards';//BOARD FADE IN
                         fadeOUT(this.playerHiddenBoardDOM);
                         fadeIN(this.playerTrueBoardDOM);
-                        // p1HiddenBoard.style.animation = 'exitUpBoard forwards';
                         clearGrid(enemyOldTable.firstElementChild);
                         clearGrid(enemyNewTable.firstElementChild);
                     }
