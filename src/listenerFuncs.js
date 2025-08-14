@@ -152,7 +152,7 @@ export function gameTypeSubmitListenerFunction(){
             winner: 1,
             gameType: "pvp"});//this means player 1 turn//here i will add the type of game i.e pvp or pve//add truePlayer: player1
         fadeINComplete(multShipsMovement);
-        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+        // multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }else{
         //gameTypeOverlay.style.animation = "exitUp 1s forwards";//FADE OUT GAME TYPE OVERLAY
         fadeOUTComplete(gameTypeOverlay);
@@ -166,7 +166,7 @@ export function gameTypeSubmitListenerFunction(){
             gameType: "cpu"});//, ".player2Board"//this means player 1 turn//add truePlayer: player2
         //player2.clickCellCore(".player2HiddenBoard", ".player1Board", 1, player1)
         fadeINComplete(multShipsMovement);
-        multShipsMovement.style.animation = "diagonalRight 2s forwards";
+        // multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }
     
     multShipsListener(player1,player2);

@@ -57,22 +57,22 @@
 
 @keyframes diagonalRight {
   from {
-    top: 30vh;
-    left: 50%;
+    /* top: 50%; */
+    left: 80vw;
   }
   to {
-    top: 30vh;
-    right: 20vw;
+    /* top: 50%; */
+    left: 20vw;
   }
 }
 
 @keyframes slideLeft {
   from {
-    top: 30vh;
-    right: 20vw;
+    /* top: 30vh; */
+    left: 80vw;
   }
   to {
-    top: 30vh;
+    /* top: 30vh; */
     left: 20vw;
   }
 }

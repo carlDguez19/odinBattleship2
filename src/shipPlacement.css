@@ -15,8 +15,8 @@
   border-radius: 50px;
 }
 .multShipsPlacementOverlay {
-  transform: translateY(-50%);
-  transform: translateX(50%);
+  top: 50%;
+  left: 80vw;
 }
 .chooseShipMsg {
   font-size: 30pt;
