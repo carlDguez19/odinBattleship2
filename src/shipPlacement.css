@@ -13,7 +13,10 @@
   font-size: 52pt;
   color: antiquewhite;
   border-radius: 50px;
-  top: -100%;
+}
+.multShipsPlacementOverlay {
+  transform: translateY(-50%);
+  transform: translateX(50%);
 }
 .chooseShipMsg {
   font-size: 30pt;
@@ -63,7 +66,7 @@ table.\35:hover {
   height: 400px;
   background-color: #F05D23;
   font-size: 24pt;
-  top: -150%;
+  z-index: 15;
 }
 
 select{
@@ -161,9 +164,20 @@ td.\35 {
   align-content: center;
   position: absolute;
   border-radius: 50px;
-  z-index: 11;
-  top: -100%;
+  z-index: 25;
 }
 .diffCoordsMsg {
   margin: 25% 5%;
+}
+
+.centeredOverlay{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

@@ -39,44 +39,65 @@ export function coordsOverlayReset(){
     xAxis.value = "0";
     yAxis.value = "0";
 }
+export function fadeIN(className){
+    let element = document.querySelector(className);
+    fadeINComplete(element);
+}
+export function fadeINComplete(element){
+    element.classList.add('active');
+}
+export function fadeOUT(className){
+    let element = document.querySelector(className);
+    fadeOUTComplete(element);
+}
+export function fadeOUTComplete(element){
+    element.classList.remove('active');
+}
 
 export function coordsOccupiedError(){
-    let coordError = document.querySelector('.coordsTakenOverlay');
-    coordError.style.animation = "enterTop 1s forwards";
+    //let coordError = document.querySelector('.coordsTakenOverlay');
+    //coordError.style.animation = "enterTop 1s forwards";//ERROR OVERLAY FADE IN
+    fadeIN('.coordsTakenOverlay');
     setTimeout(() => {
-        coordError.style.animation = "exitUp 1s forwards";
+        fadeOUT('.coordsTakenOverlay');
+        //coordError.style.animation = "exitUp 1s forwards";//ERROR OVERLAY FADE OUT
     }, 2000);
 }
 
 export function censorCurtainEnter(){
-    let curtain = document.querySelector(".censorCurtain");
-    curtain.style.animation = 'curtainEnter 1.3s forwards';
+    fadeIN('.censorCurtain');
+    // let curtain = document.querySelector(".censorCurtain");
+    // curtain.style.animation = 'curtainEnter 1.3s forwards';//CURTAIN FADE IN??
 }
 
 export async function censorCurtainExit(){
     await delay(5000);
-    let curtain = document.querySelector(".censorCurtain");
-    curtain.style.animation = 'curtainExit 1s forwards';
+    fadeOUT('.censorCurtain');
+    // let curtain = document.querySelector(".censorCurtain");
+    // curtain.style.animation = 'curtainExit 1s forwards';//CURTAIN FADE OUT??
 }
 
 export async function swapBoards(oldBoard, newBoard){
         await delay(500);
-        let oBoard = document.querySelector(oldBoard);
-        let nBoard = document.querySelector(newBoard);
-        oBoard.style.animation = 'exitUpBoard 0.5s forwards';
-        nBoard.style.animation = 'fadeIn 0.5s forwards';
+        fadeOUT(oldBoard);
+        fadeIN(newBoard);
+        // let oBoard = document.querySelector(oldBoard);
+        // let nBoard = document.querySelector(newBoard);
+        // oBoard.style.animation = 'exitUpBoard 0.5s forwards';//BOARD FADE OUT
+        // nBoard.style.animation = 'fadeIn 0.5s forwards';//BOARD FADE IN
     }
-export async function swapEnemyBoards(oldBoard, newBoard){
+export async function swapEnemyBoards(oldBoardT, newBoardH){
     await delay(500);
-    let oBoard = document.querySelector(oldBoard);
-    let nBoard = document.querySelector(newBoard);
-    oBoard.style.animation = 'fadeOut 0.5s forwards';
-    // nBoard.style.animation = 'enterTopBoardp2 0.5s forwards';
-    if(newBoard == ".player2HiddenBoard"){
-        nBoard.style.animation = 'enterTopBoardp2 0.5s forwards';
-    }else{
-        nBoard.style.animation = 'enterTopBoardp1 0.5s forwards';
-    }
+    fadeOUT(oldBoardT);
+    fadeIN(newBoardH);
+    // let oBoard = document.querySelector(oldBoardT);
+    // let nBoard = document.querySelector(newBoardH);
+    // oBoard.style.animation = 'fadeOut 0.5s forwards';//BOARD FADE OUT
+    // if(newBoard == ".player2HiddenBoard"){
+    //     nBoard.style.animation = 'enterTopBoardp2 0.5s forwards';//BOARD FADE IN
+    // }else{
+    //     nBoard.style.animation = 'enterTopBoardp1 0.5s forwards';//BOARD FADE IN
+    // }
 }
 
 export function displayShips(playerBoardDOM, player){

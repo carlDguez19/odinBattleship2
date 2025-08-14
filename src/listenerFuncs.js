@@ -3,13 +3,14 @@ import { Player } from "./player";
 import { Gameboard } from "./gameboard";
 import { coordsNotTaken, fitsOnBoard, clearBoard, displayWinner } from "./boardUtils";
 import { multShipsListener, coordsOverlayListener, playAgainButtonListener, removeListeners, gameTypeListeners } from "./setupListeners";
-import { updateHitOrMiss, clearGrid, coordsOverlayReset, coordsOccupiedError, censorCurtainEnter, censorCurtainExit, swapBoards, swapEnemyBoards, openBoard, displayShips } from "./uiController";
+import { updateHitOrMiss, clearGrid, coordsOverlayReset, coordsOccupiedError, censorCurtainEnter, censorCurtainExit, swapBoards, swapEnemyBoards, openBoard, displayShips, fadeIN, fadeOUT, fadeINComplete, fadeOUTComplete } from "./uiController";
 
 export function shipTypeClicker(e){
     if(e.target.tagName === "TABLE"||e.target.tagName === "TD"){
         //multShipSize = e.target.className;
         setMultShipSize(e.target.className);
-        shipCoordsOverlay.style.animation = "enterTop 1s forwards";
+        // shipCoordsOverlay.style.animation = "enterTop 1s forwards";//COORDS OVERLAY FADE IN
+        fadeINComplete(shipCoordsOverlay);
     }
 }
 
@@ -29,22 +30,28 @@ export function confirmAllShipsPlaced(player, enemy){
             censorCurtainEnter();    
             coordsOverlayReset();
             censorCurtainExit();
-            multShipsMovement.style.animation = "exitUp 2s forwards";
-            const hidden2Board = document.querySelector(".player2HiddenBoard");
-            const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTopBoardp2 1s forwards";
-            true2Board.style.opacity = 0;
+            // multShipsMovement.style.animation = "exitUp 2s forwards";//MULT SHIP OVERLAY FADE OUT
+            fadeOUTComplete(multShipsMovement);
+            // const hidden2Board = document.querySelector(".player2HiddenBoard");
+            // const true2Board = document.querySelector(".player2Board");
+            // hidden2Board.style.animation = "enterTopBoardp2 1s forwards";//BOARD FADE IN
+            // true2Board.style.opacity = 0;//BOARD FADE OUT
+            fadeIN('.player2HiddenBoard');
+            fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(enemy.pBoard.numOfShips == 5){//p2(real) has placed all ships)
             //get rid of all overlays and start game
             censorCurtainEnter();
             coordsOverlayReset();
             censorCurtainExit();
-            multShipsMovement.style.animation = "exitUp 2s forwards";
-            const hidden2Board = document.querySelector(".player2HiddenBoard");
-            const true2Board = document.querySelector(".player2Board");
-            hidden2Board.style.animation = "enterTopBoardp2 1s forwards";
-            true2Board.style.animation = "fadeOut 1s forwards";
+            // multShipsMovement.style.animation = "exitUp 2s forwards";//MULT SHIP OVERLAY FADE OUT
+            fadeOUTComplete(multShipsMovement);
+            // const hidden2Board = document.querySelector(".player2HiddenBoard");
+            // const true2Board = document.querySelector(".player2Board");
+            // hidden2Board.style.animation = "enterTopBoardp2 1s forwards";//BOARD FADE IN
+            // true2Board.style.animation = "fadeOut 1s forwards";//BOARD FADE OUT
+            fadeIN('.player2HiddenBoard');
+            fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
         }
 }
@@ -87,7 +94,8 @@ export function acceptCoordInputs(player1, player2){
         player.pBoard.placeShip(shipLength,[xCoord,yCoord],hOrV,getMultShipSize(), player);//WILL NEED PLAYER AS PARAMETER FOR NUMSHIPS++
         displayShips(trueTable, player);
         coordsOverlayReset();
-        shipCoordsOverlay.style.animation = "exitUp 1s forwards";    
+        //shipCoordsOverlay.style.animation = "exitUp 1s forwards";//COORDS OVERLAY FADE OUT
+        fadeOUTComplete(shipCoordsOverlay);
     }else{
         coordsOccupiedError();
     }
@@ -95,14 +103,17 @@ export function acceptCoordInputs(player1, player2){
 
 export function cancelCoordsInput(){
     coordsOverlayReset();
-    shipCoordsOverlay.style.animation = "exitUp 1s forwards";
+    //shipCoordsOverlay.style.animation = "exitUp 1s forwards";//COORDS OVERLAY FADE OUT
+    fadeOUTComplete(shipCoordsOverlay);
 }
 
 export function playAgainReset(){
-    winnerOverlay.style.animation = "exitUp 1s forwards";
+    //winnerOverlay.style.animation = "exitUp 1s forwards";//WINNER OVERLAY FADE OUT
+    fadeOUTComplete(winnerOverlay);
     pvp.checked = false;
     pve.checked = false;
-    gameTypeOverlay.style.animation = "enterTop 2s forwards";
+    //gameTypeOverlay.style.animation = "enterTop 2s forwards";//GAME TYPE OVERLAY FADE IN
+    fadeINComplete(gameTypeOverlay);
     setMultOKClicked(0);
     removeListeners();//remove all listeners
     gameTypeListeners();
@@ -118,16 +129,14 @@ export function gameTypeSubmitListenerFunction(){
 
     setMultOKClicked(0);
 
-    // let player1 = new Player("real", 10);
-    // let player2 = new Player("real", 10);
-
     openBoard(".player1Board", player1);
     openBoard(".player2Board", player2);
     openBoard(".player1HiddenBoard", player1);
     openBoard(".player2HiddenBoard", player2);
 
     if(pvp.checked){
-        gameTypeOverlay.style.animation = "exitUp 1s forwards";
+        //gameTypeOverlay.style.animation = "exitUp 1s forwards";//FADE OUT GAME TYPE OVERLAY
+        fadeOUTComplete(gameTypeOverlay);
         player1.clickCellCore({
             playerHiddenBoardDOM: ".player1HiddenBoard",
             playerTrueBoardDOM: ".player1Board",
@@ -142,9 +151,11 @@ export function gameTypeSubmitListenerFunction(){
             enemyHiddenBoard: ".player1HiddenBoard",
             winner: 1,
             gameType: "pvp"});//this means player 1 turn//here i will add the type of game i.e pvp or pve//add truePlayer: player1
+        fadeINComplete(multShipsMovement);
         multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }else{
-        gameTypeOverlay.style.animation = "exitUp 1s forwards";
+        //gameTypeOverlay.style.animation = "exitUp 1s forwards";//FADE OUT GAME TYPE OVERLAY
+        fadeOUTComplete(gameTypeOverlay);
         player2.type = "cpu";
         player2.clickCellCore({
             playerHiddenBoardDOM: ".player2HiddenBoard",
@@ -154,6 +165,7 @@ export function gameTypeSubmitListenerFunction(){
             truePlayer: player2,
             gameType: "cpu"});//, ".player2Board"//this means player 1 turn//add truePlayer: player2
         //player2.clickCellCore(".player2HiddenBoard", ".player1Board", 1, player1)
+        fadeINComplete(multShipsMovement);
         multShipsMovement.style.animation = "diagonalRight 2s forwards";
     }
     
@@ -177,8 +189,8 @@ export function cellClicker(e){//when a cell is clicked
                     }
                     if(this.pBoard.board[rIndex][cIndex] == "0"){//if we missed then switch to enemy turn
                         if(this.gameType == "pvp"){//switch to human enemy turn
-                            //censorCurtainEnter();
-                            //censorCurtainExit();//bring down curtain and exit
+                            censorCurtainEnter();
+                            censorCurtainExit();//bring down curtain and exit
                             swapEnemyBoards(this.enemyTrueBoard, this.enemyHiddenBoard);//swap the enemy boards(hidden and true)
                             swapBoards(this.playerHiddenBoardDOM, this.playerTrueBoardDOM);//swap our boards(hidden and true)
                         }else{//switch to cpu enemy turn
@@ -190,10 +202,12 @@ export function cellClicker(e){//when a cell is clicked
                     if(this.gameType == "pvp"){
                         let enemyOldTable = document.querySelector(this.enemyTrueBoard);//current players boards
                         let enemyNewTable = document.querySelector(this.enemyHiddenBoard);
-                        let hiddenBoard = document.querySelector(this.playerHiddenBoardDOM);
-                        let trueBoard = document.querySelector(this.playerTrueBoardDOM);
-                        hiddenBoard.style.animation = 'exitUpBoard 0.5s forwards';
-                        trueBoard.style.animation = 'fadeIn 0.5s forwards';
+                        // let hiddenBoard = document.querySelector(this.playerHiddenBoardDOM);
+                        // let trueBoard = document.querySelector(this.playerTrueBoardDOM);
+                        // hiddenBoard.style.animation = 'exitUpBoard 0.5s forwards';//BOARD FADE OUT
+                        // trueBoard.style.animation = 'fadeIn 0.5s forwards';//BOARD FADE IN
+                        fadeOUT(this.playerHiddenBoardDOM);
+                        fadeIN(this.playerTrueBoardDOM);
                         // p1HiddenBoard.style.animation = 'exitUpBoard forwards';
                         clearGrid(enemyOldTable.firstElementChild);
                         clearGrid(enemyNewTable.firstElementChild);

@@ -59,7 +59,6 @@
   height: 100%;
   width: 100vw;
   background-color: #2D305D;
-  top: -150%;
   z-index: 20;
   font-size: 2rem;
   color: antiquewhite;
@@ -88,18 +87,23 @@
 .player1HiddenBoard,
 .player2HiddenBoard {
   position: absolute;
-  /* top: 50%; */
   top: calc(50% + 1.5em);
   left: 50%;
   transform: translate(-50%, -50%);
   width: clamp(300px, 30vw, 600px );/* width: 500px; */
   aspect-ratio: 1/1;
   z-index: 5;
-  /* opacity: 0; */
-  pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
   margin: 0;
   outline: 2px solid red;
+}
+.fadeToggle{
+  pointer-events: none; /*allows clicks to go through to whatever is underneath*/
+  opacity: 0; /*starts off invisible*/
+  transition: opacity 0.5s ease-in-out;
+}
+.fadeToggle.active{
+    pointer-events: auto; /*enables clicks when active*/
+    opacity: 1;
 }
 
 table {

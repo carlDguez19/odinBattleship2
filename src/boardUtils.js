@@ -1,4 +1,5 @@
 import { getMultOKClicked, winnerOverlay } from "./domElemConst";
+import { fadeINComplete, fadeOUTComplete, clearGrid } from "./uiController";
 export function coordsNotTaken(board, coords, axis, length){//cells are empty before placing
     if(axis == 1){//if ship is placed vertically then fill the cells it will take up with the length
         for(let i = 0; i < length; i++){
@@ -54,7 +55,8 @@ export function clearBoard(player){
 export function displayWinner(winner){
    let winnerMsg = document.querySelector(".trueWinner");
     winnerMsg.textContent = "player " + winner;
-    winnerOverlay.style.animation = "enterTop 1s forwards";
+    // winnerOverlay.style.animation = "enterTop 1s forwards";//WINNER OVERLAY NEEDS TO FADE IN
+    fadeINComplete(winnerOverlay);
 }
 
 export function getRandomIntInclusive(min, max) {
