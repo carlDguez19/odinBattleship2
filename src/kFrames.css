@@ -1,6 +1,6 @@
 @keyframes slideLeft {
   from {
-    left: 66vw;
+    left: 68vw;
   }
   to {
     left: 34vw;
@@ -11,6 +11,6 @@
     left: 34vw;
   }
   to {
-    left: 66vw;
+    left: 68vw;
   }
 }

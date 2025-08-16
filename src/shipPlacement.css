@@ -1,6 +1,6 @@
 .multShipsPlacementOverlay {/*multShip overlay*/
-  width: 600px;
-  height: 500px;
+  width: clamp(300px, 80vw ,600px);
+  height: clamp(300px,75vw,500px);
   background-color: #8FCB9B;
   display: flex;
   flex-direction: column;
@@ -9,11 +9,11 @@
   position: absolute;
   z-index: 10;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
-  font-size: 52pt;
+  font-size: clamp(1rem, 5vw, 52pt);
   color: antiquewhite;
-  border-radius: 50px;
+  border-radius: clamp(20px, 1vw, 50px);
   top: 55%;
-  left: 66vw;
+  left: 68vw;
   transform: translate(-50%, -50%);
 }
 .shipInputsOverlay {/*coords overlay*/
@@ -27,15 +27,14 @@
   border-radius: 50px;
 }
 .chooseShipMsg {
-  font-size: 30pt;
+  font-size: clamp(1.5rem, 3vw, 30pt);
   margin-left: 30px;
 }
 .shipChoiceButtons {
-  margin-top: 20px;
+  margin-top: clamp(5px,1.5vh,20px);
 }
-.confirmShip,
-.cancelShip {
-  font-size: 32pt;
+.confirmShip {
+  font-size: clamp(1.5rem, 2vw, 32pt);
 }
 
 .\35,/*ships for multShipsDiagram*/

@@ -1,15 +1,15 @@
 .playerSelectionOverlay {
-  height: 500px;
-  width: 600px;
+  height: clamp(350px,50vw,500px);
+  width: clamp(300px,60vw,600px);
   background-color: #6B9AC4;
   z-index: 10;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: antiquewhite;
-  font-size: 24pt;
+  font-size: clamp(0.5rem, 2.5vw, 24pt);
   border-radius: 50px;
 }
 .gameTypeText {
-  font-size: 36pt;
+  font-size: clamp(1.5rem, 2.5vw, 36pt);
 }
 .gameTypeDiv,
 .gameType {
@@ -21,7 +21,7 @@
 .gameTypeForm {
   background-color: rgba(0, 0, 16, 0.8);
   padding: 0.4rem 0.4rem 0.1rem 0.4rem;
-  border-radius: 2.2rem;
+  border-radius: clamp(15px, 1vw, 2.2rem);
 }
 svg {
   fill: rgb(242, 242, 242);
@@ -60,6 +60,12 @@ input[class="pve"]:focus + svg {
 }
 button {
   margin: 5px;
+}
+
+.submitButton{
+  width: clamp(100px, 20vw, 200px);
+  height: clamp(40px, 5vw, 60px);
+  font-size: clamp(1.5rem, 2.5vw, 24pt);
 }
 
 .submitButton:hover,
