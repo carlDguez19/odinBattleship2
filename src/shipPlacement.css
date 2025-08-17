@@ -1,6 +1,6 @@
 .multShipsPlacementOverlay {/*multShip overlay*/
   width: clamp(300px, 80vw ,600px);
-  height: clamp(300px,75vw,500px);
+  height: clamp(350px,75vw,500px);
   background-color: #8FCB9B;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   color: antiquewhite;
   border-radius: clamp(20px, 1vw, 50px);
   top: 55%;
-  left: 68vw;
+  left: 70%;
   transform: translate(-50%, -50%);
 }
 .shipInputsOverlay {/*coords overlay*/
@@ -86,10 +86,10 @@ select{/*dropdown on shipCoords overlay*/
 }
 .radios {
   margin-left: 35px;
-  margin-top: 20px;
+  margin-top: clamp(10px,20px);
 }
 .shipLocationButtons {/*coordsOverlay buttons*/
-  margin-top: 30px;
+  margin-top: clamp(10px, 30px);
   display: flex;
   justify-content: center;
   align-items: center;

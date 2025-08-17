@@ -18,7 +18,7 @@ export function confirmAllShipsPlaced(player, enemy){
             // reset the overlay for coords
             coordsOverlayReset();
             censorCurtainEnter();
-            multShipsMovement.style.animation = "slideLeft 2s forwards";
+            multShipsMovement.style.animation = "slideOverP1 2s forwards";
             censorCurtainExit();
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
@@ -37,7 +37,7 @@ export function confirmAllShipsPlaced(player, enemy){
             coordsOverlayReset();
             censorCurtainExit();
             fadeOUTComplete(multShipsMovement);
-            multShipsMovement.style.animation = "slideOriginal 2s forwards";
+            multShipsMovement.style.animation = "slideBackP2 2s forwards";
             fadeIN('.player2HiddenBoard');
             fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);
@@ -117,9 +117,10 @@ export function gameTypeSubmitListenerFunction(){
     openBoard(".player2Board", player2);
     openBoard(".player1HiddenBoard", player1);
     openBoard(".player2HiddenBoard", player2);
-
+    fadeIN(".player1Board");
     if(pvp.checked){
         fadeOUTComplete(gameTypeOverlay);
+        fadeIN(".player2Board");
         player1.clickCellCore({
             playerHiddenBoardDOM: ".player1HiddenBoard",
             playerTrueBoardDOM: ".player1Board",

@@ -34,12 +34,13 @@ html, body {
   z-index: 30;
 }
 .battleshipTitle {
-  display: block;
+  display: inline-block;
   text-align: center;
+  width: 100%;
   font-size: clamp(1.5rem, 3vw, 6rem);
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: #6B9AC4;
-  top: 0;
+  top: clamp(4vh, 7vh, 10vh);
   left: 50%;
   transform: translateX(-50%);
   margin: 30px auto;
@@ -64,7 +65,7 @@ html, body {
   font-size: clamp(1rem, 2vw, 2rem);
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: #ddd;
-  margin-bottom: 0.5em;
+  margin-bottom: 1px;
   text-shadow: 1px 1px #F05D23;
 }
 
@@ -88,6 +89,7 @@ html, body {
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   font-weight: bolder;
   z-index: 25;
+  text-align: center;
 }
 
 .player1Board,
@@ -103,7 +105,7 @@ html, body {
   background-color: #6B9AC4;
 }
 .player1Board, .player2Board{
-  margin: 1em;/* margin: 20px; */
+  margin: clamp(0.5em, 0.75em, 1em);/* margin: 20px; */
   z-index: 1;
   outline: 5px solid limegreen;
 }

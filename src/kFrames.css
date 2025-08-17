@@ -1,4 +1,4 @@
-@keyframes slideLeft {
+@keyframes slideOverP1 {
   from {
     left: 68vw;
   }
@@ -6,7 +6,7 @@
     left: 34vw;
   }
 }
-@keyframes slideOriginal {
+@keyframes slideBackP2 {
   from {
     left: 34vw;
   }
