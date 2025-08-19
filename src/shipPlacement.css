@@ -18,7 +18,7 @@
 }
 .shipInputsOverlay {/*coords overlay*/
   font-family: "byteFont", Arial, Helvetica, sans-serif;
-  width: 250px;
+  width: 300px;
   min-height: 300px;
   max-height: 450px;
   height: auto;
@@ -33,7 +33,7 @@
   justify-content: center;
   align-items: center;
   transform: translateX(-50%);
-  top: 42%;
+  top: 40%;
   left: 70%
 }
 .chooseShipMsg {

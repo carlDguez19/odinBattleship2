@@ -16,13 +16,17 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
-
+body{
+  min-height: 100dvh;
+}
 .gameWrapper{
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden;
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -53,20 +57,25 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 0;
   position: relative;
+  overflow: visible;
+  width: 100%;
+  outline: 1px solid yellow;
 }
 .boardContainer{
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 33%/* clamp(20px, 5vw, 100px) */
+  gap: clamp(20px,33%,100px);/*33%*/
 }
 .playerLabel {
   font-size: clamp(1rem, 2vw, 2rem);
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: #ddd;
-  margin-bottom: 1px;
   text-shadow: 1px 1px #F05D23;
+  outline: 1px solid red;
 }
 
 .gamingArea {
@@ -81,7 +90,6 @@ html, body {
 }
 .gameWrapper, .boardWrapper{
   max-height: 100%;
-  overflow-y: auto;
 }
 .censorCurtain {
   height: 100%;
@@ -106,11 +114,12 @@ html, body {
   align-items: center;
   border-radius: 10px;
   background-color: #6B9AC4;
+  margin: clamp(0.5em, 0.75em, 1em);
 }
 .player1Board, .player2Board{
-  margin: 1px;/* clamp(0.5em, 0.75em, 1em); */
+  /* margin: 1px;clamp(0.5em, 0.75em, 1em); */
   z-index: 1;
-  outline: 5px solid limegreen;
+  /* outline: 5px solid limegreen; */
 }
 
 .player1HiddenBoard,
@@ -123,7 +132,7 @@ html, body {
   aspect-ratio: 1/1;
   z-index: 5;
   margin: 0;
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
 }
 table {
   /* added via js in player.js openBoard method */
@@ -131,7 +140,6 @@ table {
   aspect-ratio: 1/1;
   margin-bottom: 1em;/* margin-bottom: 20px; */
 }
-
 #Player1-board, #Player2-board {
   /* added via js in player.js openBoard method */
   table-layout: fixed;
