@@ -74,15 +74,18 @@ html, body {
   justify-content: center;
   align-items: center;
   width: auto;/*auto*/
-  height: 100vh;
+  height: 100svh;
   background-color: #2D305D;
   position: relative;
   z-index: 10;
 }
-
+.gameWrapper, .boardWrapper{
+  max-height: 100%;
+  overflow-y: auto;
+}
 .censorCurtain {
   height: 100%;
-  width: 100vw;
+  width: 100%;
   background-color: #2D305D;
   font-size: clamp(1rem, 2vw, 2rem);
   color: antiquewhite;

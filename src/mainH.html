@@ -70,7 +70,7 @@
           </div>
         </div>
         <!-- end mulShips diagram -->
-        <div class="shipInputsOverlay centeredOverlay fadeToggle"> <!--  shipInputsOverlay starts here -->
+        <div class="shipInputsOverlay fadeToggle"> <!--  shipInputsOverlay starts here -->
           <div class="singleShipDiagram"></div>
           <div class="Inputs">
             <div class="coords">
@@ -104,23 +104,27 @@
                   </select>
                 </div>
                 <div class="radios">
-                  <label for="xRadio" class="radioLabel x">Horizontal</label>
-                  <input
-                    type="radio"
-                    name="position"
-                    class="xRadio"
-                    id="xRadio"
-                    value="0"
-                    required
-                  />
-                  <label for="yRadio" class="radioLabel y">Vertical</label>
-                  <input
-                    type="radio"
-                    name="position"
-                    class="yRadio"
-                    id="yRadio"
-                    value="1"
-                  />
+                  <div class="radioXwrapper">
+                    <label for="xRadio" class="radioLabel x">Horizontal</label>
+                    <input
+                      type="radio"
+                      name="position"
+                      class="xRadio"
+                      id="xRadio"
+                      value="0"
+                      required
+                    />
+                  </div>
+                  <div class="radioYwrapper">
+                    <label for="yRadio" class="radioLabel y">Vertical</label>
+                    <input
+                      type="radio"
+                      name="position"
+                      class="yRadio"
+                      id="yRadio"
+                      value="1"
+                    />
+                  </div>
                 </div>
                 <div class="shipLocationButtons">
                   <button type="submit" form="shipLocation" class="confirmCoords">

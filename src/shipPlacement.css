@@ -19,12 +19,22 @@
 .shipInputsOverlay {/*coords overlay*/
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   width: 250px;
-  height: 400px;
+  min-height: 300px;
+  max-height: 450px;
+  height: auto;
   background-color: #2D305D;
-  font-size: 24pt;
+  font-size: clamp(1.5rem, 2vw, 24pt);
   z-index: 15;
   color: antiquewhite;
   border-radius: 50px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-50%);
+  top: 42%;
+  left: 70%
 }
 .chooseShipMsg {
   font-size: clamp(1.5rem, 3vw, 30pt);
@@ -87,6 +97,9 @@ select{/*dropdown on shipCoords overlay*/
 .radios {
   margin-left: 35px;
   margin-top: clamp(10px,20px);
+  display: flex;
+  flex-direction: column;
+  
 }
 .shipLocationButtons {/*coordsOverlay buttons*/
   margin-top: clamp(10px, 30px);
