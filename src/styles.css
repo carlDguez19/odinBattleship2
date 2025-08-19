@@ -59,7 +59,7 @@ html, body {
 .boardContainer{
   display: flex;
   justify-content: center;
-  gap: clamp(20px, 5vw, 100px)
+  gap: 33%/* clamp(20px, 5vw, 100px) */
 }
 .playerLabel {
   font-size: clamp(1rem, 2vw, 2rem);
@@ -108,7 +108,7 @@ html, body {
   background-color: #6B9AC4;
 }
 .player1Board, .player2Board{
-  margin: clamp(0.5em, 0.75em, 1em);/* margin: 20px; */
+  margin: 1px;/* clamp(0.5em, 0.75em, 1em); */
   z-index: 1;
   outline: 5px solid limegreen;
 }

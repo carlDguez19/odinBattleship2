@@ -1,3 +1,26 @@
+@media (max-width: 1440px){
+    .shipsDiagram{
+        flex-direction: column;
+    }
+    table.\35,/*ships for multShipsDiagram*/
+    table.\34,
+    table.\33,
+    table.\32 a,
+    table.\32 b {
+        margin: 5px;
+    }
+}
+@media (max-width: 600px){
+    .multShipsPlacementOverlay,.shipInputsOverlay, .winnerOverlay, .coordsTakenOverlay {
+        width: 90vw;
+        max-width: 400px;
+        height: auto;
+        padding: 1em;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
 @media (max-width: 480px){
     /* *{
         outline: 1px solid red;
@@ -26,16 +49,6 @@
     table.\32 a,
     table.\32 b {
         margin: 5px;
-        height: 25px;
-        border-radius: 100px;
-    }
-    td.\32 a,
-    td.\32 b,
-    td.\33,
-    td.\34,
-    td.\35 {
-        width: 5px;
-        height: 5px;
     }
     .chooseShipMsg {
         margin: 0;

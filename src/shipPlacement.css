@@ -1,6 +1,6 @@
 .multShipsPlacementOverlay {/*multShip overlay*/
-  width: clamp(300px, 80vw ,600px);
-  height: clamp(350px,75vw,500px);
+  width: clamp(300px, 40vw ,650px);
+  height: clamp(350px,35vw,500px);
   background-color: #8FCB9B;
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
   color: antiquewhite;
   border-radius: clamp(20px, 1vw, 50px);
   top: 55%;
-  left: 70%;
+  left: 75%;
   transform: translate(-50%, -50%);
 }
 .shipInputsOverlay {/*coords overlay*/
@@ -147,6 +147,8 @@ td.\34,
 td.\35 {
   background-color: #2D305D;
   border-radius: 50px;
+  height: clamp(5px, .5vh, 15px);
+  width: clamp(5px, .5vh, 15px);
 }
 
 .confirmCoords:hover,
