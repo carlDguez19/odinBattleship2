@@ -55,15 +55,10 @@ body{
 }
 .boardWrapper {
   display: inline-block;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
   margin: 0;
   position: relative;
   overflow: visible;
   width: 100%;
-  outline: 1px solid yellow;
 }
 .boardContainer{
   display: flex;
@@ -72,12 +67,13 @@ body{
   gap: clamp(20px,33%,100px);/*33%*/
 }
 .playerLabel {
+  position: relative;
+  margin-bottom: 0.5em;
   font-size: clamp(1rem, 2vw, 2rem);
   text-align: center;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: #ddd;
   text-shadow: 1px 1px #F05D23;
-  outline: 1px solid red;
 }
 
 .gamingArea {
@@ -104,19 +100,26 @@ body{
   z-index: 25;
   text-align: center;
 }
+.boardStack{
+  position: relative;
+  width: clamp(275px, 30vw, 630px );/* width: 500px; */
+  aspect-ratio: 1/1;
+}
 
 .player1Board,
 .player2Board,
 .player1HiddenBoard,
 .player2HiddenBoard {
-  width: clamp(250px, 30vw, 600px );/* width: 500px; */
+  position: relative;
+  width: 100%;
+  height: 100%;
   aspect-ratio: 1/1;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   background-color: #6B9AC4;
-  margin: clamp(0.5em, 0.75em, 1em);
+  margin: 0;/* clamp(0.5em, 0.75em, 1em); */
 }
 .player1Board, .player2Board{
   /* margin: 1px;clamp(0.5em, 0.75em, 1em); */
@@ -130,11 +133,9 @@ body{
   top: 0;/* calc(50% + 1.5em); */
   left: 0;/* 50%; */
   transform: none;/* translate(-50%, -50%); */
-  width: clamp(250px, 30vw, 600px );/* width: 500px; */
   aspect-ratio: 1/1;
   z-index: 5;
   margin: 0;
-  /* outline: 2px solid red; */
 }
 table {
   /* added via js in player.js openBoard method */

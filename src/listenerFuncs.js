@@ -19,6 +19,7 @@ export function confirmAllShipsPlaced(player, enemy){
             coordsOverlayReset();
             censorCurtainEnter();
             multShipsMovement.style.animation = "slideOverP1 2s forwards";
+            shipCoordsOverlay.style.animation = "slideOverP1 2s forwards";
             censorCurtainExit();
             setMultOKClicked(getMultOKClicked() + 1);
         }else if(player.pBoard.numOfShips == 5 && enemy.pBoard.numOfShips == 0 && enemy.type=="cpu"){//p1(real) placed all ships p2(cpu) picks locations of ships and game starts 
@@ -38,6 +39,7 @@ export function confirmAllShipsPlaced(player, enemy){
             censorCurtainExit();
             fadeOUTComplete(multShipsMovement);
             multShipsMovement.style.animation = "slideBackP2 2s forwards";
+            shipCoordsOverlay.style.animation = "slideBackP2 2s forwards";
             fadeIN('.player2HiddenBoard');
             fadeOUT('.player2Board');
             setMultOKClicked(getMultOKClicked() + 1);

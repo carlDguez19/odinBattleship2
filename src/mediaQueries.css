@@ -22,9 +22,6 @@
     }
 }
 @media (max-width: 480px){
-    /* *{
-        outline: 1px solid red;
-    } */
     .battleshipTitle{/*title*/
         margin: 0 !important;
         top: 2vh !important;
@@ -64,6 +61,14 @@
         width:auto;
         height: 35px;
     }
+    .winnerOverlay {/*winnerOverlay*/
+        width: 300px;
+        height: 500px;
+        font-size: 3rem;
+    }
+    .playAgain {
+        font-size: 2rem;
+    }
     .boardContainer{/*boards*/
         flex-direction: column;
         gap: 10px !important;
@@ -91,15 +96,15 @@
             top: 70%;
         }
         to {
-            top: 30%;
+            top: 28%;
         }
     }
     @keyframes slideBackP2 {
         from {
-            left: 34vw;
+            top: 28%;
         }
         to {
-            left: 68vw;
+            top: 70%;
         }
     }
 }
