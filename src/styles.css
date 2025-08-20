@@ -54,10 +54,11 @@ body{
   position: absolute;
 }
 .boardWrapper {
-  display: flex;
+  display: inline-block;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   margin: 0;
   position: relative;
   overflow: visible;
@@ -72,6 +73,7 @@ body{
 }
 .playerLabel {
   font-size: clamp(1rem, 2vw, 2rem);
+  text-align: center;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   color: #ddd;
   text-shadow: 1px 1px #F05D23;
@@ -125,9 +127,9 @@ body{
 .player1HiddenBoard,
 .player2HiddenBoard {
   position: absolute;
-  top: calc(50% + 1.5em);
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;/* calc(50% + 1.5em); */
+  left: 0;/* 50%; */
+  transform: none;/* translate(-50%, -50%); */
   width: clamp(250px, 30vw, 600px );/* width: 500px; */
   aspect-ratio: 1/1;
   z-index: 5;
