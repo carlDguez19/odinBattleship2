@@ -113,6 +113,7 @@ export function openBoard(playerBoardDOM, player){//generates the table for the 
     for(let j = 0; j < player.pBoard.size; j++){//get numbers ready as key for columns
         const colLabel = document.createElement('td');
         colLabel.textContent = j + 1;
+        colLabel.classList.add('headerCell');
         colLabel.style.fontweight = "bold";
         colLabel.style.textAlign = "center";
         colLabel.style.backgroundColor = "#6b9ac4";
@@ -124,6 +125,7 @@ export function openBoard(playerBoardDOM, player){//generates the table for the 
         let row = document.createElement('tr');
         const rowLabel = document.createElement('td');
         rowLabel.textContent = letters[i];
+        rowLabel.classList.add('headerCell');
         rowLabel.style.fontweight = "bold";
         rowLabel.style.textAlign = "center";
         rowLabel.style.backgroundColor = "#6b9ac4";

@@ -10,17 +10,6 @@
         margin: 5px;
     }
 }
-@media (max-width: 600px){
-    .multShipsPlacementOverlay,.shipInputsOverlay, .winnerOverlay, .coordsTakenOverlay {
-        width: 90vw;
-        max-width: 400px;
-        height: auto;
-        padding: 1em;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
 @media (max-width: 480px){
     .battleshipTitle{/*title*/
         margin: 0 !important;
@@ -48,7 +37,7 @@
         text-align: center;
     }
     .shipInputsOverlay{/*coordInputOverlay*/
-        top: 75vh;/*45%*/
+        top: 75vh;
         left: 50%;
         width: 300px;
         height: 300px;
@@ -85,11 +74,39 @@
         aspect-ratio: 1/1;
         max-height: 18px;
     }
-    table#Player1-board, table#Player2-board {
-        table-layout: fixed;
-        aspect-ratio: 1/1;
-        height: 250px;
-        width: 250px;
+    @keyframes slideOverP1 {
+        from {
+            top: 70%;
+        }
+        to {
+            top: 28%;
+        }
+    }
+    @keyframes slideBackP2 {
+        from {
+            top: 28%;
+        }
+        to {
+            top: 70%;
+        }
+    }
+}
+@media (max-width: 600px){
+     .boardContainer{/*boards*/
+        flex-direction: column;
+        gap: 10px !important;
+        top: 60%;
+    }
+    .multShipsPlacementOverlay {/*multShipOverlay*/
+        left: 50%;
+        top: 75vh;
+    }
+    .shipInputsOverlay{/*coordInputOverlay*/
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        background-color: #2D305D;
     }
     @keyframes slideOverP1 {
         from {

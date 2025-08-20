@@ -1,16 +1,16 @@
 @keyframes slideOverP1 {
   from {
-    left: 68vw;
+    left: 75%;
   }
   to {
-    left: 34vw;
+    left: 25%;
   }
 }
 @keyframes slideBackP2 {
   from {
-    left: 34vw;
+    left: 25%;
   }
   to {
-    left: 68vw;
+    left: 75%;
   }
 }
