@@ -20,7 +20,7 @@
     }
     .multShipsPlacementOverlay {/*multShipOverlay*/
         left: 50%;
-        top: 75vh;
+        top: 80%;
     }
     .shipsDiagram{
         flex-direction: column;
@@ -37,7 +37,7 @@
         text-align: center;
     }
     .shipInputsOverlay{/*coordInputOverlay*/
-        top: 75vh;
+        top: 75%;
         left: 50%;
         width: 300px;
         height: 300px;
@@ -74,22 +74,6 @@
         aspect-ratio: 1/1;
         max-height: 18px;
     }
-    @keyframes slideOverP1 {
-        from {
-            top: 70%;
-        }
-        to {
-            top: 28%;
-        }
-    }
-    @keyframes slideBackP2 {
-        from {
-            top: 28%;
-        }
-        to {
-            top: 70%;
-        }
-    }
 }
 @media (max-width: 600px){
      .boardContainer{/*boards*/
@@ -99,10 +83,10 @@
     }
     .multShipsPlacementOverlay {/*multShipOverlay*/
         left: 50%;
-        top: 75vh;
+        top: 75%;
     }
     .shipInputsOverlay{/*coordInputOverlay*/
-        top: 50%;
+        top: 75%;
         left: 50%;
         width: 300px;
         height: 300px;
@@ -113,12 +97,12 @@
             top: 70%;
         }
         to {
-            top: 28%;
+            top: 25%;
         }
     }
     @keyframes slideBackP2 {
         from {
-            top: 28%;
+            top: 25%;
         }
         to {
             top: 70%;

@@ -2,6 +2,7 @@
   height: clamp(350px,50vw,500px);
   width: clamp(250px,60vw,600px);
   background-color: #6B9AC4;
+  position: absolute;
   left: 50%;
   z-index: 10;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
@@ -9,6 +10,7 @@
   font-size: clamp(0.5rem, 2.5vw, 24pt);
   border-radius: 50px;
   text-align: center;
+  opacity: 0;
 }
 .gameTypeText {
   font-size: clamp(1.5rem, 2.5vw, 36pt);
@@ -70,12 +72,10 @@ button {
   font-size: clamp(1.5rem, 2.5vw, 24pt);
 }
 
-.submitButton:hover,
-.closeButton:hover {
+.submitButton:hover {
   background-color: #E3B505;
   color: antiquewhite;
 }
-.submitButton:active,
-.closeButton:active {
+.submitButton:active{
   scale: 0.9;
 }

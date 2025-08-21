@@ -1,10 +1,10 @@
 .winnerOverlay {
   width: 1050px;
-  height: 550px;
-  border: 0px;
+  height: 600px;
   background-color: #E3B505;
+  text-align: center;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
-  font-size: clamp(2rem, 52pt, 72pt);
+  font-size: clamp(2rem, 4.5vw, 6rem); /*clamp(2rem, 52pt, 72pt)*/
   color: antiquewhite;
   z-index: 11;
   border-radius: 50px;

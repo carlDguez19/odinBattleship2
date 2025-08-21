@@ -113,6 +113,8 @@ export function gameTypeSubmitListenerFunction(){
     clearBoard(player1);
     clearBoard(player2);
 
+    fadeINComplete(gameTypeOverlay);
+
     setMultOKClicked(0);
 
     openBoard(".player1Board", player1);//generate tables for both players boards(hidden and true)

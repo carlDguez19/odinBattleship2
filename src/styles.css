@@ -28,7 +28,6 @@ body{
   overflow: hidden;
   position: relative;
   margin: 0 auto;
-  box-sizing: border-box;
 }
 
 .titleWrapper {
@@ -80,7 +79,6 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;/*auto*/
   height: 100svh;
   background-color: #2D305D;
   position: relative;
@@ -130,7 +128,6 @@ body{
   position: absolute;
   top: 0;
   left: 0;
-  transform: none;
   aspect-ratio: 1/1;
   z-index: 5;
   margin: 0;
@@ -141,10 +138,9 @@ table {
   aspect-ratio: 1/1;
   margin-bottom: 1em;
 }
-#Player1-board, #Player2-board {
-  /* added via js in player.js openBoard method */
+/* #Player1-board, #Player2-board {
   table-layout: fixed;
-}
+} */
 table#Player1-board, table#Player2-board {
   table-layout: fixed;
   aspect-ratio: 1/1;

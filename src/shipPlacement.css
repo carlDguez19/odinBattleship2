@@ -7,13 +7,14 @@
   justify-content: center;
   align-items: center;
   position: absolute;
+  text-align: center;
   z-index: 10;
   font-family: "byteFont", Arial, Helvetica, sans-serif;
   font-size: clamp(1rem, 5vw, 52pt);
   color: antiquewhite;
   border-radius: clamp(20px, 1vw, 50px);
   top: 55%;
-  left: 75%;
+  left: 72%;
   transform: translate(-50%, -50%);
 }
 .shipInputsOverlay {/*coords overlay*/
@@ -32,9 +33,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transform: translateX(-50%);
-  top: 40%;
-  left: 70%
+  transform: translate(-50%, -50%);
+  top: 55%;
+  left: 70%;
 }
 .chooseShipMsg {
   font-size: clamp(1.5rem, 3vw, 30pt);
@@ -47,7 +48,7 @@
   font-size: clamp(1.5rem, 2vw, 32pt);
 }
 
-.\35,/*ships for multShipsDiagram*/
+.\35,/*ship tables for multShipsDiagram*/
 .\34,
 .\33,
 .\32 a,
@@ -69,11 +70,11 @@
   width: 50px;
 }
 
-table.\32 a:hover,
-table.\32 b:hover,
-table.\33:hover,
-table.\34:hover,
-table.\35:hover {
+table.\32 a:hover,/*table hover effects for ship size 2a*/
+table.\32 b:hover,/*table hover effects for ship size 2b*/
+table.\33:hover,/*table hover effects for ship size 3*/
+table.\34:hover,/*table hover effects for ship size 4*/
+table.\35:hover {/*table hover effects for ship size 5*/
   background-color: #F05D23;
   border-radius: 10px;
   cursor: pointer;
@@ -125,7 +126,6 @@ input[class="yRadio"] {
 
 input[type="radio"]:not(:disabled):checked {
   background-clip: content-box;
-  margin: 6px;
   padding: 2px;
   background-image: radial-gradient(
     circle,
@@ -140,11 +140,11 @@ input[type="radio"]:not(:disabled):checked {
   justify-content: center;
   align-items: center;
 }
-td.\32 a,
-td.\32 b,
-td.\33,
-td.\34,
-td.\35 {
+td.\32 a,/*individual dots for ship size 2a*/
+td.\32 b,/*individual dots for ship size 2b*/
+td.\33,/*individual dots for ship size 3*/
+td.\34,/*individual dots for ship size 4*/
+td.\35 {/*individual dots for ship size 5*/
   background-color: #2D305D;
   border-radius: 50px;
   height: clamp(5px, .5vh, 15px);
@@ -153,16 +153,14 @@ td.\35 {
 
 .confirmCoords:hover,
 .cancelCoords:hover,
-.confirmShip:hover,
-.cancelShip:hover {
+.confirmShip:hover {
   background-color: #E3B505;
   color: antiquewhite;
 }
 
 .confirmCoords:active,
 .cancelCoords:active,
-.confirmShip:active,
-.cancelShip:active {
+.confirmShip:active {
   scale: 0.9;
 }
 .diffCoordsMsg {
