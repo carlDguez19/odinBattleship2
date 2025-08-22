@@ -5,14 +5,13 @@
 
 `Battlship` is a modular, and responsive layout program designed with screen size breakpoints in mind.
 
-
 Scroll bar drift, DOM element alignment, logic and DOM synchronization, and game state bugs were encountered⸺and learned from⸺
 
 during this project. This project is a reflection of resilience, clarity, and above all, relentless persistance.
 
 This is the culmination of debugging and learning from mistakes, and also of years of relearning how to program after brain surgery.
 
-The complexity was intimidating but through it, I feel my undertanding of coding has been expanded by lightyears. Im looking forward to
+The complexity was intimidating but through it, I feel my understanding of coding has been expanded by lightyears. Im looking forward to
 
 what comes next.
 
@@ -38,7 +37,7 @@ npm install
 npm start
 ```
 
-Battleship will appear in your browser with url: `http://localhost:3000`
+Battleship will appear in your browser at: `http://localhost:3000`
 
 ## Credits
 
