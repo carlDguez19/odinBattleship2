@@ -5,22 +5,23 @@
 
 `Battlship` is a modular, and responsive layout program designed with screen size breakpoints in mind.
 
-Scroll bar drift, DOM element alignment, logic and DOM synchronization, and game state bugs were encountered and learned from
 
-during this project. This project is a reflection of resilience, clarity, but most importantly, relentless persistance. This
+Scroll bar drift, DOM element alignment, logic and DOM synchronization, and game state bugs were encountered⸺and learned from⸺
 
-is the culmination of not only months of debugging and learning from mistakes, but the culmination of a few years of relearning
+during this project. This project is a reflection of resilience, clarity, and above all, relentless persistance.
 
-how to program after brain surgery. This project was complex, but thanks to that complexity, I feel my undertanding of coding
+This is the culmination of debugging and learning from mistakes, and also of years of relearning how to program after brain surgery.
 
-has been expanded by lightyears. Im looking forward to what comes next.
+The complexity was intimidating but through it, I feel my undertanding of coding has been expanded by lightyears. Im looking forward to
+
+what comes next.
 
 ## Features
 
 - CSS architecture with detailed class naming, modularized based on UI
 - Responsive breakpoint design
 - DOM element alignment and containment strategies
-- Scroll bar, DOM element alignment, logic and DOM synchronization, and game state bug mitigation
+- Mitigation of scroll bar drift, DOM element alignment, logic and DOM synchronization, and game state bugs
 - Smooth UI with ease of use interactions
 
 ## Installation
@@ -47,4 +48,4 @@ Built by Carlos Dominguez, a systems-oriented developer and designer whos founda
 
 
 _"If I have seen further, it is by standing on the shoulders of giants."_
--Isaac Newton 
+-Isaac Newton
